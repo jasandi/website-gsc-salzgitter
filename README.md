@@ -10,10 +10,11 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
 
 ### Muss
 - Impressum und Datenschutz
+- Level 1 (Hauptseite) Inhalte
 
 ### Kann
 #### Prio High
-- Alle Inhalte
+- Level 2 (Unterseiten) Inhalte
 
 #### Prio Medium
 
