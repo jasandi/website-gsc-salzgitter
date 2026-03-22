@@ -7,17 +7,21 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
 ---
 
 ## Folgeaufgaben / Nächste Schritte
-- Priorisierung ausstehend
 
-### Rechtliches
-- Impressum
-- Datenschutz (Cookies etc.)
+### Muss
+- Impressum und Datenschutz
 
-### Verein
-- Änderungsantrag
+### Kann
+#### Prio High
+- Alle Inhalte
+
+#### Prio Medium
+
+#### Prio Low
+
+#### Nicht eingestuft
+- Änderungsantrag Verein 
 - Satzung des Vereins
-
-### Sonstiges
 - Skript um die Unterseiten für die Strecke von Markdown zu HTML zu transformieren (wie bei Content/ Neuigkeiten)
 - FAQ Sektion hinzufügen
 - Anfahrt über Google
@@ -26,4 +30,3 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
 - GSC Shop
 - Link zu den Rennergebnissen der Vereinsrennen
 - Mehrere Bilder automatisch in Galerie hochladen auf Unterseiten
-- Inhalte
