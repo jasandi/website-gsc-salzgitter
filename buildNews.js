@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const contentDir = path.join(__dirname, 'content', 'neuigkeiten');
-const templatePath = path.join(__dirname, 'templates', 'news-detail.html');
+const templatePath = path.join(__dirname, 'templates', 'subpage.html');
 const indexPath = path.join(__dirname, 'index.html');
 const outDir = path.join(__dirname, 'neuigkeiten');
 
