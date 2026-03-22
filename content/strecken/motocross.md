@@ -15,4 +15,3 @@ Die Strecke wurde in den Jahren 2017/2018 nach den Zeichnungen von Stefan Ludwig
 * **Sprünge:** Insgesamt 15 abwechslungsreiche Sektionen, die viel Abwechslung bieten.
 * **Bewässerung:** Eine permanente Bewässerung soll einen Großteil der Strecke abdecken und damit der Staubentwicklung entgegenwirken.
 
-<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><a href="../index.html#strecke" class="btn btn-outline">← Zurück zu den Strecken</a></div>

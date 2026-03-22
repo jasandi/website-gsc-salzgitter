@@ -16,4 +16,3 @@ In der GSC School bringen dir erfahrene Instruktoren bei, worauf es ankommt. Ega
 
 Wir erweitern kontinuierlich unsere Leihflotte und bieten mittlerweile auch 250ccm Viertakt-Maschinen für den Einstieg an. Melde dich einfach über unser Kontaktformular oder sprich uns direkt an der Strecke an!
 
-<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><a href="../index.html#initiativen" class="btn btn-outline">← Zurück zu Initiativen</a></div>

@@ -60,4 +60,3 @@ Kündigungen der Mitgliedschaft sind zum Ende eines Kalenderjahrs nur per E-Mail
 
 Gastfahrer nur mit Tagesgebühr 20 € je Training. Samstag Vor- und Nachmittag 30 €. Anmeldung ausschließlich über MX Tickets. Eine Anmeldung mit dem Papierformular an der Strecke ist seit 2024 nicht mehr möglich.
 
-<div style="padding-top: 2rem; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><a href="../index.html#verein" class="btn btn-outline">← Zurück zum Verein</a></div>

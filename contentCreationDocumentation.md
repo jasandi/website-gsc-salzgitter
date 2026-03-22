@@ -13,26 +13,19 @@ Wir nutzen für die Inhalte eine sehr einfache Schreibweise namens **Markdown** 
 
 ---
 
-## 2. Wie man eine statische Unterseite bearbeitet oder neu erstellt (Verein, Strecken, Initiativen)
+## 2. Wie man eine statische Unterseite bearbeitet (Verein, Strecken, Initiativen)
 
-**A. Bestehende Seiten aktualisieren (Der Normalfall)**
 Wenn du die Inhalte der aktuellen Unterseiten ändern willst (z.B. Angaben zur Motocross-Strecke oder Vorstandsmitglieder anpassen):
 1. Öffne den Ordner `content` und navigiere in den entsprechenden Unterordner (`strecken`, `verein` oder `initiativen`).
 2. Öffne die dort bereits **existierende Markdown-Datei** (z. B. `motocross.md` oder `verein.md`).
 3. Ändere den Text einfach nach deinen Wünschen ab und speichere die Datei. Fertig!
-
-**B. Eine komplett neue Seite hinzufügen**
-Möchtest du eine zusätzliche Seite für eine völlig neue Strecke oder Initiative anlegen?
-1. Öffne den passenden Ordner (z.B. `content/strecken`).
-2. Erstelle dort eine neue Textdatei und nenne sie z.B. `neue-strecke.md` (schreibe den Dateinamen am besten komplett klein und ohne Leerzeichen).
-3. Füge bei komplett neuen Dateien **ganz oben** einen "Kopfbereich" ein. Dieser sagt der Website, wie die Seite heißt und welches Bild genutzt werden soll.
 
 **Beispiel für eine normale Unterseite (`neue-strecke.md`):**
 ```text
 ---
 titel: Die neue Supercross Strecke
 bild: ../assets/strecken_bild.png
-kurzbeschreibung: Hier steht ein kurzer Einleitungstext für Google und Co.
+kurzbeschreibung: Hier steht ein kurzer Einleitungstext
 ---
 
 Hier startet dein normaler, formatierter Text für die Website! Du kannst **fett** schreiben oder Listen anlegen.

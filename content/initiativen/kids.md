@@ -6,7 +6,7 @@ kurzbeschreibung: Die Zukunft unseres Sports liegt uns am Herzen.
 
 ## Jugendförderung beim GSC
 
-Bei den "Cross Kids" können die Kleinsten sicher und unter Aufsicht ihre ersten Erfahrungen auf der Motocross-Maschine sammeln. Wir legen höchsten Wert auf Sicherheit, Rücksichtnahme und den spielerischen Zugang zum Motorsport.
+Dies ist ein Skript Test für Aktualisierungen. Bei den "Cross Kids" können die Kleinsten sicher und unter Aufsicht ihre ersten Erfahrungen auf der Motocross-Maschine sammeln. Wir legen höchsten Wert auf Sicherheit, Rücksichtnahme und den spielerischen Zugang zum Motorsport.
 
 ## Kinder von 5 bis 10 Jahren
 
@@ -16,4 +16,3 @@ Bei den "Cross Kids" können die Kleinsten sicher und unter Aufsicht ihre ersten
 
 Neben dem regulären Training veranstalten wir regelmäßig "GSC School Kids Camps" an den Wochenenden. Hier kommt der Spaß auf der Strecke nicht zu kurz und Freundschaften im Fahrerlager werden geschlossen.
 
-<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><a href="../index.html#initiativen" class="btn btn-outline">← Zurück zu Initiativen</a></div>

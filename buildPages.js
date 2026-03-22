@@ -150,11 +150,32 @@ function processFile(mdPath, slug, category, templateContent, outDir, postsArray
         finalImageHtml = `<img src="${imgSrc}" alt="${parsed.data.titel}" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">`;
     }
 
+    let backLabel = 'Zurück';
+    let backHash = category;
+    if (category === 'strecken') {
+        backLabel = 'Zurück zu den Strecken';
+        backHash = 'strecke';
+    } else if (category === 'verein') {
+        backLabel = 'Zurück zum Verein';
+        backHash = 'verein';
+    } else if (category === 'initiativen') {
+        backLabel = 'Zurück zu Initiativen';
+        backHash = 'initiativen';
+    } else if (category === 'neuigkeiten') {
+        backLabel = 'Zurück zu den Neuigkeiten';
+        backHash = 'neuigkeiten';
+    }
+
+    const backButtonHtml = `<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;">
+                        <a href="../index.html#${backHash}" class="btn btn-outline">← ${backLabel}</a>
+                    </div>`;
+
     let postHtml = templateContent
         .replace(/\{\{TITLE\}\}/g, parsed.data.titel || 'Subpage')
         .replace(/\{\{DATE\}\}/g, parsed.data.datum || '')
         .replace(/\{\{DESCRIPTION\}\}/g, parsed.data.kurzbeschreibung || '')
-        .replace(/\{\{CONTENT\}\}/g, finalImageHtml + '\n\n' + htmlContent);
+        .replace(/\{\{CONTENT\}\}/g, finalImageHtml + '\n\n' + htmlContent)
+        .replace(/\{\{BACK_BUTTON\}\}/g, backButtonHtml);
 
     const outPath = path.join(outDir, `${slug}.html`);
     fs.writeFileSync(outPath, postHtml);

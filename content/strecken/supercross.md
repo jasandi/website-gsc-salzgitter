@@ -17,4 +17,3 @@ Unsere 800 Meter lange Supercross-Strecke wurde nach höchsten Stadion-Standards
 
 Die SX-Strecke ist gerade für fortgeschrittene Fahrer ein absolutes Highlight in der Region und wird in der Wintersaison intensiv für Vorbereitungen genutzt. Regelmäßig richten wir zudem spannende Nachtrennen unter Flutlicht aus.
 
-<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><a href="../index.html#strecke" class="btn btn-outline">← Zurück zu den Strecken</a></div>
