@@ -6,7 +6,7 @@ kurzbeschreibung: Mit einer Länge von ca. 1900 Metern ist er mit seinem harten 
 
 ## Die Hauptstrecke
 
-Die Strecke wurde in den Jahren 2017/2018 nach den Zeichnungen von Stefan Ludwig umgebaut und wird seitdem immer weiter optimiert. Mit einer enormen Länge von ca. 1.900 Metern bietet sie ausreichend Platz, um sowohl das Können bei hohen Geschwindigkeiten als auch die Kurventechnik perfekt zu verfeinern.
+Test 711. Die Strecke wurde in den Jahren 2017/2018 nach den Zeichnungen von Stefan Ludwig umgebaut und wird seitdem immer weiter optimiert. Mit einer enormen Länge von ca. 1.900 Metern bietet sie ausreichend Platz, um sowohl das Können bei hohen Geschwindigkeiten als auch die Kurventechnik perfekt zu verfeinern.
 
 ## Details im Überblick
 

@@ -6,7 +6,7 @@ kurzbeschreibung: Erfahre alles über unsere Historie, den Vorstand und die Mitg
 
 ## Wie es begann:
 
-Im Jahr 1985 beschlossen die 8 Gründungsmitglieder Thomas Rusitzka, Andreas Kalus, Uwe Strack, Anton Baumstark, Helmut Knips, Michael Reichelt, Christian Zadow und George Dick dem wilden und an der Grenze der Legalität stattfindende Crossfahren auf dem Gelände an der Eisenhüttenstraße ein Ende zu setzen.
+Test 108. Im Jahr 1985 beschlossen die 8 Gründungsmitglieder Thomas Rusitzka, Andreas Kalus, Uwe Strack, Anton Baumstark, Helmut Knips, Michael Reichelt, Christian Zadow und George Dick dem wilden und an der Grenze der Legalität stattfindende Crossfahren auf dem Gelände an der Eisenhüttenstraße ein Ende zu setzen.
 
 Ein Verein soll gegründet und das Gelände als Vereinsstrecke gepachtet werden. Gleichzeitig wurde die Gemeinnützigkeit beim Finanzamt beantragt und hat seither Bestand.
 

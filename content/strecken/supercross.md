@@ -6,7 +6,7 @@ kurzbeschreibung: Perfektioniere deine Technik auf unserer herausfordernden Supe
 
 ## Kompakt, Kurz und Intensiv
 
-Unsere 800 Meter lange Supercross-Strecke wurde nach höchsten Stadion-Standards entwickelt. Hier zählen Timing, Präzision und schnelle Rhythmuswechsel. Diese Strecke eignet sich hervorragend, um Rhythmus-Sektionen und spektakuläre Sprungkombinationen zu trainieren.
+Test 744. Unsere 800 Meter lange Supercross-Strecke wurde nach höchsten Stadion-Standards entwickelt. Hier zählen Timing, Präzision und schnelle Rhythmuswechsel. Diese Strecke eignet sich hervorragend, um Rhythmus-Sektionen und spektakuläre Sprungkombinationen zu trainieren.
 
 ## Details im Überblick
 

@@ -9,16 +9,36 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
 ## Folgeaufgaben / Nächste Schritte
 
 ### Muss
-- Impressum und Datenschutz
-- Level 1 (Hauptseite) Inhalte
+@Jan
+- Impressum und Datenschutz (überlegen, ob getrennt halten oder zusammenführen als ein Link)
+- Fußzeile
+    - Kontaktdaten
+    - Verein korrekt benennen
+    - Slogan anpassen
+- Level 1 Hauptseite Inhalte
+    - Aktuelle Neuigkeiten
+    - Kommende Termine
+    - Strecken
+    - Verein
+    - Initiativen
 
 ### Kann
 #### Prio High
-- Level 2 (Unterseiten) Inhalte
+- "mehr erfahren" Button bei "aktuellen Neuigkeiten" als optionales Element in Markdown und build.js mit aufnehmen
+- Level 2 Unterseiten Inhalte
+    - Motocross @tbc
+    - Supercross @tbc
+    - Kinder Strecke @tbc
+    - Verein @tbc
+    - GSC School @tbc
+    - Cross Kids @tbc
+- Aktuelle Neuigkeiten Verweis, dass kurzfristige Ankündigungen dem WhatsApp Kanal zu entnehmen sind
 
 #### Prio Medium
 
 #### Prio Low
+- Navigation aus Fußzeile entfernen
+- GSC Logo hinzufügen
 
 #### Nicht eingestuft
 - Änderungsantrag Verein 

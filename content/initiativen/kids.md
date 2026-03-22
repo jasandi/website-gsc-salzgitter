@@ -15,4 +15,3 @@ Dies ist ein Skript Test für Aktualisierungen. Bei den "Cross Kids" können die
 * **100% Safety First:** Ohne komplette Schutzausrüstung geht bei uns niemand auf die Strecke! Betreuer achten jederzeit auf die Einhaltung unserer Regeln.
 
 Neben dem regulären Training veranstalten wir regelmäßig "GSC School Kids Camps" an den Wochenenden. Hier kommt der Spaß auf der Strecke nicht zu kurz und Freundschaften im Fahrerlager werden geschlossen.
-
