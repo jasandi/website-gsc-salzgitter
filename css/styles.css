@@ -648,10 +648,10 @@ img {
 .event-details h3 {
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  word-wrap: normal;
+  overflow-wrap: normal;
 }
 
 .event-details p {
@@ -715,6 +715,38 @@ img {
   top: 0;
   color: var(--color-primary);
   font-weight: 800;
+}
+
+/* Individual Record Icons for Proposal 1 */
+.feature-list li.li-level::before,
+.feature-list li.li-length::before,
+.feature-list li.li-hours::before {
+  content: '';
+  width: 1.1rem;
+  height: 1.1rem;
+  background-color: var(--color-primary);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  top: 0.25rem;
+}
+
+.feature-list li.li-level::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20v-5'%3E%3C/path%3E%3Cpath d='M17 20v-9'%3E%3C/path%3E%3Cpath d='M22 20V4'%3E%3C/path%3E%3Cpath d='M2 20v-1'%3E%3C/path%3E%3Cpath d='M7 20v-2'%3E%3C/path%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20v-5'%3E%3C/path%3E%3Cpath d='M17 20v-9'%3E%3C/path%3E%3Cpath d='M22 20V4'%3E%3C/path%3E%3Cpath d='M2 20v-1'%3E%3C/path%3E%3Cpath d='M7 20v-2'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.feature-list li.li-length::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15'%3E%3C/path%3E%3Ccircle cx='6' cy='19' r='3'%3E%3C/circle%3E%3Ccircle cx='18' cy='5' r='3'%3E%3C/circle%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 19h8.5a3.5 3.5 0 1 0 0-7h-11a3.5 3.5 0 1 1 0-7H15'%3E%3C/path%3E%3Ccircle cx='6' cy='19' r='3'%3E%3C/circle%3E%3Ccircle cx='18' cy='5' r='3'%3E%3C/circle%3E%3C/svg%3E");
+}
+
+.feature-list li.li-hours::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
 .rounded-img {

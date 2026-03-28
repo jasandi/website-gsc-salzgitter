@@ -12,14 +12,14 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
 @Jan
 - Impressum <- done
 - Datenschutz (es fehlen Angaben zur Hosting Plattform)
-- Fußzeile
+- Fußzeile <- done
     - Kontaktdaten <- done
     - Verein korrekt benennen <- done
-    - Slogan anpassen 
+    - Slogan anpassen <- done
 - Level 1 Hauptseite Inhalte
-    - Aktuelle Neuigkeiten
+    - Aktuelle Neuigkeiten <- erstmal ausgeblendet, einfacher informell auf Instagram und Whatsapp für kurzfristige Ankündigungen
     - Kommende Termine <- done
-    - Strecken
+    - Strecken <- done
     - Verein
     - Initiativen
 
