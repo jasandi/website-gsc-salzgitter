@@ -18,7 +18,7 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
     - Slogan anpassen 
 - Level 1 Hauptseite Inhalte
     - Aktuelle Neuigkeiten
-    - Kommende Termine (drei Vereinsrennen Kids, SX-Series 2. Lauf, Sonntag Ride Day SX/MX bzw. SX Workshop, Girlsday 8.8.2026)
+    - Kommende Termine <- done
     - Strecken
     - Verein
     - Initiativen
