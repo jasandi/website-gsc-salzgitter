@@ -10,14 +10,15 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
 
 ### Muss
 @Jan
-- Impressum und Datenschutz (überlegen, ob getrennt halten oder zusammenführen als ein Link)
+- Impressum <- done
+- Datenschutz (es fehlen Angaben zur Hosting Plattform)
 - Fußzeile
-    - Kontaktdaten
-    - Verein korrekt benennen
-    - Slogan anpassen
+    - Kontaktdaten <- done
+    - Verein korrekt benennen <- done
+    - Slogan anpassen 
 - Level 1 Hauptseite Inhalte
     - Aktuelle Neuigkeiten
-    - Kommende Termine
+    - Kommende Termine (drei Vereinsrennen Kids, SX-Series 2. Lauf, Sonntag Ride Day SX/MX bzw. SX Workshop, Girlsday 8.8.2026)
     - Strecken
     - Verein
     - Initiativen

@@ -15,4 +15,3 @@ Dies ist ein Test, ob das build.js Skript funktioniert. Im April 2021 haben wir 
 * **3. Komplettstrecke:** Ein 800m langer, anspruchsvoller und abwechslungsreicher Track inklusive dem neuen Teil.
 
 Die gesamte Kinder- und Jugendtrack liegt im hinteren Teil unseres Geländes. Wenn Ihr vom Fahrerlager aus hinter der Startanlage lang geht, seht Ihr schon ein Hinweisschild auf die Kinderstrecke. Folgt einfach dem Weg am Holzzaun entlang.
-

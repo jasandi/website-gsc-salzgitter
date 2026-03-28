@@ -89,6 +89,9 @@ function build() {
     }
     const templateContent = fs.readFileSync(templatePath, 'utf8');
 
+    const footerPath = path.join(__dirname, 'templates', 'footer.html');
+    const footerTemplate = fs.existsSync(footerPath) ? fs.readFileSync(footerPath, 'utf8') : '';
+
     categories.forEach(category => {
         const catDir = path.join(baseContentDir, category);
         const outDir = path.join(__dirname, category);
@@ -109,12 +112,15 @@ function build() {
             folders.forEach(folder => {
                 const postPath = path.join(catDir, folder, 'post.md');
                 if (fs.existsSync(postPath)) {
-                    processFile(postPath, folder, category, templateContent, outDir, posts, true);
+                    processFile(postPath, folder, category, templateContent, footerTemplate, outDir, posts, true);
                 }
             });
 
             // Update index.html carousel for news
             updateNewsCarousel(posts);
+
+            // Update index.html footer
+            updateMasterFooter(footerTemplate);
 
         } else {
             // Other categories use direct .md files
@@ -123,7 +129,7 @@ function build() {
             files.forEach(file => {
                 const mdPath = path.join(catDir, file);
                 const slug = file.replace('.md', '');
-                processFile(mdPath, slug, category, templateContent, outDir, null, false);
+                processFile(mdPath, slug, category, templateContent, footerTemplate, outDir, null, false);
             });
         }
     });
@@ -131,7 +137,7 @@ function build() {
     console.log("Build complete.");
 }
 
-function processFile(mdPath, slug, category, templateContent, outDir, postsArray, isNews) {
+function processFile(mdPath, slug, category, templateContent, footerTemplate, outDir, postsArray, isNews) {
     const rawContent = fs.readFileSync(mdPath, 'utf8');
     const parsed = parseMarkdown(rawContent);
     const htmlContent = renderBasicHtml(parsed.content);
@@ -170,12 +176,15 @@ function processFile(mdPath, slug, category, templateContent, outDir, postsArray
                         <a href="../index.html#${backHash}" class="btn btn-outline">← ${backLabel}</a>
                     </div>`;
 
+    const processedFooter = footerTemplate.replace(/\{\{PATH\}\}/g, '../');
+
     let postHtml = templateContent
         .replace(/\{\{TITLE\}\}/g, parsed.data.titel || 'Subpage')
         .replace(/\{\{DATE\}\}/g, parsed.data.datum || '')
         .replace(/\{\{DESCRIPTION\}\}/g, parsed.data.kurzbeschreibung || '')
         .replace(/\{\{CONTENT\}\}/g, finalImageHtml + '\n\n' + htmlContent)
-        .replace(/\{\{BACK_BUTTON\}\}/g, backButtonHtml);
+        .replace(/\{\{BACK_BUTTON\}\}/g, backButtonHtml)
+        .replace(/\{\{FOOTER\}\}/g, processedFooter);
 
     const outPath = path.join(outDir, `${slug}.html`);
     fs.writeFileSync(outPath, postHtml);
@@ -191,7 +200,7 @@ function processFile(mdPath, slug, category, templateContent, outDir, postsArray
 }
 
 function updateNewsCarousel(posts) {
-    posts.sort((a, b) => a.dateValue - b.dateValue);
+    posts.sort((a, b) => b.dateValue - a.dateValue); // Newest first
 
     let carouselHtml = '';
     posts.forEach(post => {
@@ -218,8 +227,46 @@ function updateNewsCarousel(posts) {
             + '\n' + carouselHtml
             + '                        ' + indexContent.substring(endIndex);
         fs.writeFileSync(indexPath, indexContent);
-        console.log('Successfully updated index.html with new carousel items.');
     }
 }
 
+function updateMasterFooter(footerTemplate) {
+    let indexContent = fs.readFileSync(indexPath, 'utf8');
+    const processedFooter = footerTemplate.replace(/\{\{PATH\}\}/g, '');
+    
+    // Simple regex to replace the footer section
+    const footerRegex = /<footer class="site-footer">[\s\S]*?<\/footer>/;
+    if (footerRegex.test(indexContent)) {
+        indexContent = indexContent.replace(footerRegex, processedFooter);
+        fs.writeFileSync(indexPath, indexContent);
+        console.log('Updated index.html footer.');
+    }
+}
+
+function updateStaticPage(filePath, footerTemplate, pathPrefix) {
+    if (!fs.existsSync(filePath)) return;
+    let content = fs.readFileSync(filePath, 'utf8');
+    const processedFooter = footerTemplate.replace(/\{\{PATH\}\}/g, pathPrefix);
+    
+    const footerRegex = /<footer class="site-footer">[\s\S]*?<\/footer>/;
+    const footerRegexAlt = /<footer class="footer">[\s\S]*?<\/footer>/; // for old footers
+    
+    if (footerRegex.test(content)) {
+        content = content.replace(footerRegex, processedFooter);
+    } else if (footerRegexAlt.test(content)) {
+        content = content.replace(footerRegexAlt, processedFooter);
+    }
+    
+    fs.writeFileSync(filePath, content);
+    console.log(`Updated static page footer: ${path.basename(filePath)}`);
+}
+
 build();
+
+// Update static pages
+const footerPath = path.join(__dirname, 'templates', 'footer.html');
+if (fs.existsSync(footerPath)) {
+    const footerTemplate = fs.readFileSync(footerPath, 'utf8');
+    updateStaticPage(path.join(__dirname, 'rechtliches', 'impressum.html'), footerTemplate, '../');
+    updateStaticPage(path.join(__dirname, 'rechtliches', 'datenschutz.html'), footerTemplate, '../');
+}
