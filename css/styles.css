@@ -33,6 +33,13 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-height);
@@ -43,7 +50,6 @@ body {
   background-color: var(--color-bg-darkest);
   color: var(--color-text-main);
   line-height: 1.6;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
