@@ -453,6 +453,31 @@ img {
   margin: 0 auto;
 }
 
+.inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-main);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.inline-link:hover {
+  color: var(--color-primary);
+}
+
+.inline-link svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: transform var(--transition-fast);
+}
+
+.inline-link:hover svg {
+  transform: translateY(-1px) rotate(-15deg);
+}
+
 /* Neuigkeiten Carousel */
 .events-carousel-wrapper {
   position: relative;
