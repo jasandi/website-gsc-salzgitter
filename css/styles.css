@@ -885,7 +885,7 @@ details[open] .accordion-header::after {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 4rem;
   margin-bottom: 4rem;
 }
