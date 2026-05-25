@@ -314,7 +314,13 @@ img {
   background-image: url('../assets/hero-bg.png');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
+}
+
+@media (min-width: 1025px) {
+  .hero-section {
+    background-attachment: fixed;
+  }
 }
 
 
