@@ -31,22 +31,24 @@ Die Website wurde mit **Antigravity** entwickelt und befindet sich aktuell noch 
     - Supercross @tbc
     - Kinder Strecke @tbc
     - Verein @tbc
+        - Mitglied Button entfernen und einfach nur "mehr erfahren" hinzufügen
+        - Informationen zur Mitgliedschaft
+        - Satzung des Vereins als pdf Download überlegen
+        - Anmeldeformulare als PDF hochladen und sollen sie per Email an [EMAIL_ADDRESS] schicken als pragmatische Lösung
+        - Änderungsantrag Formular als PDF hochladen und sollen sie per Email an [EMAIL_ADDRESS] schicken als pragmatische Lösung
     - GSC School @tbc
     - Cross Kids @tbc
 - Aktuelle Neuigkeiten Verweis, dass kurzfristige Ankündigungen dem WhatsApp Kanal zu entnehmen sind
 
 #### Prio Medium
+- Nutzungsbedingungen und Informationen zum Camping an der Strecke
 
 #### Prio Low
 - Navigation aus Fußzeile entfernen
 - GSC Logo hinzufügen
 
 #### Nicht eingestuft
-- Änderungsantrag Verein 
-- Satzung des Vereins
-- Skript um die Unterseiten für die Strecke von Markdown zu HTML zu transformieren (wie bei Content/ Neuigkeiten)
 - FAQ Sektion hinzufügen
-- Anfahrt über Google
 - Live-Feed
 - Sponsoren
 - GSC Shop

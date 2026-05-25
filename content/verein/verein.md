@@ -1,7 +1,7 @@
 ---
-titel: Der GSC Salzgitter
+titel: Unser Verein
 bild: assets/verein_img.png
-kurzbeschreibung: Erfahre alles über unsere Historie, den Vorstand und die Mitgliedschaft.
+kurzbeschreibung: Informationen Rund um die Mitgliedschaft, Kosten und Erwartungen.
 ---
 
 ## Wie es begann:
