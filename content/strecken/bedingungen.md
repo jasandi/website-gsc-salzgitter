@@ -1,20 +1,19 @@
 ---
 titel: Aktuelle Bedingungen
-bild: assets/mx_track.png
-kurzbeschreibung: Informiere dich live über die aktuellen Strecken- und Wetterverhältnisse sowie den Zustand des Fahrerlagers.
+kurzbeschreibung: Informiere dich über die aktuellen Strecken- und Wetterverhältnisse sowie den Zustand des Fahrerlagers.
 ---
 
-Hier findest du Live-Bilder und Zeitrafferaufnahmen unseres Geländes. Nutze diese Informationen, um dir vor der Anreise ein Bild von den aktuellen Verhältnissen vor Ort zu machen.
+Hier findest du Bilder und Zeitrafferaufnahmen unseres Geländes. Nutze diese Informationen, um dir vor der Anreise ein Bild von den aktuellen Verhältnissen vor Ort zu machen. Bitte beachte, dass es sich bei den Bildern um tagesaktuelle Snapshots und nicht um einen permanenten Live-Stream handelt.
 
-## Live-Kameras
+## Kameras (Tagesaktuelle Snapshots)
 
-* **[Livebild Strecke](https://gsccam.openlaptime.de/cam1.jpg)**  
-  Aktuelle Aufnahme unserer Motocross-Strecke zur Beurteilung der Streckenverhältnisse (Bodenfeuchte, Wetterbedingungen).
-
-* **[Livebild Fahrerlager](https://gsccam.openlaptime.de/cam2.jpg)**  
-  Aktueller Blick auf das Fahrerlager-Gelände.
+<ul class="feature-list" style="margin-bottom: 2rem; padding-left: 1.5rem;">
+  <li style="margin-bottom: 0.5rem;"><a href="https://gsccam.openlaptime.de/cam1.jpg" target="_blank" style="color: var(--color-primary); text-decoration: underline; font-weight: bold;">Livebild Strecke</a> – Tagesaktueller Snapshot unserer Motocross-Strecke zur Beurteilung der Streckenverhältnisse (Bodenfeuchte, Wetterbedingungen). Kein Live-Videostream.</li>
+  <li style="margin-bottom: 0.5rem;"><a href="https://gsccam.openlaptime.de/cam2.jpg" target="_blank" style="color: var(--color-primary); text-decoration: underline; font-weight: bold;">Livebild Fahrerlager</a> – Tagesaktueller Snapshot des Fahrerlager-Geländes. Kein Live-Videostream.</li>
+</ul>
 
 ## Zeitraffer (Timelapse)
 
-* **[Zeitraffer Fahrerlager](https://gsccam.openlaptime.de/timelapse.html)**  
-  Zeitraffer-Visualisierung des Fahrerlagers der letzten Stunden.
+<ul class="feature-list" style="margin-bottom: 2rem; padding-left: 1.5rem;">
+  <li style="margin-bottom: 0.5rem;"><a href="https://gsccam.openlaptime.de/timelapse.html" target="_blank" style="color: var(--color-primary); text-decoration: underline; font-weight: bold;">Zeitraffer Fahrerlager</a> – Zeitraffer-Visualisierung des Fahrerlagers der letzten Stunden.</li>
+</ul>
