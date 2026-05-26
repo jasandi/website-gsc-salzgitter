@@ -685,12 +685,12 @@ img {
 }
 
 .event-details h3 {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
   margin-bottom: 0.5rem;
-  hyphens: none;
-  -webkit-hyphens: none;
-  word-wrap: normal;
-  overflow-wrap: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .event-details p {
