@@ -318,7 +318,7 @@ img {
   background-attachment: scroll;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .hero-section {
     background-attachment: fixed;
   }
