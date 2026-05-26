@@ -679,6 +679,11 @@ img {
   text-transform: uppercase;
 }
 
+.event-details {
+  flex: 1;
+  min-width: 0;
+}
+
 .event-details h3 {
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
@@ -692,6 +697,10 @@ img {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   margin-bottom: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .event-details .time {
@@ -1166,10 +1175,22 @@ details[open] .accordion-header::after {
     font-size: 2.8rem;
   }
 
+  .events-carousel {
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 20px;
+    scroll-padding-left: 20px;
+    scroll-padding-right: 20px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
+  }
+
   .events-carousel .event-card,
   .events-carousel .track-card {
     flex: 0 0 100%;
     min-width: 0;
+    padding: 1.25rem;
+    gap: 1rem;
   }
 
   .stats-row {
