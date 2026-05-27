@@ -303,6 +303,7 @@ img {
 .hero-section {
   position: relative;
   height: 100vh;
+  height: 100dvh;
   min-height: 600px;
   display: flex;
   align-items: center;
@@ -1338,7 +1339,7 @@ details[open] .accordion-header::after {
   
   /* Shift the scroll indicator up so it stands clearly above the mobile bottom nav */
   .scroll-indicator {
-    bottom: 95px;
+    bottom: 130px;
   }
   
   /* Ensure padding at the bottom of the screen so contents are not covered by the nav bar */
