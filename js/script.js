@@ -70,15 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sections.forEach(current => {
             const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 150; // Offset for navbar
+            const sectionTop = current.offsetTop - 180; // Adjusted offset for mobile/desktop headers
             const sectionId = current.getAttribute('id');
-            const navLink = document.querySelector(`.nav-links a[href*=${sectionId}]`);
-
-            if (!navLink) return;
+            const navLink = document.querySelector(`.nav-links a[href*="${sectionId}"]`);
+            const bottomNavLink = document.querySelector(`.mobile-bottom-nav a[href*="${sectionId}"]`);
 
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
                 navItems.forEach(a => a.classList.remove('active'));
-                navLink.classList.add('active');
+                if (navLink) navLink.classList.add('active');
+
+                document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('active'));
+                if (bottomNavLink) bottomNavLink.classList.add('active');
             }
         });
     }
@@ -403,5 +405,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize dots after a short delay to ensure layout is done
         setTimeout(updateDots, 200);
     });
+
+    // 6. GPU-Accelerated Mobile Parallax Effect for Hero Background
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.pageYOffset;
+            if (scrollY < window.innerHeight) {
+                const translateY = scrollY * 0.35; // Parallax speed factor (0.35)
+                heroSection.style.setProperty('--hero-translate-y', `${translateY}px`);
+            }
+        }, { passive: true });
+    }
 });
 
