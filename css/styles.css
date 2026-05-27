@@ -1331,6 +1331,16 @@ details[open] .accordion-header::after {
     display: none !important;
   }
   
+  /* Hide the top navbar on the homepage (where there is no back button) on mobile */
+  .navbar:not(:has(.back-nav)) {
+    display: none !important;
+  }
+  
+  /* Shift the scroll indicator up so it stands clearly above the mobile bottom nav */
+  .scroll-indicator {
+    bottom: 95px;
+  }
+  
   /* Ensure padding at the bottom of the screen so contents are not covered by the nav bar */
   body {
     padding-bottom: 90px;
