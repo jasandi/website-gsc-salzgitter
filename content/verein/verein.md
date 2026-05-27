@@ -1,6 +1,6 @@
 ---
 titel: Unser Verein
-bild: assets/verein_img.png
+bild: assets/verein_img.jpeg
 kurzbeschreibung: Informationen Rund um die Mitgliedschaft, Kosten und Erwartungen.
 ---
 
