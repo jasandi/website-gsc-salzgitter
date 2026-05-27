@@ -1383,7 +1383,6 @@ details[open] .accordion-header::after {
   transition: transform var(--transition-fast);
 }
 
-.mobile-bottom-nav .nav-item:hover,
 .mobile-bottom-nav .nav-item:active,
 .mobile-bottom-nav .nav-item.active {
   color: var(--color-primary);
