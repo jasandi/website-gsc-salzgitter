@@ -1330,6 +1330,14 @@ details[open] .accordion-header::after {
 
   .mobile-bottom-nav {
     display: flex;
+    padding: 6px 4px;
+  }
+
+  .mobile-bottom-nav .nav-item {
+    padding: 6px 2px;
+    font-size: 0.68rem;
+    letter-spacing: -0.02em;
+    gap: 2px;
   }
   
   /* Hide the top hamburger toggle as bottom nav becomes the primary navigation */
