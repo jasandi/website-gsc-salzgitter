@@ -1,6 +1,6 @@
 ---
 titel: Cross Kids
-bild: assets/kids_img.png
+bild: assets/cross_kids.png
 kurzbeschreibung: Die Zukunft unseres Sports liegt uns am Herzen.
 ---
 

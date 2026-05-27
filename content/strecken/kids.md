@@ -1,6 +1,6 @@
 ---
 titel: Kinder Strecke
-bild: assets/kids_img.png
+bild: assets/kids_track.png
 kurzbeschreibung: Eine vielseitige und sichere Strecke für den kompletten Nachwuchs.
 ---
 
