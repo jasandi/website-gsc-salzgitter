@@ -68,13 +68,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function highlightNavLink() {
         let currentSectionId = '';
 
-        sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            // Check if section is currently active in the viewport (intersection with a line at 40% height of screen)
-            if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.4) {
-                currentSectionId = section.getAttribute('id');
-            }
-        });
+        // Check if we are at the bottom of the page (to handle short final sections)
+        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 20);
+
+        if (isAtBottom && sections.length > 0) {
+            currentSectionId = sections[sections.length - 1].getAttribute('id');
+        } else {
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                // Check if section is currently active in the viewport (intersection with a line at 40% height of screen)
+                if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.4) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+        }
 
         if (currentSectionId) {
             const navLink = document.querySelector(`.nav-links a[href*="${currentSectionId}"]`);
@@ -95,15 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     highlightNavLink();
 
     window.addEventListener('scroll', highlightNavLink, { passive: true });
-
-    // Immediate active highlight on clicking mobile bottom nav items
-    const bottomNavLinks = document.querySelectorAll('.mobile-bottom-nav a');
-    bottomNavLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            bottomNavLinks.forEach(a => a.classList.remove('active'));
-            link.classList.add('active');
-        });
-    });
 
     // 4. Intersection Observer for Scroll Animations
     const observerOptions = {
