@@ -236,9 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeCards = Array.from(carousel.querySelectorAll('.event-card, .track-card')).filter(c => c.style.display !== 'none');
             if (activeCards.length === 0) return;
 
-            const gap = parseFloat(getComputedStyle(carousel).gap) || 40;
-            const cardWidth = activeCards[0].getBoundingClientRect().width;
-            const scrollAmount = cardWidth + gap;
+            const paddingLeft = parseFloat(getComputedStyle(carousel).paddingLeft) || 0;
 
             // Temporarily disable scroll snapping to prevent iOS Safari from fighting smooth scroll
             carousel.style.scrollSnapType = 'none';
@@ -249,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let closestDistance = Infinity;
 
             activeCards.forEach((card, index) => {
-                const cardCenter = (index * scrollAmount) + (cardWidth / 2);
+                const cardCenter = card.offsetLeft + (card.getBoundingClientRect().width / 2);
                 const distance = Math.abs(scrollCenter - cardCenter);
                 if (distance < closestDistance) {
                     closestDistance = distance;
@@ -261,7 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetIndex < 0) targetIndex = 0;
             if (targetIndex >= activeCards.length) targetIndex = activeCards.length - 1;
 
-            carousel.scrollTo({ left: targetIndex * scrollAmount, behavior: 'smooth' });
+            const targetCard = activeCards[targetIndex];
+            const targetLeft = targetCard.offsetLeft - paddingLeft;
+
+            carousel.scrollTo({ left: targetLeft, behavior: 'smooth' });
 
             // Restore scroll snap after the smooth scroll animation completes
             setTimeout(() => {
@@ -287,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gap = parseFloat(getComputedStyle(carousel).gap) || 40;
                 const scrollAmount = cardWidth + gap;
                 const visibleCount = Math.round(carousel.clientWidth / scrollAmount) || 1;
+                const paddingLeft = parseFloat(getComputedStyle(carousel).paddingLeft) || 0;
 
                 // Disable smooth behavior temporarily to prevent animation glitches on load jump
                 carousel.style.scrollBehavior = 'auto';
@@ -297,19 +299,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (visibleCount <= 1) {
                         // Mobile: Focus the target card by snapping it exactly into the view
-                        carousel.scrollLeft = targetIndex * scrollAmount;
+                        carousel.scrollLeft = activeCards[targetIndex].offsetLeft - paddingLeft;
                     } else {
                         // Desktop/Tablet: Make the target card be on the FAR RIGHT
                         // So the card to align to the left edge is offset by (visibleCount - 1)
                         let snapIndex = targetIndex - visibleCount + 1;
                         if (snapIndex < 0) snapIndex = 0;
-                        carousel.scrollLeft = snapIndex * scrollAmount;
+                        carousel.scrollLeft = activeCards[snapIndex].offsetLeft - paddingLeft;
                     }
                 } else if (sectionId === 'termine') {
                     // For Termine, the targeted (upcoming) card should always be on the far left.
                     // (Since we hide past ones, this is usually index 0 anyway)
                     let targetIndex = targetCard && activeCards.includes(targetCard) ? activeCards.indexOf(targetCard) : 0;
-                    carousel.scrollLeft = targetIndex * scrollAmount;
+                    carousel.scrollLeft = activeCards[targetIndex].offsetLeft - paddingLeft;
                 }
 
                 // Restore smooth scroll after a brief frame
@@ -346,13 +348,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     dot.classList.add('carousel-dot');
                     dot.setAttribute('aria-label', `Gehe zu Element ${index + 1}`);
                     dot.addEventListener('click', () => {
-                        const gap = parseFloat(getComputedStyle(carousel).gap) || 40;
-                        const scrollAmount = activeCards[0].getBoundingClientRect().width + gap;
-                        carousel.style.scrollSnapType = 'none';
-                        carousel.scrollTo({ left: index * scrollAmount, behavior: 'smooth' });
-                        setTimeout(() => {
-                            carousel.style.scrollSnapType = '';
-                        }, 500);
+                        const paddingLeft = parseFloat(getComputedStyle(carousel).paddingLeft) || 0;
+                        const targetCard = activeCards[index];
+                        if (targetCard) {
+                            carousel.style.scrollSnapType = 'none';
+                            carousel.scrollTo({ left: targetCard.offsetLeft - paddingLeft, behavior: 'smooth' });
+                            setTimeout(() => {
+                                carousel.style.scrollSnapType = '';
+                            }, 500);
+                        }
                     });
                     dotsContainer.appendChild(dot);
                     dotsArray.push(dot);
@@ -370,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let closestDistance = Infinity;
 
             activeCards.forEach((card, index) => {
-                // Approximate the center of each card
-                const cardCenter = (index * scrollAmount) + (card.getBoundingClientRect().width / 2);
+                // Approximate the center of each card using exact offsetLeft
+                const cardCenter = card.offsetLeft + (card.getBoundingClientRect().width / 2);
                 const distance = Math.abs(scrollCenter - cardCenter);
                 if (distance < closestDistance) {
                     closestDistance = distance;
