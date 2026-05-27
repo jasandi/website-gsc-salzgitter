@@ -233,13 +233,40 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const scrollByItem = (direction) => {
-            // Find the first visible card to calculate the correct scroll width
-            const card = Array.from(carousel.querySelectorAll('.event-card, .track-card')).find(c => c.style.display !== 'none');
-            if (!card) return;
-            // Calculate scroll amount using exact sub-pixel width
-            const gap = parseFloat(getComputedStyle(carousel).gap) || 40; // Fallback to 40px
-            const scrollAmount = card.getBoundingClientRect().width + gap;
-            carousel.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+            const activeCards = Array.from(carousel.querySelectorAll('.event-card, .track-card')).filter(c => c.style.display !== 'none');
+            if (activeCards.length === 0) return;
+
+            const gap = parseFloat(getComputedStyle(carousel).gap) || 40;
+            const cardWidth = activeCards[0].getBoundingClientRect().width;
+            const scrollAmount = cardWidth + gap;
+
+            // Temporarily disable scroll snapping to prevent iOS Safari from fighting smooth scroll
+            carousel.style.scrollSnapType = 'none';
+
+            // Calculate current index based on scroll position
+            const scrollCenter = carousel.scrollLeft + (carousel.clientWidth / 2);
+            let currentIndex = 0;
+            let closestDistance = Infinity;
+
+            activeCards.forEach((card, index) => {
+                const cardCenter = (index * scrollAmount) + (cardWidth / 2);
+                const distance = Math.abs(scrollCenter - cardCenter);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    currentIndex = index;
+                }
+            });
+
+            let targetIndex = currentIndex + direction;
+            if (targetIndex < 0) targetIndex = 0;
+            if (targetIndex >= activeCards.length) targetIndex = activeCards.length - 1;
+
+            carousel.scrollTo({ left: targetIndex * scrollAmount, behavior: 'smooth' });
+
+            // Restore scroll snap after the smooth scroll animation completes
+            setTimeout(() => {
+                carousel.style.scrollSnapType = '';
+            }, 500);
         };
 
         if (arrowLeft) {
@@ -321,7 +348,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     dot.addEventListener('click', () => {
                         const gap = parseFloat(getComputedStyle(carousel).gap) || 40;
                         const scrollAmount = activeCards[0].getBoundingClientRect().width + gap;
+                        carousel.style.scrollSnapType = 'none';
                         carousel.scrollTo({ left: index * scrollAmount, behavior: 'smooth' });
+                        setTimeout(() => {
+                            carousel.style.scrollSnapType = '';
+                        }, 500);
                     });
                     dotsContainer.appendChild(dot);
                     dotsArray.push(dot);
