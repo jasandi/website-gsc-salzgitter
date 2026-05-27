@@ -62,18 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollTop = scrollTop;
     }, { passive: true }); // Passive listener for better scroll performance
 
-    // 3. Active Nav Link on Scroll
+    // 3. Active Nav Link on Scroll (ScrollSpy)
     const sections = document.querySelectorAll('section[id]');
 
     function highlightNavLink() {
-        const scrollY = window.pageYOffset;
         let currentSectionId = '';
 
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 240; // Comfort threshold for mobile viewports
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                currentSectionId = current.getAttribute('id');
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            // Check if section is currently active in the viewport (intersection with a line at 40% height of screen)
+            if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.4) {
+                currentSectionId = section.getAttribute('id');
             }
         });
 
@@ -91,6 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // Call initially to highlight correct nav on page load
+    highlightNavLink();
 
     window.addEventListener('scroll', highlightNavLink, { passive: true });
 

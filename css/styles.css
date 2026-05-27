@@ -1324,6 +1324,10 @@ details[open] .accordion-header::after {
 }
 
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 0 !important;
+  }
+
   .mobile-bottom-nav {
     display: flex;
   }
