@@ -216,13 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const updateArrows = () => {
             if (!arrowLeft || !arrowRight) return;
 
-            // Hide both arrows if all active items fit in the viewport
-            if (carousel.scrollWidth <= carousel.clientWidth + 20) {
-                arrowLeft.classList.remove('visible');
-                arrowRight.classList.remove('visible');
-                return;
-            }
-
             // Show left arrow if we can scroll left
             if (carousel.scrollLeft > 10) {
                 arrowLeft.classList.add('visible');
@@ -240,32 +233,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const scrollByItem = (direction) => {
-            const activeCards = Array.from(carousel.querySelectorAll('.event-card, .track-card')).filter(c => c.style.display !== 'none');
-            if (activeCards.length === 0) return;
-
-            const gap = parseFloat(getComputedStyle(carousel).gap) || 40;
-            const cardWidth = activeCards[0].getBoundingClientRect().width;
-            const scrollAmount = cardWidth + gap;
-
-            // Calculate current index based on scroll position
-            const scrollCenter = carousel.scrollLeft + (carousel.clientWidth / 2);
-            let currentIndex = 0;
-            let closestDistance = Infinity;
-
-            activeCards.forEach((card, index) => {
-                const cardCenter = (index * scrollAmount) + (cardWidth / 2);
-                const distance = Math.abs(scrollCenter - cardCenter);
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    currentIndex = index;
-                }
-            });
-
-            let targetIndex = currentIndex + direction;
-            if (targetIndex < 0) targetIndex = 0;
-            if (targetIndex >= activeCards.length) targetIndex = activeCards.length - 1;
-
-            carousel.scrollTo({ left: targetIndex * scrollAmount, behavior: 'smooth' });
+            // Find the first visible card to calculate the correct scroll width
+            const card = Array.from(carousel.querySelectorAll('.event-card, .track-card')).find(c => c.style.display !== 'none');
+            if (!card) return;
+            // Calculate scroll amount using exact sub-pixel width
+            const gap = parseFloat(getComputedStyle(carousel).gap) || 40; // Fallback to 40px
+            const scrollAmount = card.getBoundingClientRect().width + gap;
+            carousel.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
         };
 
         if (arrowLeft) {
