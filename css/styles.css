@@ -312,6 +312,7 @@ img {
   /* Offset for sticky nav */
   padding: var(--nav-height) 5% 0;
   text-align: center;
+  background-color: #4c4c4e; /* Blends with top of the background image sky */
 }
 
 .hero-section::before {
