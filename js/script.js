@@ -67,25 +67,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function highlightNavLink() {
         const scrollY = window.pageYOffset;
+        let currentSectionId = '';
 
         sections.forEach(current => {
             const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 180; // Adjusted offset for mobile/desktop headers
-            const sectionId = current.getAttribute('id');
-            const navLink = document.querySelector(`.nav-links a[href*="${sectionId}"]`);
-            const bottomNavLink = document.querySelector(`.mobile-bottom-nav a[href*="${sectionId}"]`);
-
+            const sectionTop = current.offsetTop - 240; // Comfort threshold for mobile viewports
             if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                navItems.forEach(a => a.classList.remove('active'));
-                if (navLink) navLink.classList.add('active');
-
-                document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('active'));
-                if (bottomNavLink) bottomNavLink.classList.add('active');
+                currentSectionId = current.getAttribute('id');
             }
         });
+
+        if (currentSectionId) {
+            const navLink = document.querySelector(`.nav-links a[href*="${currentSectionId}"]`);
+            if (navLink) {
+                navItems.forEach(a => a.classList.remove('active'));
+                navLink.classList.add('active');
+            }
+
+            const bottomNavLink = document.querySelector(`.mobile-bottom-nav a[href*="${currentSectionId}"]`);
+            if (bottomNavLink) {
+                document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('active'));
+                bottomNavLink.classList.add('active');
+            }
+        }
     }
 
     window.addEventListener('scroll', highlightNavLink, { passive: true });
+
+    // Immediate active highlight on clicking mobile bottom nav items
+    const bottomNavLinks = document.querySelectorAll('.mobile-bottom-nav a');
+    bottomNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            bottomNavLinks.forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+        });
+    });
 
     // 4. Intersection Observer for Scroll Animations
     const observerOptions = {

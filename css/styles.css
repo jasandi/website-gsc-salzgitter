@@ -1337,6 +1337,11 @@ details[open] .accordion-header::after {
     display: none !important;
   }
   
+  /* Reset hero top padding to let content utilize the full display height on mobile */
+  .hero-section {
+    padding-top: 0 !important;
+  }
+  
   /* Shift the scroll indicator up so it stands clearly above the mobile bottom nav */
   .scroll-indicator {
     bottom: 130px;
