@@ -1,7 +1,32 @@
-/**
- * GSC Motocross Track Interactive Features
- * Vanilla JS implementation for modern, high-performance interactions
- */
+// Force scroll to top on reload/refresh
+(function() {
+    const isReload = (performance.getEntriesByType('navigation')[0]?.type === 'reload') || 
+                     (performance.navigation && performance.navigation.type === 1);
+
+    if (isReload) {
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        
+        // Remove hash from URL to prevent scrolling to sections on reload
+        if (window.location.hash) {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+
+        // Additional scroll to top attempts to combat late layout shifts
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
+        });
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+            // Backup scroll just in case of layout changes
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 50);
+        });
+    }
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Mobile Navigation Toggle
