@@ -1302,103 +1302,12 @@ details[open] .accordion-header::after {
   }
 }
 
-/* Feature 2: App-Style Bottom Navigation for Mobile */
-.mobile-bottom-nav {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  width: 90%;
-  max-width: 440px;
-  background: rgba(10, 10, 12, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 40px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-  display: none; /* Hidden on desktop */
-  justify-content: space-around;
-  align-items: center;
-  padding: 8px 12px;
-}
-
-@media (max-width: 768px) {
-  html {
-    scroll-padding-top: 0 !important;
-  }
-
-  .mobile-bottom-nav {
-    display: flex;
-    padding: 6px 8px;
-  }
-
-  .mobile-bottom-nav .nav-item {
-    padding: 6px 4px;
-    font-size: 0.72rem;
-    letter-spacing: -0.03em;
-    gap: 3px;
-  }
-  
-  /* Hide the top hamburger toggle as bottom nav becomes the primary navigation */
-  .menu-toggle {
-    display: none !important;
-  }
-  
-  /* Hide the top navbar on the homepage (where there is no back button) on mobile */
-  .navbar:not(:has(.back-nav)) {
-    display: none !important;
-  }
-  
-  /* Reset hero top padding to let content utilize the full display height on mobile */
-  .hero-section {
-    padding-top: 0 !important;
-  }
-  
-  /* Shift the scroll indicator up so it stands clearly above the mobile bottom nav */
-  .scroll-indicator {
-    bottom: 130px;
-  }
-  
-  /* Ensure padding at the bottom of the screen so contents are not covered by the nav bar */
-  body {
-    padding-bottom: 90px;
-  }
-}
-
-.mobile-bottom-nav .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-size: 0.75rem;
-  font-weight: 500;
-  gap: 4px;
-  padding: 6px 12px;
-  transition: color var(--transition-fast), transform var(--transition-fast);
-}
-
-.mobile-bottom-nav .nav-item svg {
-  transition: transform var(--transition-fast);
-}
-
-.mobile-bottom-nav .nav-item:active,
-.mobile-bottom-nav .nav-item.active {
-  color: var(--color-primary);
-}
-
-.mobile-bottom-nav .nav-item:active svg {
-  transform: scale(1.15);
-}
-
 /* Feature 3: Aktives haptisches Feedback (Tap Shrink Effect) */
 .btn:active,
 .event-card:active,
 .track-card:active,
 .social-links a:active,
-.carousel-arrow:active,
-.mobile-bottom-nav .nav-item:active {
+.carousel-arrow:active {
   transform: scale(0.96) !important;
 }
 
@@ -1407,7 +1316,6 @@ details[open] .accordion-header::after {
 .event-card,
 .track-card,
 .social-links a,
-.carousel-arrow,
-.mobile-bottom-nav .nav-item {
+.carousel-arrow {
   transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast) !important;
 }

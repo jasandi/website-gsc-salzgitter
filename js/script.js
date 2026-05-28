@@ -89,12 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 navItems.forEach(a => a.classList.remove('active'));
                 navLink.classList.add('active');
             }
-
-            const bottomNavLink = document.querySelector(`.mobile-bottom-nav a[href*="${currentSectionId}"]`);
-            if (bottomNavLink) {
-                document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('active'));
-                bottomNavLink.classList.add('active');
-            }
         }
     }
 
