@@ -1388,3 +1388,38 @@ details[open] .accordion-header::after {
   font-size: 0.95rem;
   line-height: 1.6;
 }
+
+/* Static FAQ Page Styles */
+.faq-list {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.faq-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  transition: border-color var(--transition-normal), transform var(--transition-normal);
+}
+
+.faq-card:hover {
+  border-color: rgba(255, 107, 0, 0.3);
+  transform: translateY(-4px);
+}
+
+.faq-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.faq-card p {
+  color: var(--color-text-main);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
