@@ -269,4 +269,5 @@ if (fs.existsSync(footerPath)) {
     const footerTemplate = fs.readFileSync(footerPath, 'utf8');
     updateStaticPage(path.join(__dirname, 'rechtliches', 'impressum.html'), footerTemplate, '../');
     updateStaticPage(path.join(__dirname, 'rechtliches', 'datenschutz.html'), footerTemplate, '../');
+    updateStaticPage(path.join(__dirname, 'faq.html'), footerTemplate, '');
 }
