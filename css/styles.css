@@ -582,41 +582,15 @@ img {
 
 .carousel-arrow:hover {
   background-color: var(--color-primary-hover);
-  transform: translateY(-50%) scale(1.1);
+  transform: translateY(-50%);
 }
 
 .carousel-arrow-left {
   left: -20px;
-  animation: pulse-left 2s infinite ease-in-out;
 }
 
 .carousel-arrow-right {
   right: -20px;
-  animation: pulse-right 2s infinite ease-in-out;
-}
-
-@keyframes pulse-left {
-
-  0%,
-  100% {
-    transform: translateY(-50%) translateX(0);
-  }
-
-  50% {
-    transform: translateY(-50%) translateX(-5px);
-  }
-}
-
-@keyframes pulse-right {
-
-  0%,
-  100% {
-    transform: translateY(-50%) translateX(0);
-  }
-
-  50% {
-    transform: translateY(-50%) translateX(5px);
-  }
 }
 
 @media (max-width: 768px) {
@@ -699,6 +673,66 @@ img {
   font-size: 1.8rem;
   font-weight: 800;
   line-height: 1;
+}
+
+/* Termine Custom Styles for Vertical Layout */
+#termine .event-card {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.event-title-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-primary-transparent);
+  color: var(--color-primary);
+  border: 1px solid rgba(255, 107, 0, 0.25);
+  padding: 0.35rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.event-card-desc {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.event-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 1rem;
+}
+
+.event-card-date {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.event-card-time {
+  font-size: 0.85rem;
+  color: var(--color-text-main);
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  white-space: nowrap;
 }
 
 .event-date .month {
@@ -1327,9 +1361,12 @@ details[open] .accordion-header::after {
 .btn:active,
 .event-card:active,
 .track-card:active,
-.social-links a:active,
-.carousel-arrow:active {
+.social-links a:active {
   transform: scale(0.96) !important;
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.96) !important;
 }
 
 /* Smooth transitions for a physical feel */
