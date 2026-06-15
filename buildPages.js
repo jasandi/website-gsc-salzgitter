@@ -110,6 +110,15 @@ function build() {
             const folders = fs.readdirSync(catDir).filter(f => fs.statSync(path.join(catDir, f)).isDirectory());
 
             folders.forEach(folder => {
+                // Skip building/displaying expired Supercross post starting July 6, 2026
+                if (folder === '2026-07-04-supercross' && Date.now() >= new Date('2026-07-06T00:00:00').getTime()) {
+                    console.log("Skipping expired news post: 2026-07-04-supercross");
+                    const compiledPath = path.join(outDir, `${folder}.html`);
+                    if (fs.existsSync(compiledPath)) {
+                        fs.unlinkSync(compiledPath);
+                    }
+                    return;
+                }
                 const postPath = path.join(catDir, folder, 'post.md');
                 if (fs.existsSync(postPath)) {
                     processFile(postPath, folder, category, templateContent, footerTemplate, outDir, posts, true);

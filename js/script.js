@@ -29,6 +29,24 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Expiration cleanup for Supercross Event (Expired on July 6th, 2026)
+    const expiryDate = new Date('2026-07-06T00:00:00');
+    if (new Date() >= expiryDate) {
+        if (window.location.pathname.includes('2026-07-04-supercross.html')) {
+            window.location.replace('../index.html');
+        }
+        const highlightBanner = document.getElementById('homepage-highlight-event');
+        if (highlightBanner) {
+            highlightBanner.remove();
+        }
+        document.querySelectorAll('a[href*="2026-07-04-supercross.html"]').forEach(link => {
+            const card = link.closest('.event-card') || link.closest('article');
+            if (card) {
+                card.remove();
+            }
+        });
+    }
+
     // 1. Mobile Navigation Toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
