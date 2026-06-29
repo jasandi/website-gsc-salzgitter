@@ -21,7 +21,7 @@ Am Vormittag finden die Trainingssessions zum Kennenlernen der Strecke ab 08:00 
 
 ## Geländeplan & Parken
 
-Hier findet ihr den aktuellen Geländeplan für die Veranstaltung. Bitte beachtet, dass das Parken für Tagesgäste im **Industriegebiet Sudetenstraße / Telcat** vorgesehen ist.
+Hier findet ihr den aktuellen Geländeplan für die Veranstaltung. Bitte beachtet, dass das Parken für Tagesgäste im **Industriegebiet Sudentenstraße / Telcat** vorgesehen ist.
 
 ![Geländeplan](../assets/gelaendeplan.jpg)
 
