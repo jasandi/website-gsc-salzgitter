@@ -302,10 +302,8 @@ img {
 
 .hero-section {
   position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  height: auto;
-  min-height: 600px;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
