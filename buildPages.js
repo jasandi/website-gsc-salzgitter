@@ -119,6 +119,15 @@ function build() {
                     }
                     return;
                 }
+                // Skip building/displaying expired Girlsday post starting August 9, 2026
+                if (folder === '2026-08-08-girlsday' && Date.now() >= new Date('2026-08-09T00:00:00').getTime()) {
+                    console.log("Skipping expired news post: 2026-08-08-girlsday");
+                    const compiledPath = path.join(outDir, `${folder}.html`);
+                    if (fs.existsSync(compiledPath)) {
+                        fs.unlinkSync(compiledPath);
+                    }
+                    return;
+                }
                 const postPath = path.join(catDir, folder, 'post.md');
                 if (fs.existsSync(postPath)) {
                     processFile(postPath, folder, category, templateContent, footerTemplate, outDir, posts, true);
