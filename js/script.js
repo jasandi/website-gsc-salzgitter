@@ -328,7 +328,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetIndex >= activeCards.length) targetIndex = activeCards.length - 1;
 
             const targetCard = activeCards[targetIndex];
-            const targetLeft = carousel.scrollLeft + targetCard.getBoundingClientRect().left - carouselRect.left - paddingLeft;
+            const cardRect = targetCard.getBoundingClientRect();
+            let targetLeft;
+            if (window.innerWidth <= 768) {
+                const offset = (carouselRect.width - cardRect.width) / 2;
+                targetLeft = carousel.scrollLeft + cardRect.left - carouselRect.left - offset;
+            } else {
+                targetLeft = carousel.scrollLeft + cardRect.left - carouselRect.left - paddingLeft;
+            }
 
             // Scroll programmatically utilizing native CSS scroll-behavior: smooth
             carousel.scrollLeft = targetLeft;

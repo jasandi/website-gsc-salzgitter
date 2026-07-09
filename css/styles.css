@@ -1282,22 +1282,21 @@ details[open] .accordion-header::after {
   }
 
   .events-carousel {
-    padding-left: 20px;
-    padding-right: 20px;
-    gap: 20px;
-    scroll-padding-left: 20px;
-    scroll-padding-right: 20px;
+    padding-left: 8%;
+    padding-right: 8%;
+    gap: 16px;
     padding-bottom: 4rem;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0%, black 20px, black calc(100% - 20px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 
   .events-carousel .event-card,
   .events-carousel .track-card {
-    flex: 0 0 82%;
+    flex: 0 0 84%;
     min-width: 0;
     padding: 1.25rem;
     gap: 1rem;
+    scroll-snap-align: center;
   }
 
   .stats-row {
