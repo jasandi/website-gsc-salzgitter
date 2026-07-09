@@ -1159,7 +1159,7 @@ details[open] .accordion-header::after {
   width: 100%;
   aspect-ratio: 16/10;
   object-fit: cover;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.5rem !important;
   transition: transform var(--transition-normal);
 }
 
@@ -1168,14 +1168,22 @@ details[open] .accordion-header::after {
 }
 
 .track-card h3 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
 }
 
 .track-card p {
   color: var(--color-text-muted);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
   margin-bottom: 1.5rem;
+  min-height: 4.5rem;
+}
+
+.track-card .feature-list {
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
 }
 
 
@@ -1297,6 +1305,10 @@ details[open] .accordion-header::after {
     padding: 1.25rem;
     gap: 1rem;
     scroll-snap-align: center;
+  }
+
+  .track-card p {
+    min-height: 6rem;
   }
 
   .stats-row {
