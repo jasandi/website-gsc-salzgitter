@@ -1156,9 +1156,10 @@ details[open] .accordion-header::after {
 
 .track-card img {
   border-radius: 12px;
-  width: 100%;
-  aspect-ratio: 16/10;
-  object-fit: cover;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16/10 !important;
+  object-fit: cover !important;
   margin-bottom: 1.5rem !important;
   transition: transform var(--transition-normal);
 }
@@ -1178,7 +1179,7 @@ details[open] .accordion-header::after {
   font-size: 0.95rem;
   line-height: 1.5;
   margin-bottom: 1.5rem;
-  min-height: 4.5rem;
+  flex-grow: 1;
 }
 
 .track-card .feature-list {
@@ -1305,10 +1306,6 @@ details[open] .accordion-header::after {
     padding: 1.25rem;
     gap: 1rem;
     scroll-snap-align: center;
-  }
-
-  .track-card p {
-    min-height: 6rem;
   }
 
   .stats-row {
