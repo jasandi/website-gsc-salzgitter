@@ -186,8 +186,13 @@ function processFile(mdPath, slug, category, templateContent, footerTemplate, ou
         backLabel = 'Zurück zu Initiativen';
         backHash = 'initiativen';
     } else if (category === 'neuigkeiten') {
-        backLabel = 'Zurück zu den Neuigkeiten';
-        backHash = 'neuigkeiten';
+        if (slug === '2026-08-08-girlsday' || slug === '2026-07-04-supercross') {
+            backLabel = 'Zurück zu den Terminen';
+            backHash = 'termine';
+        } else {
+            backLabel = 'Zurück zu den Neuigkeiten';
+            backHash = 'neuigkeiten';
+        }
     }
 
     const backButtonHtml = `<div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;">
