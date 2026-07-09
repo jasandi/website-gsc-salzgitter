@@ -564,21 +564,23 @@ img {
 
 .carousel-arrow {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: calc(50% - 14px) !important;
+  transform: translateY(-50%) scale(1) !important;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   background-color: var(--color-primary);
   color: #fff;
   border: none;
+  margin: 0 !important;
+  padding: 0 !important;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
   box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
-  transition: all var(--transition-normal);
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color var(--transition-fast), box-shadow var(--transition-fast) !important;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -591,8 +593,13 @@ img {
 }
 
 .carousel-arrow:hover {
-  background-color: var(--color-primary-hover);
-  transform: translateY(-50%);
+  background-color: var(--color-primary-hover) !important;
+  transform: translateY(-50%) scale(1.08) !important;
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(1.15) !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2) !important;
 }
 
 .carousel-arrow-left {
@@ -1375,16 +1382,11 @@ details[open] .accordion-header::after {
   transform: scale(0.96) !important;
 }
 
-.carousel-arrow:active {
-  transform: translateY(-50%) scale(0.96) !important;
-}
-
 /* Smooth transitions for a physical feel */
 .btn,
 .event-card,
 .track-card,
-.social-links a,
-.carousel-arrow {
+.social-links a {
   transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast) !important;
 }
 
