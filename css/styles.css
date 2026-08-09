@@ -1179,12 +1179,22 @@ details[open] .accordion-header::after {
   font-size: 0.95rem;
   line-height: 1.5;
   margin-bottom: 1.5rem;
-  flex-grow: 1;
+  min-height: 4.5rem;
 }
 
 .track-card .feature-list {
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.track-card .feature-list li {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.track-card .btn {
   margin-top: auto !important;
-  margin-bottom: 0 !important;
 }
 
 

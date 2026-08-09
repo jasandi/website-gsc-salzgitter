@@ -47,19 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Expiration cleanup for Girlsday Event (Expired on August 9th, 2026)
-    const expiryDateGirlsday = new Date('2026-08-09T00:00:00');
-    if (new Date() >= expiryDateGirlsday) {
-        if (window.location.pathname.includes('2026-08-08-girlsday.html')) {
-            window.location.replace('../index.html');
-        }
-        document.querySelectorAll('a[href*="2026-08-08-girlsday.html"], [data-href*="2026-08-08-girlsday.html"]').forEach(link => {
-            const card = link.closest('.event-card') || link.closest('article');
-            if (card) {
-                card.remove();
-            }
-        });
-    }
+
 
     // 1. Mobile Navigation Toggle
     const menuToggle = document.querySelector('.menu-toggle');
