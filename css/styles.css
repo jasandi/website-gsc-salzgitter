@@ -1565,12 +1565,18 @@ details[open] .accordion-header::after {
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius);
   padding: 2.5rem;
-  transition: border-color var(--transition-normal), transform var(--transition-normal);
+  transition: border-color var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
+  scroll-margin-top: 120px;
 }
 
 .faq-card:hover {
   border-color: rgba(255, 107, 0, 0.3);
   transform: translateY(-4px);
+}
+
+.faq-card:target {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 25px rgba(255, 107, 0, 0.3);
 }
 
 .faq-card h3 {
