@@ -558,5 +558,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 8. Nutzungshinweise Modal Logic
+    const nutzungshinweiseBtn = document.getElementById('open-nutzungshinweise-btn');
+    const nutzungshinweiseModal = document.getElementById('nutzungshinweise-modal');
+    
+    if (nutzungshinweiseBtn && nutzungshinweiseModal) {
+        const modalBackdrop = nutzungshinweiseModal.querySelector('.info-modal-backdrop');
+        const modalClose = nutzungshinweiseModal.querySelector('.info-modal-close');
+        const modalOkBtn = nutzungshinweiseModal.querySelector('.info-modal-ok-btn');
+
+        const openModal = () => {
+            nutzungshinweiseModal.classList.add('active');
+            nutzungshinweiseModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = () => {
+            nutzungshinweiseModal.classList.remove('active');
+            nutzungshinweiseModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        };
+
+        nutzungshinweiseBtn.addEventListener('click', openModal);
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+        if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+        if (modalOkBtn) modalOkBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && nutzungshinweiseModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
 });
 

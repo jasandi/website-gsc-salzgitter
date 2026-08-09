@@ -127,9 +127,10 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="text-center fade-in" style="margin-top: 3rem;">
+                <div class="text-center fade-in" style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; align-items: center;">
                     <a href="https://mx-tickets.com/de-DE/t/gsc-salzgitter/events" target="_blank"
                         rel="noopener noreferrer" class="btn btn-primary">Anmelden mit MX-Tickets</a>
+                    <button type="button" id="open-nutzungshinweise-btn" class="btn btn-outline">Nutzungshinweise</button>
                 </div>
             </div>
         </section>
@@ -629,6 +630,35 @@
         <span class="lightbox-close">&times;</span>
         <img class="lightbox-content" id="lightbox-img" alt="Vergrößertes Bild">
         <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- Nutzungshinweise Modal -->
+    <div id="nutzungshinweise-modal" class="info-modal" aria-hidden="true" role="dialog" aria-labelledby="nutzungshinweise-title">
+        <div class="info-modal-backdrop"></div>
+        <div class="info-modal-card">
+            <button class="info-modal-close" aria-label="Schließen">&times;</button>
+            <div class="info-modal-header">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--color-primary)" style="flex-shrink: 0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                <h3 id="nutzungshinweise-title">Nutzungshinweise für das Training</h3>
+            </div>
+            <div class="info-modal-body">
+                <p>Für die Teilnahme am Training auf den Strecken des GSC Salzgitter e.V. gelten folgende Voraussetzungen:</p>
+                <ul>
+                    <li><strong>Gültige Anmeldung:</strong> Eine rechtzeitige Anmeldung über <strong>MX-Tickets</strong> vor Fahrantritt ist zwingend erforderlich.</li>
+                    <li><strong>Vollständige Schutzausrüstung:</strong> Das Tragen der passenden Sicherheitsausrüstung ist Pflicht. Dazu gehören mindestens:
+                        <ul>
+                            <li>Stiefel</li>
+                            <li>Knieschoner</li>
+                            <li>Helm</li>
+                            <li>Brustpanzer</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="info-modal-footer">
+                <button class="btn btn-primary info-modal-ok-btn">Verstanden</button>
+            </div>
+        </div>
     </div>
 
     <script src="js/script.js?v=1.0.5"></script>
