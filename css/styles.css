@@ -1409,12 +1409,12 @@ details[open] .accordion-header::after {
   justify-content: center;
 }
 
-/* Individual Story Tile Floating 3D Style (Scroll-Driven Direct Interpolation) */
+/* Individual Story Tile Floating 3D Style (GPU Hardware Accelerated) */
 .story-tile {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.94);
+  transform: translate3d(-50%, -50%, 0) scale(0.94);
   width: calc(100% - 3rem);
   max-width: 880px;
   max-height: calc(100vh - 160px);
@@ -1425,7 +1425,9 @@ details[open] .accordion-header::after {
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 24px !important;
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 45px rgba(255, 107, 0, 0.12);
-  will-change: opacity, transform;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
   box-sizing: border-box;
 }
 

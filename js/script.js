@@ -635,41 +635,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. Interactive Storytelling Scroll Engine (Word-by-Word Text Fill & Tile Focus)
+    // 9. Interactive Storytelling Scroll Engine (GPU Hardware-Accelerated & rAF-Throttled)
     function initInteractiveStorySections() {
         const storySections = document.querySelectorAll('.interactive-story-section');
         if (!storySections.length) return;
 
         storySections.forEach(section => {
-            const tiles = section.querySelectorAll('.story-tile');
-            const dots = section.querySelectorAll('.story-progress-dots .dot');
-            if (!tiles.length) return;
+            const rawTiles = section.querySelectorAll('.story-tile');
+            if (!rawTiles.length) return;
 
-            // Automatically wrap text into word spans
-            tiles.forEach(tile => {
+            // Pre-cache DOM nodes to eliminate querySelector overhead in scroll callbacks
+            const cachedTiles = Array.from(rawTiles).map(tile => {
                 const fillTexts = tile.querySelectorAll('.story-fill-text');
                 fillTexts.forEach(p => {
-                    if (p.dataset.wrapped) return;
-                    const rawText = p.textContent.trim();
-                    const words = rawText.split(/\s+/);
-                    p.innerHTML = words.map(w => `<span class="word">${w}</span>`).join(' ');
-                    p.dataset.wrapped = "true";
+                    if (!p.dataset.wrapped) {
+                        const rawText = p.textContent.trim();
+                        const words = rawText.split(/\s+/);
+                        p.innerHTML = words.map(w => `<span class="word">${w}</span>`).join(' ');
+                        p.dataset.wrapped = "true";
+                    }
                 });
+
+                return {
+                    element: tile,
+                    wordSpans: Array.from(tile.querySelectorAll('.story-fill-text .word')),
+                    bulletItems: Array.from(tile.querySelectorAll('.feature-list li'))
+                };
             });
 
-            // Dot click listener to jump to tile
-            dots.forEach((dot, dotIdx) => {
-                dot.addEventListener('click', () => {
-                    const rect = section.getBoundingClientRect();
-                    const sectionTop = window.pageYOffset + rect.top;
-                    const totalScrollableDistance = rect.height - window.innerHeight;
-                    const segmentSize = totalScrollableDistance / tiles.length;
-                    const targetScroll = sectionTop + (dotIdx * segmentSize) + (segmentSize * 0.3);
-                    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-                });
-            });
+            const numTiles = cachedTiles.length;
+            const segmentSize = 1 / numTiles;
+            let isTicking = false;
 
-            // 3-Phase Storytelling Choreography: Fixed Card -> Text & Bullet Reveal -> Scroll Transition Out/In
             function updateStoryProgress() {
                 const rect = section.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
@@ -679,13 +676,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const scrolled = -rect.top;
                 let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
 
-                const numTiles = tiles.length;
-                const segmentSize = 1 / numTiles;
-
                 let activeIndex = Math.floor(progress / segmentSize);
                 if (activeIndex >= numTiles) activeIndex = numTiles - 1;
 
-                tiles.forEach((tile, i) => {
+                cachedTiles.forEach((tileObj, i) => {
+                    const tile = tileObj.element;
+                    const wordSpans = tileObj.wordSpans;
+                    const bulletItems = tileObj.bulletItems;
+                    const totalWords = wordSpans.length;
+                    const totalBullets = bulletItems.length;
+
                     const segStart = i * segmentSize;
                     const segEnd = (i + 1) * segmentSize;
                     const tileP = Math.max(0, Math.min(1, (progress - segStart) / segmentSize));
@@ -695,14 +695,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     let scale = 1;
 
                     if (progress >= segStart && progress <= segEnd) {
-                        // THIS TILE IS IN ITS PRIMARY SCROLL WINDOW
+                        // PRIMARY TILE WINDOW
                         if (tileP < 0.68) {
-                            // Phase 1 & 2: Card remains 100% FIXED & STILL centered
                             opacity = 1;
                             translateY = 0;
                             scale = 1;
                         } else {
-                            // Phase 3: Transition Out (Tile slides UP and flies out towards top)
                             const exitProgress = (tileP - 0.68) / 0.32;
                             opacity = Math.max(0, 1 - (exitProgress * 0.9));
                             translateY = -420 * exitProgress;
@@ -710,37 +708,33 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         // Word-by-Word Fill (Phase 1: 0.04 to 0.40)
-                        const wordSpans = tile.querySelectorAll('.story-fill-text .word');
-                        const totalWords = wordSpans.length;
                         if (totalWords > 0) {
                             const wordFillProgress = Math.max(0, Math.min(1, (tileP - 0.04) / 0.36));
                             const filledCount = Math.floor(wordFillProgress * (totalWords + 1));
-                            wordSpans.forEach((wSpan, wIdx) => {
+                            for (let wIdx = 0; wIdx < totalWords; wIdx++) {
                                 if (wIdx < filledCount) {
-                                    wSpan.classList.add('is-filled');
+                                    wordSpans[wIdx].classList.add('is-filled');
                                 } else {
-                                    wSpan.classList.remove('is-filled');
+                                    wordSpans[wIdx].classList.remove('is-filled');
                                 }
-                            });
+                            }
                         }
 
                         // Feature Bullets Reveal (Phase 2: 0.34 to 0.65)
-                        const bulletItems = tile.querySelectorAll('.feature-list li');
-                        const totalBullets = bulletItems.length;
                         if (totalBullets > 0) {
                             const bulletProgress = Math.max(0, Math.min(1, (tileP - 0.34) / 0.31));
                             const revealedBullets = Math.floor(bulletProgress * (totalBullets + 1));
-                            bulletItems.forEach((bItem, bIdx) => {
+                            for (let bIdx = 0; bIdx < totalBullets; bIdx++) {
                                 if (bIdx < revealedBullets) {
-                                    bItem.classList.add('is-revealed');
+                                    bulletItems[bIdx].classList.add('is-revealed');
                                 } else {
-                                    bItem.classList.remove('is-revealed');
+                                    bulletItems[bIdx].classList.remove('is-revealed');
                                 }
-                            });
+                            }
                         }
 
                     } else if (i === activeIndex + 1 && progress > activeIndex * segmentSize) {
-                        // NEXT TILE IS ENTERING FROM BELOW IN PHASE 3 OF PREVIOUS TILE
+                        // ENTERING FROM BELOW
                         const prevSegStart = (i - 1) * segmentSize;
                         const prevTileP = Math.max(0, Math.min(1, (progress - prevSegStart) / segmentSize));
                         if (prevTileP >= 0.68) {
@@ -749,52 +743,45 @@ document.addEventListener('DOMContentLoaded', () => {
                             translateY = 420 * (1 - enterProgress);
                             scale = 0.96 + (0.04 * enterProgress);
 
-                            // Reset text & bullets before entering
-                            const wordSpans = tile.querySelectorAll('.story-fill-text .word');
-                            wordSpans.forEach(w => w.classList.remove('is-filled'));
-                            const bulletItems = tile.querySelectorAll('.feature-list li');
-                            bulletItems.forEach(b => b.classList.remove('is-revealed'));
+                            for (let wIdx = 0; wIdx < totalWords; wIdx++) wordSpans[wIdx].classList.remove('is-filled');
+                            for (let bIdx = 0; bIdx < totalBullets; bIdx++) bulletItems[bIdx].classList.remove('is-revealed');
                         }
                     } else if (i < activeIndex) {
-                        // PAST TILE (Fully Exited to Top)
+                        // PAST TILE (Exited Top)
                         opacity = 0;
                         translateY = -420;
                         scale = 0.96;
-                        // Keep text & bullets filled for past tiles
-                        const wordSpans = tile.querySelectorAll('.story-fill-text .word');
-                        wordSpans.forEach(w => w.classList.add('is-filled'));
-                        const bulletItems = tile.querySelectorAll('.feature-list li');
-                        bulletItems.forEach(b => b.classList.add('is-revealed'));
+                        for (let wIdx = 0; wIdx < totalWords; wIdx++) wordSpans[wIdx].classList.add('is-filled');
+                        for (let bIdx = 0; bIdx < totalBullets; bIdx++) bulletItems[bIdx].classList.add('is-revealed');
                     } else {
                         // FUTURE TILE (Waiting Below)
                         opacity = 0;
                         translateY = 420;
                         scale = 0.96;
-                        const wordSpans = tile.querySelectorAll('.story-fill-text .word');
-                        wordSpans.forEach(w => w.classList.remove('is-filled'));
-                        const bulletItems = tile.querySelectorAll('.feature-list li');
-                        bulletItems.forEach(b => b.classList.remove('is-revealed'));
+                        for (let wIdx = 0; wIdx < totalWords; wIdx++) wordSpans[wIdx].classList.remove('is-filled');
+                        for (let bIdx = 0; bIdx < totalBullets; bIdx++) bulletItems[bIdx].classList.remove('is-revealed');
                     }
 
-                    // Apply styles
+                    // GPU hardware-accelerated transform with translate3d
                     tile.style.opacity = opacity.toFixed(3);
-                    tile.style.transform = `translate(-50%, calc(-50% + ${translateY.toFixed(1)}px)) scale(${scale.toFixed(3)})`;
+                    tile.style.transform = `translate3d(-50%, calc(-50% + ${translateY.toFixed(1)}px), 0) scale(${scale.toFixed(3)})`;
                     tile.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
                     tile.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
                 });
-
-                // Update Progress Dots
-                dots.forEach((dot, idx) => {
-                    if (idx === activeIndex) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
             }
 
-            window.addEventListener('scroll', updateStoryProgress, { passive: true });
-            window.addEventListener('resize', updateStoryProgress, { passive: true });
+            function requestUpdate() {
+                if (!isTicking) {
+                    requestAnimationFrame(() => {
+                        updateStoryProgress();
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }
+
+            window.addEventListener('scroll', requestUpdate, { passive: true });
+            window.addEventListener('resize', requestUpdate, { passive: true });
             updateStoryProgress();
         });
     }
