@@ -697,8 +697,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         const wordSpans = tile.querySelectorAll('.story-fill-text .word');
                         const totalWords = wordSpans.length;
                         if (totalWords > 0) {
-                            // Fill words progressively between local progress 0.1 and 0.85
-                            const fillProgress = Math.max(0, Math.min(1, (tileLocalProgress - 0.1) / 0.75));
+                            // Fill words progressively between local progress 0.05 and 0.70
+                            const fillProgress = Math.max(0, Math.min(1, (tileLocalProgress - 0.05) / 0.65));
                             const filledCount = Math.floor(fillProgress * (totalWords + 1));
                             wordSpans.forEach((wSpan, wIdx) => {
                                 if (wIdx < filledCount) {
