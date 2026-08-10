@@ -1465,7 +1465,7 @@ details[open] .accordion-header::after {
   margin-bottom: 0.5rem;
 }
 
-/* Word-by-Word Color Fill Effect */
+/* Word-by-Word Color Fill Effect (Fixed Weight & Size for Zero Layout Shift) */
 .story-fill-text {
   font-size: 1.0rem;
   line-height: 1.6;
@@ -1474,15 +1474,15 @@ details[open] .accordion-header::after {
 
 .story-fill-text .word {
   display: inline-block;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.28);
-  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.15s, transform 0.15s;
+  transition: color 0.15s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.15s;
   margin-right: 0.26em;
 }
 
 .story-fill-text .word.is-filled {
   color: #ffffff;
-  font-weight: 600;
-  text-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
+  text-shadow: 0 0 10px rgba(255, 107, 0, 0.35);
 }
 
 /* Feature Bullets Progressive Reveal in Story Stage */
