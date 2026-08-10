@@ -521,14 +521,6 @@ img {
     margin-bottom: 1.8rem;
     padding: 1.2rem 0 1rem 0;
   }
-
-  .section-header h2 {
-    font-size: 1.75rem;
-  }
-
-  .section-header p {
-    font-size: 0.88rem;
-  }
 }
 
 .inline-link {
@@ -759,7 +751,7 @@ img {
 
 .event-card-desc {
   color: var(--color-text-muted);
-  font-size: 0.95rem;
+  font-size: 1.0rem;
   line-height: 1.6;
   margin: 0;
   flex-grow: 1;
@@ -777,7 +769,7 @@ img {
 }
 
 .event-card-date {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #fff;
 }
@@ -792,7 +784,7 @@ img {
 }
 
 .event-date .month {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -803,7 +795,9 @@ img {
 }
 
 .event-details h3 {
-  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.25;
   margin-bottom: 0.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -813,7 +807,8 @@ img {
 
 .event-details p {
   color: var(--color-text-muted);
-  font-size: 0.95rem;
+  font-size: 1.0rem;
+  line-height: 1.6;
   margin-bottom: 1rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -1463,9 +1458,16 @@ details[open] .accordion-header::after {
   border-radius: 16px;
 }
 
+.story-tile h3 {
+  font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
 /* Word-by-Word Color Fill Effect */
 .story-fill-text {
-  font-size: 1.05rem;
+  font-size: 1.0rem;
   line-height: 1.6;
   margin-bottom: 0.8rem;
 }

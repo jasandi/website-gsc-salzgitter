@@ -35,11 +35,11 @@ function parseMarkdown(fileContent) {
 function renderBasicHtml(mdText) {
     let html = mdText;
 
-    html = html.replace(/^### (.*$)/gim, '<h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-primary);">$1</h3>');
-    html = html.replace(/^## (.*$)/gim, '<h2 style="font-size: 2rem; margin-bottom: 1.5rem; margin-top: 3rem; color: #fff; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">$1</h2>');
-    html = html.replace(/^# (.*$)/gim, '<h1 style="font-size: 2.5rem; margin-bottom: 2rem; color: #fff;">$1</h1>');
+    html = html.replace(/^### (.*$)/gim, '<h3 style="font-size: clamp(1.3rem, 2.5vw, 1.65rem); margin-bottom: 1rem; color: var(--color-primary);">$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2 style="font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 1.5rem; margin-top: 3rem; color: #fff; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1 style="font-size: clamp(2.4rem, 5vw, 3.6rem); margin-bottom: 2rem; color: #fff;">$1</h1>');
 
-    html = html.replace(/^> (.*$)/gim, '<blockquote style="border-left: 4px solid var(--color-primary); padding-left: 1.5rem; margin: 2.5rem 0; font-size: 1.3rem; font-style: italic; color: #fff;">$1</blockquote>');
+    html = html.replace(/^> (.*$)/gim, '<blockquote style="border-left: 4px solid var(--color-primary); padding-left: 1.5rem; margin: 2.5rem 0; font-size: 1.1rem; font-style: italic; color: #fff;">$1</blockquote>');
 
     html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
 
@@ -227,7 +227,7 @@ function updateNewsCarousel(posts) {
                                 <span class="time" style="margin-bottom: 0.5rem;">${post.data.datum}</span>
                                 <h3 style="margin-top: 0.5rem;">${post.data.titel}</h3>
                                 <p>${post.data.kurzbeschreibung}</p>
-                                <a href="neuigkeiten/${post.slug}.html" class="btn btn-outline" style="margin-top: 1.5rem; padding: 0.5rem 1.2rem; display: inline-block; font-size: 0.9rem;">Mehr erfahren &rarr;</a>
+                                <a href="neuigkeiten/${post.slug}.html" class="btn btn-outline" style="margin-top: 1.5rem; padding: 0.5rem 1.2rem; display: inline-block;">Mehr erfahren &rarr;</a>
                             </div>
                         </article>\n`;
     });
