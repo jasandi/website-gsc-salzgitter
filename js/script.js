@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            // Calculate scroll progress & word fills
+            // Continuous Scroll Progress Calculation & Direct Style Interpolation (100% Scroll-Bound Movement)
             function updateStoryProgress() {
                 const rect = section.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
@@ -680,26 +680,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
 
                 const numTiles = tiles.length;
-                const segmentSize = 1 / numTiles;
-                let activeIndex = Math.floor(progress / segmentSize);
-                if (activeIndex >= numTiles) activeIndex = numTiles - 1;
+                const activeIndex = Math.min(numTiles - 1, Math.floor(progress * numTiles));
 
-                // Local progress inside the current active tile (0.0 to 1.0)
-                const tileLocalProgress = (progress - (activeIndex * segmentSize)) / segmentSize;
+                // Define centers for each tile (e.g., 0.16, 0.50, 0.84)
+                const centers = [];
+                for (let i = 0; i < numTiles; i++) {
+                    centers.push((i + 0.5) / numTiles);
+                }
 
-                // Update Tiles Active State & Transitions
-                tiles.forEach((tile, idx) => {
-                    if (idx === activeIndex) {
-                        tile.classList.add('active');
-                        tile.classList.remove('exiting', 'entering');
+                tiles.forEach((tile, i) => {
+                    const center = centers[i];
+                    const distance = progress - center; // distance from tile center in scroll progress
+                    const absDist = Math.abs(distance);
 
-                        // Word-by-Word Fill Calculation
+                    // 1. Calculate Opacity (Smooth fluid cross-fade bound to scroll)
+                    let opacity = 0;
+                    if (absDist <= 0.08) {
+                        opacity = 1;
+                    } else if (absDist <= 0.22) {
+                        opacity = (0.22 - absDist) / (0.22 - 0.08);
+                    } else {
+                        opacity = 0;
+                    }
+
+                    // 2. Calculate Continuous Y-Translation & Scale
+                    // As scroll progresses, tile glides continuously from +60px up to -60px
+                    const translateY = -distance * 360;
+                    const scale = 1 - Math.min(0.08, absDist * 0.4);
+
+                    // Apply inline styles for 100% scroll-bound fluid movement
+                    tile.style.opacity = opacity.toFixed(3);
+                    tile.style.transform = `translate(-50%, calc(-50% + ${translateY.toFixed(1)}px)) scale(${scale.toFixed(3)})`;
+                    tile.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
+                    tile.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
+
+                    // 3. Word-by-Word Fill Calculation for Visible Tile
+                    if (opacity > 0.05) {
                         const wordSpans = tile.querySelectorAll('.story-fill-text .word');
                         const totalWords = wordSpans.length;
                         if (totalWords > 0) {
-                            // Fill words progressively between local progress 0.05 and 0.70
-                            const fillProgress = Math.max(0, Math.min(1, (tileLocalProgress - 0.05) / 0.65));
-                            const filledCount = Math.floor(fillProgress * (totalWords + 1));
+                            // Words fill progressively as scroll moves toward center (-0.12 to +0.06)
+                            const wordFillProgress = Math.max(0, Math.min(1, (distance + 0.12) / 0.18));
+                            const filledCount = Math.floor(wordFillProgress * (totalWords + 1));
                             wordSpans.forEach((wSpan, wIdx) => {
                                 if (wIdx < filledCount) {
                                     wSpan.classList.add('is-filled');
@@ -708,12 +730,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                             });
                         }
-                    } else if (idx < activeIndex) {
-                        tile.classList.remove('active', 'entering');
-                        tile.classList.add('exiting');
-                    } else {
-                        tile.classList.remove('active', 'exiting');
-                        tile.classList.add('entering');
                     }
                 });
 

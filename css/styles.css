@@ -1409,12 +1409,12 @@ details[open] .accordion-header::after {
   justify-content: center;
 }
 
-/* Individual Story Tile Floating 3D Style */
+/* Individual Story Tile Floating 3D Style (Scroll-Driven Direct Interpolation) */
 .story-tile {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -46%) scale(0.92);
+  transform: translate(-50%, -50%) scale(0.94);
   width: calc(100% - 3rem);
   max-width: 880px;
   max-height: calc(100vh - 160px);
@@ -1424,11 +1424,7 @@ details[open] .accordion-header::after {
   background-color: #14151a;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 24px !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(255, 107, 0, 0.08);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 1.2s,
-              box-shadow 1.2s;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 45px rgba(255, 107, 0, 0.12);
   will-change: opacity, transform;
   box-sizing: border-box;
 }
@@ -1448,29 +1444,6 @@ details[open] .accordion-header::after {
   aspect-ratio: 16/10 !important;
   object-fit: cover !important;
   border-radius: 16px;
-}
-
-.story-tile.active {
-  position: relative;
-  top: auto;
-  left: auto;
-  transform: translate(0, 0) scale(1);
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 45px rgba(255, 107, 0, 0.12);
-}
-
-.story-tile.exiting {
-  transform: translate(-50%, -64%) scale(0.94);
-  opacity: 0;
-  visibility: hidden;
-}
-
-.story-tile.entering {
-  transform: translate(-50%, -24%) scale(0.94);
-  opacity: 0;
-  visibility: hidden;
 }
 
 /* Word-by-Word Color Fill Effect */
