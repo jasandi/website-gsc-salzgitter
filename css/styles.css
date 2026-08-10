@@ -1410,26 +1410,34 @@ details[open] .accordion-header::after {
 .story-tiles-viewport {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 920px;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Individual Story Tile Sizing for 100% Viewport Height Fit */
+/* Individual Story Tile Floating 3D Style */
 .story-tile {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -46%) scale(0.92);
-  width: 100%;
+  width: calc(100% - 3rem);
+  max-width: 880px;
   max-height: calc(100vh - 160px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  background-color: #14151a;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(255, 107, 0, 0.08);
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.6s;
+              visibility 0.6s,
+              box-shadow 0.6s;
   will-change: opacity, transform;
   box-sizing: border-box;
 }
@@ -1439,7 +1447,7 @@ details[open] .accordion-header::after {
   grid-template-columns: 1fr 1.15fr;
   gap: 1.8rem;
   align-items: center;
-  padding: 1.4rem 1.8rem;
+  padding: 1.6rem 2rem;
 }
 
 .story-tile.track-card img {
@@ -1448,7 +1456,7 @@ details[open] .accordion-header::after {
   max-height: 240px;
   aspect-ratio: 16/10 !important;
   object-fit: cover !important;
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
 .story-tile.active {
@@ -1459,6 +1467,7 @@ details[open] .accordion-header::after {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 45px rgba(255, 107, 0, 0.12);
 }
 
 .story-tile.exiting {
