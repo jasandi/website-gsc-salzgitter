@@ -1466,6 +1466,21 @@ details[open] .accordion-header::after {
   text-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
 }
 
+/* Feature Bullets Progressive Reveal in Story Stage */
+.story-tile .feature-list li {
+  opacity: 0.28;
+  transform: translateY(6px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s;
+}
+
+.story-tile .feature-list li.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  color: #ffffff;
+}
+
 /* Story Progress Dots Indicator */
 .story-progress-dots {
   display: flex;

@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            // Continuous Scroll Progress Calculation & Direct Style Interpolation (100% Scroll-Bound Movement)
+            // 3-Phase Storytelling Choreography: Fixed Card -> Text & Bullet Reveal -> Scroll Transition Out/In
             function updateStoryProgress() {
                 const rect = section.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
@@ -680,47 +680,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
 
                 const numTiles = tiles.length;
-                const activeIndex = Math.min(numTiles - 1, Math.floor(progress * numTiles));
+                const segmentSize = 1 / numTiles;
 
-                // Define centers for each tile (e.g., 0.16, 0.50, 0.84)
-                const centers = [];
-                for (let i = 0; i < numTiles; i++) {
-                    centers.push((i + 0.5) / numTiles);
-                }
+                let activeIndex = Math.floor(progress / segmentSize);
+                if (activeIndex >= numTiles) activeIndex = numTiles - 1;
 
                 tiles.forEach((tile, i) => {
-                    const center = centers[i];
-                    const distance = progress - center; // distance from tile center in scroll progress
-                    const absDist = Math.abs(distance);
+                    const segStart = i * segmentSize;
+                    const segEnd = (i + 1) * segmentSize;
+                    const tileP = Math.max(0, Math.min(1, (progress - segStart) / segmentSize));
 
-                    // 1. Calculate Opacity (Smooth fluid cross-fade bound to scroll)
                     let opacity = 0;
-                    if (absDist <= 0.08) {
-                        opacity = 1;
-                    } else if (absDist <= 0.22) {
-                        opacity = (0.22 - absDist) / (0.22 - 0.08);
-                    } else {
-                        opacity = 0;
-                    }
+                    let translateY = 0;
+                    let scale = 1;
 
-                    // 2. Calculate Continuous Y-Translation & Scale
-                    // As scroll progresses, tile glides continuously from +60px up to -60px
-                    const translateY = -distance * 360;
-                    const scale = 1 - Math.min(0.08, absDist * 0.4);
+                    if (progress >= segStart && progress <= segEnd) {
+                        // THIS TILE IS IN ITS PRIMARY SCROLL WINDOW
+                        if (tileP < 0.72) {
+                            // Phase 1 & 2: Card remains 100% FIXED & STILL centered
+                            opacity = 1;
+                            translateY = 0;
+                            scale = 1;
+                        } else {
+                            // Phase 3: Transition Out (Tile glides UP and flies out to the top)
+                            const exitProgress = (tileP - 0.72) / 0.28;
+                            opacity = 1 - exitProgress;
+                            translateY = -90 * exitProgress;
+                            scale = 1 - (0.05 * exitProgress);
+                        }
 
-                    // Apply inline styles for 100% scroll-bound fluid movement
-                    tile.style.opacity = opacity.toFixed(3);
-                    tile.style.transform = `translate(-50%, calc(-50% + ${translateY.toFixed(1)}px)) scale(${scale.toFixed(3)})`;
-                    tile.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
-                    tile.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
-
-                    // 3. Word-by-Word Fill Calculation for Visible Tile
-                    if (opacity > 0.05) {
+                        // Word-by-Word Fill (Phase 1: 0.05 to 0.45)
                         const wordSpans = tile.querySelectorAll('.story-fill-text .word');
                         const totalWords = wordSpans.length;
                         if (totalWords > 0) {
-                            // Words fill progressively as scroll moves toward center (-0.12 to +0.06)
-                            const wordFillProgress = Math.max(0, Math.min(1, (distance + 0.12) / 0.18));
+                            const wordFillProgress = Math.max(0, Math.min(1, (tileP - 0.04) / 0.38));
                             const filledCount = Math.floor(wordFillProgress * (totalWords + 1));
                             wordSpans.forEach((wSpan, wIdx) => {
                                 if (wIdx < filledCount) {
@@ -730,7 +723,64 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                             });
                         }
+
+                        // Feature Bullets Reveal (Phase 2: 0.36 to 0.68)
+                        const bulletItems = tile.querySelectorAll('.feature-list li');
+                        const totalBullets = bulletItems.length;
+                        if (totalBullets > 0) {
+                            const bulletProgress = Math.max(0, Math.min(1, (tileP - 0.36) / 0.32));
+                            const revealedBullets = Math.floor(bulletProgress * (totalBullets + 1));
+                            bulletItems.forEach((bItem, bIdx) => {
+                                if (bIdx < revealedBullets) {
+                                    bItem.classList.add('is-revealed');
+                                } else {
+                                    bItem.classList.remove('is-revealed');
+                                }
+                            });
+                        }
+
+                    } else if (i === activeIndex + 1 && progress > activeIndex * segmentSize) {
+                        // NEXT TILE IS ENTERING FROM BELOW IN PHASE 3 OF PREVIOUS TILE
+                        const prevSegStart = (i - 1) * segmentSize;
+                        const prevTileP = Math.max(0, Math.min(1, (progress - prevSegStart) / segmentSize));
+                        if (prevTileP >= 0.72) {
+                            const enterProgress = (prevTileP - 0.72) / 0.28;
+                            opacity = enterProgress;
+                            translateY = 90 * (1 - enterProgress);
+                            scale = 0.95 + (0.05 * enterProgress);
+
+                            // Reset text & bullets before entering
+                            const wordSpans = tile.querySelectorAll('.story-fill-text .word');
+                            wordSpans.forEach(w => w.classList.remove('is-filled'));
+                            const bulletItems = tile.querySelectorAll('.feature-list li');
+                            bulletItems.forEach(b => b.classList.remove('is-revealed'));
+                        }
+                    } else if (i < activeIndex) {
+                        // PAST TILE (Fully Exited to Top)
+                        opacity = 0;
+                        translateY = -90;
+                        scale = 0.95;
+                        // Keep text & bullets filled for past tiles
+                        const wordSpans = tile.querySelectorAll('.story-fill-text .word');
+                        wordSpans.forEach(w => w.classList.add('is-filled'));
+                        const bulletItems = tile.querySelectorAll('.feature-list li');
+                        bulletItems.forEach(b => b.classList.add('is-revealed'));
+                    } else {
+                        // FUTURE TILE (Waiting Below)
+                        opacity = 0;
+                        translateY = 90;
+                        scale = 0.95;
+                        const wordSpans = tile.querySelectorAll('.story-fill-text .word');
+                        wordSpans.forEach(w => w.classList.remove('is-filled'));
+                        const bulletItems = tile.querySelectorAll('.feature-list li');
+                        bulletItems.forEach(b => b.classList.remove('is-revealed'));
                     }
+
+                    // Apply styles
+                    tile.style.opacity = opacity.toFixed(3);
+                    tile.style.transform = `translate(-50%, calc(-50% + ${translateY.toFixed(1)}px)) scale(${scale.toFixed(3)})`;
+                    tile.style.visibility = opacity > 0.01 ? 'visible' : 'hidden';
+                    tile.style.pointerEvents = opacity > 0.5 ? 'auto' : 'none';
                 });
 
                 // Update Progress Dots
