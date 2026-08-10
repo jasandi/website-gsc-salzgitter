@@ -104,6 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
             navbar.classList.remove('hidden');
         }
 
+        // Helper to update sticky section header top offset dynamically
+        const isHidden = navbar.classList.contains('hidden');
+        const offset = isHidden ? 15 : (navbar.offsetHeight + 25);
+        document.documentElement.style.setProperty('--sticky-header-top', `${offset}px`);
+
         lastScrollTop = scrollTop;
     }, { passive: true }); // Passive listener for better scroll performance
 
