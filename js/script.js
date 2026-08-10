@@ -634,5 +634,105 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 9. Interactive Storytelling Scroll Engine (Word-by-Word Text Fill & Tile Focus)
+    function initInteractiveStorySections() {
+        const storySections = document.querySelectorAll('.interactive-story-section');
+        if (!storySections.length) return;
+
+        storySections.forEach(section => {
+            const tiles = section.querySelectorAll('.story-tile');
+            const dots = section.querySelectorAll('.story-progress-dots .dot');
+            if (!tiles.length) return;
+
+            // Automatically wrap text into word spans
+            tiles.forEach(tile => {
+                const fillTexts = tile.querySelectorAll('.story-fill-text');
+                fillTexts.forEach(p => {
+                    if (p.dataset.wrapped) return;
+                    const rawText = p.textContent.trim();
+                    const words = rawText.split(/\s+/);
+                    p.innerHTML = words.map(w => `<span class="word">${w}</span>`).join(' ');
+                    p.dataset.wrapped = "true";
+                });
+            });
+
+            // Dot click listener to jump to tile
+            dots.forEach((dot, dotIdx) => {
+                dot.addEventListener('click', () => {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = window.pageYOffset + rect.top;
+                    const totalScrollableDistance = rect.height - window.innerHeight;
+                    const segmentSize = totalScrollableDistance / tiles.length;
+                    const targetScroll = sectionTop + (dotIdx * segmentSize) + (segmentSize * 0.3);
+                    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                });
+            });
+
+            // Calculate scroll progress & word fills
+            function updateStoryProgress() {
+                const rect = section.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const totalScrollableDistance = rect.height - viewportHeight;
+                if (totalScrollableDistance <= 0) return;
+
+                const scrolled = -rect.top;
+                let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
+
+                const numTiles = tiles.length;
+                const segmentSize = 1 / numTiles;
+                let activeIndex = Math.floor(progress / segmentSize);
+                if (activeIndex >= numTiles) activeIndex = numTiles - 1;
+
+                // Local progress inside the current active tile (0.0 to 1.0)
+                const tileLocalProgress = (progress - (activeIndex * segmentSize)) / segmentSize;
+
+                // Update Tiles Active State & Transitions
+                tiles.forEach((tile, idx) => {
+                    if (idx === activeIndex) {
+                        tile.classList.add('active');
+                        tile.classList.remove('exiting', 'entering');
+
+                        // Word-by-Word Fill Calculation
+                        const wordSpans = tile.querySelectorAll('.story-fill-text .word');
+                        const totalWords = wordSpans.length;
+                        if (totalWords > 0) {
+                            // Fill words progressively between local progress 0.1 and 0.85
+                            const fillProgress = Math.max(0, Math.min(1, (tileLocalProgress - 0.1) / 0.75));
+                            const filledCount = Math.floor(fillProgress * (totalWords + 1));
+                            wordSpans.forEach((wSpan, wIdx) => {
+                                if (wIdx < filledCount) {
+                                    wSpan.classList.add('is-filled');
+                                } else {
+                                    wSpan.classList.remove('is-filled');
+                                }
+                            });
+                        }
+                    } else if (idx < activeIndex) {
+                        tile.classList.remove('active', 'entering');
+                        tile.classList.add('exiting');
+                    } else {
+                        tile.classList.remove('active', 'exiting');
+                        tile.classList.add('entering');
+                    }
+                });
+
+                // Update Progress Dots
+                dots.forEach((dot, idx) => {
+                    if (idx === activeIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateStoryProgress, { passive: true });
+            window.addEventListener('resize', updateStoryProgress, { passive: true });
+            updateStoryProgress();
+        });
+    }
+
+    initInteractiveStorySections();
 });
 
