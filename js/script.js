@@ -706,8 +706,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else {
                             // Phase 3: Exiting Tile glides UP towards top header mask
                             const exitProgress = (tileP - 0.65) / 0.35;
-                            opacity = Math.max(0, 1 - (exitProgress * 1.25));
-                            translateY = -420 * exitProgress;
+                            opacity = Math.max(0, 1 - (exitProgress * 1.3));
+                            translateY = -480 * exitProgress;
                             scale = 1 - (0.04 * exitProgress);
                         }
 
@@ -738,13 +738,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                     } else if (i === activeIndex + 1 && progress > activeIndex * segmentSize) {
-                        // Phase 3: ENTERING TILE SLIDES UP FROM BELOW IN PARALLEL AT 100% SOLID OPACITY (WITHOUT FADE)
+                        // Phase 3: ENTERING TILE SLIDES UP FROM BELOW WITH GUARANTEED 200px+ PHYSICAL GAP
                         const prevSegStart = (i - 1) * segmentSize;
                         const prevTileP = Math.max(0, Math.min(1, (progress - prevSegStart) / segmentSize));
                         if (prevTileP >= 0.65) {
                             const enterProgress = (prevTileP - 0.65) / 0.35;
                             opacity = 1; // SOLID 100% OPACITY (WITHOUT FADE)
-                            translateY = 420 * (1 - enterProgress);
+                            translateY = 560 * (1 - enterProgress); // 560px initial offset guarantees physical gap
                             scale = 0.96 + (0.04 * enterProgress);
 
                             for (let wIdx = 0; wIdx < totalWords; wIdx++) wordSpans[wIdx].classList.remove('is-filled');
