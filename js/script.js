@@ -698,22 +698,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         // THIS TILE IS IN ITS PRIMARY SCROLL WINDOW OR PAST IT (LAST TILE)
                         const isLastTile = (i === numTiles - 1);
 
-                        if (isLastTile || tileP < 0.68) {
-                            // Last tile STAYS 100% FIXED & VISIBLE, or earlier tiles in Phase 1 & 2
+                        if (isLastTile || tileP < 0.62) {
+                            // Phase 1 & 2: Card remains 100% FIXED & STILL centered
                             opacity = 1;
                             translateY = 0;
                             scale = 1;
                         } else {
-                            // Non-last tiles in Phase 3: Transition Out (Tile slides UP towards top)
-                            const exitProgress = (tileP - 0.68) / 0.32;
-                            opacity = Math.max(0, 1 - (exitProgress * 0.9));
-                            translateY = -420 * exitProgress;
+                            // Phase 3A: Transition Out - Fades cleanly to EXACT 0 OPACITY by tileP = 0.77
+                            const exitProgress = Math.min(1, (tileP - 0.62) / 0.15);
+                            opacity = Math.max(0, 1 - exitProgress);
+                            translateY = -340 * exitProgress;
                             scale = 1 - (0.04 * exitProgress);
                         }
 
-                        // Word-by-Word Fill (Phase 1: 0.04 to 0.40)
+                        // Word-by-Word Fill (Phase 1: 0.04 to 0.38)
                         if (totalWords > 0) {
-                            const wordFillProgress = Math.max(0, Math.min(1, (tileP - 0.04) / 0.36));
+                            const wordFillProgress = Math.max(0, Math.min(1, (tileP - 0.04) / 0.34));
                             const filledCount = Math.floor(wordFillProgress * (totalWords + 1));
                             for (let wIdx = 0; wIdx < totalWords; wIdx++) {
                                 if (wIdx < filledCount) {
@@ -724,9 +724,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         }
 
-                        // Feature Bullets Reveal (Phase 2: 0.34 to 0.65)
+                        // Feature Bullets Reveal (Phase 2: 0.34 to 0.60)
                         if (totalBullets > 0) {
-                            const bulletProgress = Math.max(0, Math.min(1, (tileP - 0.34) / 0.31));
+                            const bulletProgress = Math.max(0, Math.min(1, (tileP - 0.34) / 0.26));
                             const revealedBullets = Math.floor(bulletProgress * (totalBullets + 1));
                             for (let bIdx = 0; bIdx < totalBullets; bIdx++) {
                                 if (bIdx < revealedBullets) {
@@ -738,13 +738,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                     } else if (i === activeIndex + 1 && progress > activeIndex * segmentSize) {
-                        // ENTERING FROM BELOW
+                        // Phase 3B: ENTERING FROM BELOW ONLY AFTER PREVIOUS TILE IS 100% INVISIBLE (prevTileP >= 0.77)
                         const prevSegStart = (i - 1) * segmentSize;
                         const prevTileP = Math.max(0, Math.min(1, (progress - prevSegStart) / segmentSize));
-                        if (prevTileP >= 0.68) {
-                            const enterProgress = (prevTileP - 0.68) / 0.32;
+                        if (prevTileP >= 0.77) {
+                            const enterProgress = Math.min(1, (prevTileP - 0.77) / 0.23);
                             opacity = enterProgress;
-                            translateY = 420 * (1 - enterProgress);
+                            translateY = 280 * (1 - enterProgress);
                             scale = 0.96 + (0.04 * enterProgress);
 
                             for (let wIdx = 0; wIdx < totalWords; wIdx++) wordSpans[wIdx].classList.remove('is-filled');
