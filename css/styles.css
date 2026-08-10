@@ -476,21 +476,13 @@ img {
   }
 }
 
-/* Section Headers (Full-Width Sticky Edge-to-Edge with Tight Fade Buffer) */
+/* Section Headers (Clean Layout with Generous Margin to Content) */
 .section-header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 300;
+  position: relative;
+  z-index: 100;
   text-align: center;
-  margin-bottom: 2rem;
-  padding: 1.6rem 0 1.2rem 0;
-  background: transparent;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
+  margin-bottom: 3.5rem;
+  padding: 1rem 0 0 0;
   pointer-events: none;
 }
 
@@ -498,17 +490,10 @@ img {
   pointer-events: auto;
 }
 
-.dark-bg .section-header {
-  background: linear-gradient(180deg, var(--color-bg-dark) 0%, var(--color-bg-dark) 75%, rgba(17, 18, 22, 0) 100%);
-}
-
-.black-bg .section-header {
-  background: linear-gradient(180deg, var(--color-bg-black) 0%, var(--color-bg-black) 75%, rgba(10, 10, 12, 0) 100%);
-}
-
 .section-header h2 {
   font-size: clamp(2rem, 4.5vw, 3.2rem);
   text-transform: uppercase;
+  font-weight: 800;
   margin-bottom: 0.5rem;
 }
 
@@ -517,10 +502,6 @@ img {
   color: var(--color-text-muted);
   max-width: 600px;
   margin: 0 auto;
-}
-
-#termine {
-  padding-bottom: 2rem !important;
 }
 
 @media (max-width: 768px) {
