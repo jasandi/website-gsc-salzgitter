@@ -1216,21 +1216,148 @@ details[open] .accordion-header::after {
   justify-content: center;
 }
 
-/* Event Cards Vertical Stack */
+/* Event Cards Vertical Stack (Redesigned Matching Screenshot) */
 .stacked-tiles-grid.events-grid {
-  gap: 1.5rem;
-  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-.stacked-tiles-grid .event-card {
+#termine .event-card {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1.8rem 2.2rem;
+  gap: 1.4rem;
+  padding: 1.1rem 1.6rem;
+  background-color: #131417;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
   box-sizing: border-box;
+}
+
+#termine .event-card:hover {
+  border-color: rgba(255, 107, 0, 0.35);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 107, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Highlighted Event Card (Matching Screenshot) */
+#termine .event-card.is-highlighted {
+  border-color: rgba(255, 85, 0, 0.45);
+  background: linear-gradient(90deg, rgba(255, 85, 0, 0.12) 0%, rgba(20, 20, 24, 0.95) 70%);
+  box-shadow: 0 10px 30px rgba(255, 85, 0, 0.12);
+}
+
+#termine .event-card.is-highlighted .event-date-box {
+  background-color: rgba(255, 85, 0, 0.16);
+  border-color: rgba(255, 85, 0, 0.35);
+}
+
+/* Date Box (Left Box in Screenshot) */
+.event-date-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.event-date-box .day {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.event-date-box .month {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+/* Event Info (Center) */
+.event-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.event-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.event-highlight-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ff5500;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 0.18rem 0.55rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.event-card-desc {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Event Meta (Right Side in Screenshot) */
+.event-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  text-align: right;
+  min-width: 130px;
+}
+
+.event-date-text {
+  font-size: 0.84rem;
+  color: var(--color-text-muted);
+}
+
+.event-action-text {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ff5500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.event-action-text:hover {
+  color: #ff7722;
+  text-decoration: underline;
 }
 
 /* Interactive Scroll-Triggered Reveal & Transition Animation (Rose Bikes Style) */
@@ -1258,32 +1385,35 @@ details[open] .accordion-header::after {
 }
 
 /* Responsive adjustments for Mobile & Tablet */
-@media (max-width: 850px) {
-  .stacked-tiles-grid {
-    gap: 2rem;
-    max-width: 100%;
+@media (max-width: 768px) {
+  #termine .event-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.9rem;
+    padding: 1.1rem;
   }
 
-  .stacked-tiles-grid .track-card {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.5rem;
+  .event-date-box {
+    grid-column: 1;
+    grid-row: 1;
   }
 
-  .stacked-tiles-grid .track-card img {
-    max-height: 240px;
-    margin-bottom: 1rem !important;
+  .event-card-body {
+    grid-column: 2;
+    grid-row: 1;
   }
 
-  .stacked-tiles-grid .event-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.5rem;
-  }
-
-  .stacked-tiles-grid .event-card-footer {
+  .event-card-meta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     width: 100%;
+    min-width: 0;
   }
 }
 
