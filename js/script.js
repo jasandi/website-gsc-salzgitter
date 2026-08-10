@@ -696,24 +696,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (progress >= segStart && progress <= segEnd) {
                         // THIS TILE IS IN ITS PRIMARY SCROLL WINDOW
-                        if (tileP < 0.72) {
+                        if (tileP < 0.68) {
                             // Phase 1 & 2: Card remains 100% FIXED & STILL centered
                             opacity = 1;
                             translateY = 0;
                             scale = 1;
                         } else {
-                            // Phase 3: Transition Out (Tile glides UP and flies out to the top)
-                            const exitProgress = (tileP - 0.72) / 0.28;
-                            opacity = 1 - exitProgress;
-                            translateY = -90 * exitProgress;
-                            scale = 1 - (0.05 * exitProgress);
+                            // Phase 3: Transition Out (Tile slides UP and flies out towards top)
+                            const exitProgress = (tileP - 0.68) / 0.32;
+                            opacity = Math.max(0, 1 - (exitProgress * 0.9));
+                            translateY = -420 * exitProgress;
+                            scale = 1 - (0.04 * exitProgress);
                         }
 
-                        // Word-by-Word Fill (Phase 1: 0.05 to 0.45)
+                        // Word-by-Word Fill (Phase 1: 0.04 to 0.40)
                         const wordSpans = tile.querySelectorAll('.story-fill-text .word');
                         const totalWords = wordSpans.length;
                         if (totalWords > 0) {
-                            const wordFillProgress = Math.max(0, Math.min(1, (tileP - 0.04) / 0.38));
+                            const wordFillProgress = Math.max(0, Math.min(1, (tileP - 0.04) / 0.36));
                             const filledCount = Math.floor(wordFillProgress * (totalWords + 1));
                             wordSpans.forEach((wSpan, wIdx) => {
                                 if (wIdx < filledCount) {
@@ -724,11 +724,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         }
 
-                        // Feature Bullets Reveal (Phase 2: 0.36 to 0.68)
+                        // Feature Bullets Reveal (Phase 2: 0.34 to 0.65)
                         const bulletItems = tile.querySelectorAll('.feature-list li');
                         const totalBullets = bulletItems.length;
                         if (totalBullets > 0) {
-                            const bulletProgress = Math.max(0, Math.min(1, (tileP - 0.36) / 0.32));
+                            const bulletProgress = Math.max(0, Math.min(1, (tileP - 0.34) / 0.31));
                             const revealedBullets = Math.floor(bulletProgress * (totalBullets + 1));
                             bulletItems.forEach((bItem, bIdx) => {
                                 if (bIdx < revealedBullets) {
@@ -743,11 +743,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         // NEXT TILE IS ENTERING FROM BELOW IN PHASE 3 OF PREVIOUS TILE
                         const prevSegStart = (i - 1) * segmentSize;
                         const prevTileP = Math.max(0, Math.min(1, (progress - prevSegStart) / segmentSize));
-                        if (prevTileP >= 0.72) {
-                            const enterProgress = (prevTileP - 0.72) / 0.28;
+                        if (prevTileP >= 0.68) {
+                            const enterProgress = (prevTileP - 0.68) / 0.32;
                             opacity = enterProgress;
-                            translateY = 90 * (1 - enterProgress);
-                            scale = 0.95 + (0.05 * enterProgress);
+                            translateY = 420 * (1 - enterProgress);
+                            scale = 0.96 + (0.04 * enterProgress);
 
                             // Reset text & bullets before entering
                             const wordSpans = tile.querySelectorAll('.story-fill-text .word');
@@ -758,8 +758,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else if (i < activeIndex) {
                         // PAST TILE (Fully Exited to Top)
                         opacity = 0;
-                        translateY = -90;
-                        scale = 0.95;
+                        translateY = -420;
+                        scale = 0.96;
                         // Keep text & bullets filled for past tiles
                         const wordSpans = tile.querySelectorAll('.story-fill-text .word');
                         wordSpans.forEach(w => w.classList.add('is-filled'));
@@ -768,8 +768,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         // FUTURE TILE (Waiting Below)
                         opacity = 0;
-                        translateY = 90;
-                        scale = 0.95;
+                        translateY = 420;
+                        scale = 0.96;
                         const wordSpans = tile.querySelectorAll('.story-fill-text .word');
                         wordSpans.forEach(w => w.classList.remove('is-filled'));
                         const bulletItems = tile.querySelectorAll('.feature-list li');
