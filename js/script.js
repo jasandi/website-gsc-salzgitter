@@ -694,13 +694,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     let translateY = 0;
                     let scale = 1;
 
-                    if (progress >= segStart && progress <= segEnd) {
-                        // PRIMARY TILE WINDOW
-                        if (tileP < 0.68) {
+                    if (progress >= segStart) {
+                        // THIS TILE IS IN ITS PRIMARY SCROLL WINDOW OR PAST IT (LAST TILE)
+                        const isLastTile = (i === numTiles - 1);
+
+                        if (isLastTile || tileP < 0.68) {
+                            // Last tile STAYS 100% FIXED & VISIBLE, or earlier tiles in Phase 1 & 2
                             opacity = 1;
                             translateY = 0;
                             scale = 1;
                         } else {
+                            // Non-last tiles in Phase 3: Transition Out (Tile slides UP towards top)
                             const exitProgress = (tileP - 0.68) / 0.32;
                             opacity = Math.max(0, 1 - (exitProgress * 0.9));
                             translateY = -420 * exitProgress;
