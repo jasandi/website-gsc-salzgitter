@@ -179,8 +179,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const animateElements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
     animateElements.forEach(el => scrollObserver.observe(el));
 
+    // 5. Stacked Tiles Interactive Scroll Reveal Observer (Rose Bikes Style)
+    const tileObserverOptions = {
+        root: null,
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1
+    };
 
-    // 5. Carousels Interactive Scroll
+    const tileObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const tile = entry.target;
+                const parentGrid = tile.closest('.stacked-tiles-grid');
+                if (parentGrid) {
+                    const visibleSiblings = Array.from(parentGrid.querySelectorAll('.tile-scroll-reveal')).filter(t => t.style.display !== 'none');
+                    const index = visibleSiblings.indexOf(tile);
+                    if (index >= 0) {
+                        tile.style.transitionDelay = `${Math.min(index * 0.1, 0.35)}s`;
+                    }
+                }
+                tile.classList.add('is-visible');
+                observer.unobserve(tile);
+            }
+        });
+    }, tileObserverOptions);
+
+    document.querySelectorAll('.tile-scroll-reveal').forEach(tile => tileObserver.observe(tile));
+
+    // 6. Date Filtering & Cleanup
     const systemDate = new Date();
     const todayStart = new Date(systemDate.getFullYear(), systemDate.getMonth(), systemDate.getDate()).getTime();
 
@@ -223,6 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return null;
     };
+
+    // Filter expired event cards in #termine
+    const termineSection = document.getElementById('termine');
+    if (termineSection) {
+        const eventCards = termineSection.querySelectorAll('.event-card');
+        eventCards.forEach(card => {
+            const time = parseDateHelper(card, 'termine');
+            if (time && time < todayStart) {
+                card.style.display = 'none';
+            }
+        });
+    }
 
     const carouselWrappers = document.querySelectorAll('.events-carousel-wrapper');
     carouselWrappers.forEach(wrapper => {
