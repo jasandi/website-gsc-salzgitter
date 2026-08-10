@@ -1381,13 +1381,30 @@ details[open] .accordion-header::after {
 }
 
 .interactive-story-section .section-header {
-  padding-bottom: 1.2rem;
-  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 100 !important;
+  width: 100%;
+  padding: 1.5rem 0 2.8rem 0;
+  margin-bottom: 0;
   flex-shrink: 0;
+  pointer-events: none;
+}
+
+.dark-bg.interactive-story-section .section-header {
+  background: linear-gradient(180deg, var(--color-bg-dark) 0%, var(--color-bg-dark) 78%, rgba(17, 18, 22, 0) 100%) !important;
+}
+
+.black-bg.interactive-story-section .section-header {
+  background: linear-gradient(180deg, var(--color-bg-black) 0%, var(--color-bg-black) 78%, rgba(10, 10, 12, 0) 100%) !important;
+}
+
+.interactive-story-section .section-header * {
+  pointer-events: auto;
 }
 
 .story-stage-container {
   position: relative;
+  z-index: 10;
   flex-grow: 1;
   width: 100%;
   display: flex;
@@ -1400,6 +1417,7 @@ details[open] .accordion-header::after {
 
 .story-tiles-viewport {
   position: relative;
+  z-index: 5;
   width: 100%;
   max-width: 920px;
   padding: 0 1.5rem;
