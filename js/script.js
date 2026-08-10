@@ -698,16 +698,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         // THIS TILE IS IN ITS PRIMARY SCROLL WINDOW OR PAST IT (LAST TILE)
                         const isLastTile = (i === numTiles - 1);
 
-                        if (isLastTile || tileP < 0.62) {
+                        if (isLastTile || tileP < 0.65) {
                             // Phase 1 & 2: Card remains 100% FIXED & STILL centered
                             opacity = 1;
                             translateY = 0;
                             scale = 1;
                         } else {
-                            // Phase 3A: Transition Out - Fades cleanly to EXACT 0 OPACITY by tileP = 0.77
-                            const exitProgress = Math.min(1, (tileP - 0.62) / 0.15);
-                            opacity = Math.max(0, 1 - exitProgress);
-                            translateY = -340 * exitProgress;
+                            // Phase 3: Exiting Tile glides UP towards top header mask
+                            const exitProgress = (tileP - 0.65) / 0.35;
+                            opacity = Math.max(0, 1 - (exitProgress * 1.25));
+                            translateY = -420 * exitProgress;
                             scale = 1 - (0.04 * exitProgress);
                         }
 
@@ -738,13 +738,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                     } else if (i === activeIndex + 1 && progress > activeIndex * segmentSize) {
-                        // Phase 3B: ENTERING FROM BELOW ONLY AFTER PREVIOUS TILE IS 100% INVISIBLE (prevTileP >= 0.77)
+                        // Phase 3: ENTERING TILE SLIDES UP FROM BELOW IN PARALLEL AT 100% SOLID OPACITY (WITHOUT FADE)
                         const prevSegStart = (i - 1) * segmentSize;
                         const prevTileP = Math.max(0, Math.min(1, (progress - prevSegStart) / segmentSize));
-                        if (prevTileP >= 0.77) {
-                            const enterProgress = Math.min(1, (prevTileP - 0.77) / 0.23);
-                            opacity = enterProgress;
-                            translateY = 280 * (1 - enterProgress);
+                        if (prevTileP >= 0.65) {
+                            const enterProgress = (prevTileP - 0.65) / 0.35;
+                            opacity = 1; // SOLID 100% OPACITY (WITHOUT FADE)
+                            translateY = 420 * (1 - enterProgress);
                             scale = 0.96 + (0.04 * enterProgress);
 
                             for (let wIdx = 0; wIdx < totalWords; wIdx++) wordSpans[wIdx].classList.remove('is-filled');
