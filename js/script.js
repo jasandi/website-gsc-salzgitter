@@ -663,9 +663,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const rawTiles = section.querySelectorAll('.story-tile');
             if (!rawTiles.length) return;
 
-            // DESKTOP (≥ 1025px): Skip scroll animation, show all tiles statically
-            const isDesktop = () => window.innerWidth >= 1025;
-
             // Pre-cache DOM nodes to eliminate querySelector overhead in scroll callbacks
             const cachedTiles = Array.from(rawTiles).map(tile => {
                 const fillTexts = tile.querySelectorAll('.story-fill-text');
@@ -685,30 +682,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             });
 
-            function showAllTilesStatic() {
-                cachedTiles.forEach(tileObj => {
-                    const tile = tileObj.element;
-                    // CSS handles layout via @media, just ensure classes are set
-                    tile.style.opacity = '';
-                    tile.style.transform = '';
-                    tile.style.visibility = '';
-                    tile.style.pointerEvents = '';
-                    tileObj.wordSpans.forEach(w => w.classList.add('is-filled'));
-                    tileObj.bulletItems.forEach(b => b.classList.add('is-revealed'));
-                });
-            }
-
             const numTiles = cachedTiles.length;
             const segmentSize = 1 / numTiles;
             let isTicking = false;
 
             function updateStoryProgress() {
-                // On desktop, skip scroll animation entirely
-                if (isDesktop()) {
-                    showAllTilesStatic();
-                    return;
-                }
-
                 const rect = section.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
                 const totalScrollableDistance = rect.height - viewportHeight;
