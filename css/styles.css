@@ -1367,16 +1367,22 @@ details[open] .accordion-header::after {
 }
 
 /* Interactive Storytelling Scroll Section (Rose Bikes / Apple Style) */
-.interactive-story-section {
+.interactive-story-section,
+.interactive-timetable-section {
   position: relative;
   height: 480vh; /* Extended scroll track distance for relaxed threshold scrolling */
   padding: 0 !important;
+}
+
+.interactive-timetable-section {
+  height: 200vh; /* Override height for timetable */
 }
 
 .story-sticky-container {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1386,17 +1392,19 @@ details[open] .accordion-header::after {
   box-sizing: border-box;
 }
 
-.interactive-story-section .section-header {
+.interactive-story-section .section-header,
+.interactive-timetable-section .section-header {
   position: relative;
   z-index: 100 !important;
   width: 100%;
-  padding: 1.5rem 0 2.8rem 0;
+  padding: clamp(1.5rem, 4vh, 2.5rem) 0 clamp(1rem, 4vh, 2.8rem) 0;
   margin-bottom: 0;
   flex-shrink: 0;
   pointer-events: none;
 }
 
-.dark-bg.interactive-story-section .section-header {
+.dark-bg.interactive-story-section .section-header,
+.dark-bg.interactive-timetable-section .section-header {
   background: linear-gradient(180deg, var(--color-bg-dark) 0%, var(--color-bg-dark) 78%, rgba(17, 18, 22, 0) 100%) !important;
 }
 
@@ -1404,7 +1412,8 @@ details[open] .accordion-header::after {
   background: linear-gradient(180deg, var(--color-bg-black) 0%, var(--color-bg-black) 78%, rgba(10, 10, 12, 0) 100%) !important;
 }
 
-.interactive-story-section .section-header * {
+.interactive-story-section .section-header *,
+.interactive-timetable-section .section-header * {
   pointer-events: auto;
 }
 
@@ -2022,15 +2031,6 @@ details[open] .accordion-header::after {
 }
 
 /* Interactive Timetable Progress Bar */
-.interactive-timetable-section {
-  position: relative;
-  height: 200vh; /* Scroll track distance for animation */
-  padding: 0 !important;
-}
-
-.interactive-timetable-section .story-sticky-container {
-  /* Using the same sticky container class as stories */
-}
 
 .timetable .progress-row td {
   padding: 0;
@@ -2080,6 +2080,13 @@ details[open] .accordion-header::after {
     display: inline;
     margin-left: 0.5rem;
     margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .timetable th,
+  .timetable td {
+    padding: 0.75rem 1rem;
   }
 }
 
