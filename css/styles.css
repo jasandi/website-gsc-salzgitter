@@ -2498,6 +2498,18 @@ a.event-card-time:hover {
   margin-bottom: 1rem;
 }
 
+.track-text-col p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  color: var(--color-text-muted);
+}
+
+.track-text-col .feature-list li {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 /* Staggered Initial States */
 .track-reveal-item .stagger-1 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.1s; }
 .track-reveal-item .stagger-2 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.2s; }
@@ -2541,6 +2553,12 @@ a.event-card-time:hover {
   
   .track-text-col .feature-list {
     text-align: left;
+  }
+
+  .track-text-col p,
+  .track-text-col .feature-list li {
+    font-size: 1rem;
+    line-height: 1.5;
   }
 }
 
