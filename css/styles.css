@@ -2555,19 +2555,27 @@ a.event-card-time:hover {
 
 .stepped-viewport {
   position: relative;
-  height: 100%;
-  width: 100%;
-  padding-top: 2rem; /* space below sticky header */
+  /* We remove fixed height so we can set it dynamically in JS */
+  /* height: 100%; */
+  /* Remove width: 100% to inherit container's 90% */
+  /* We use flex to center the dynamic height container if needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   overflow: hidden; 
-  /* hide the cards that slide out of the top/bottom */
-  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.stepped-viewport-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .stepped-track {
   will-change: transform;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-  padding-bottom: 20vh; /* Ensure gap between last card and bottom of viewport */
 }
 
 /* Base styles for the stepped cards */

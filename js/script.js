@@ -714,9 +714,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let isTicking = false;
             let rows = [];
             let rowHeight = 0;
-
             let numSteps = 0;
-            let maxTranslate = 0;
+            let visibleRows = 1;
 
             function calculateRows() {
                 // reset transform for measurement
@@ -738,17 +737,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentRow.length) rows.push(currentRow);
                 
                 if (rows.length > 1) {
-                    // Calculate height of a row + gap
                     rowHeight = rows[1][0].offsetTop - rows[0][0].offsetTop;
+                } else if (rows.length === 1) {
+                    rowHeight = rows[0][0].offsetHeight + 20; // fallback
                 }
 
-                const viewportHeight = window.innerHeight;
-                // Add extra padding to the bottom so the last card isn't flush
-                const extraPadding = 100;
-                maxTranslate = Math.max(0, track.scrollHeight - viewportHeight + extraPadding);
+                const viewportInner = section.querySelector('.stepped-viewport');
+                const availableHeight = viewportInner ? viewportInner.getBoundingClientRect().height : window.innerHeight;
                 
-                if (maxTranslate > 0) {
-                    numSteps = Math.ceil(maxTranslate / (rowHeight || 1));
+                visibleRows = Math.floor(availableHeight / (rowHeight || 1));
+                if (visibleRows < 1) visibleRows = 1;
+                if (visibleRows > rows.length) visibleRows = rows.length;
+
+                const innerWrapper = section.querySelector('.stepped-viewport-inner');
+                if (innerWrapper) {
+                    innerWrapper.style.height = (visibleRows * rowHeight) + 'px';
+                }
+
+                if (visibleRows < rows.length) {
+                    numSteps = rows.length - visibleRows;
                     // Dynamic height based on how many steps we actually need
                     section.style.height = (100 + numSteps * 100) + 'vh';
                 } else {
@@ -773,9 +780,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Step translation
                 let translateY = activeStep * rowHeight;
-                if (activeStep === numSteps) {
-                    translateY = maxTranslate;
-                }
                 track.style.transform = `translateY(-${translateY}px)`;
 
                 // Update row classes for animation
@@ -788,6 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
                 });
+                
                 isTicking = false;
             }
 
