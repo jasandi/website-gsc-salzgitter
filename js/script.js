@@ -712,7 +712,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!cards.length) return;
 
             let isTicking = false;
-            let rows = [];
             let rowHeight = 0;
             let numSteps = 0;
             let visibleRows = 1;
@@ -720,26 +719,15 @@ document.addEventListener('DOMContentLoaded', () => {
             function calculateRows() {
                 // reset transform for measurement
                 track.style.transform = 'none';
-                rows = [];
-                let currentY = -1;
-                let currentRow = [];
                 
-                cards.forEach(card => {
-                    let top = card.offsetTop;
-                    if (Math.abs(top - currentY) > 10) {
-                        if (currentRow.length) rows.push(currentRow);
-                        currentRow = [card];
-                        currentY = top;
-                    } else {
-                        currentRow.push(card);
-                    }
-                });
-                if (currentRow.length) rows.push(currentRow);
-                
-                if (rows.length > 1) {
-                    rowHeight = rows[1][0].offsetTop - rows[0][0].offsetTop;
-                } else if (rows.length === 1) {
-                    rowHeight = rows[0][0].offsetHeight + 20; // fallback
+                const numCards = cards.length;
+                rowHeight = 0;
+
+                if (numCards > 1) {
+                    rowHeight = cards[1].offsetTop - cards[0].offsetTop;
+                    if (rowHeight < 10) rowHeight = cards[0].offsetHeight + 20; // fallback
+                } else if (numCards === 1) {
+                    rowHeight = cards[0].offsetHeight + 20; // fallback
                 }
 
                 let availableHeight = window.innerHeight;
@@ -752,19 +740,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gap = rowHeight - (cards[0] ? cards[0].offsetHeight : 0);
                 visibleRows = Math.floor((availableHeight + gap) / (rowHeight || 1));
                 if (visibleRows < 1) visibleRows = 1;
-                if (visibleRows > rows.length) visibleRows = rows.length;
+                if (visibleRows > numCards) visibleRows = numCards;
 
                 const innerWrapper = section.querySelector('.stepped-viewport-inner');
                 if (innerWrapper) {
-                    // True height is visibleRows * rowHeight minus one gap, where gap = rowHeight - cardHeight
+                    // True height is visibleRows * rowHeight minus one gap
                     const trueHeight = (visibleRows * rowHeight) - gap;
                     innerWrapper.style.height = trueHeight + 'px';
                 }
 
-                if (visibleRows < rows.length) {
-                    numSteps = rows.length - visibleRows;
+                if (visibleRows < numCards) {
+                    numSteps = numCards - visibleRows;
                     // Dynamic height based on how many steps we actually need
-                    section.style.height = (100 + numSteps * 100) + 'vh';
+                    // Use a smaller scroll distance per step (50vh) so it iterates faster
+                    section.style.height = (100 + numSteps * 50) + 'vh';
                 } else {
                     numSteps = 0;
                     section.style.height = 'auto'; // No scrolling needed
@@ -789,15 +778,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 let translateY = activeStep * rowHeight;
                 track.style.transform = `translateY(-${translateY}px)`;
 
-                // Update row classes for animation
-                rows.forEach((row, i) => {
-                    row.forEach(card => {
-                        if (i < activeStep) {
-                            card.classList.add('fading-out-up');
-                        } else {
-                            card.classList.remove('fading-out-up');
-                        }
-                    });
+                // Update classes for animation
+                cards.forEach((card, i) => {
+                    if (i < activeStep) {
+                        card.classList.add('fading-out-up');
+                    } else {
+                        card.classList.remove('fading-out-up');
+                    }
                 });
                 
                 isTicking = false;
