@@ -1483,7 +1483,7 @@ details[open] .accordion-header::after {
 .story-fill-text {
   font-size: clamp(1.05rem, 2.2vw, 1.2rem);
   line-height: 1.6;
-  margin-bottom: 1.0rem;
+  margin-bottom: 1.25rem;
 }
 
 .story-fill-text .word {
@@ -1499,11 +1499,17 @@ details[open] .accordion-header::after {
   text-shadow: 0 0 10px rgba(255, 107, 0, 0.35);
 }
 
-/* Feature Bullets Progressive Reveal in Story Stage */
+/* Feature Bullets Progressive Reveal in Story Stage (Symmetrical Top & Bottom Spacing) */
 .story-tile .feature-list {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.story-tile .btn {
+  margin-top: 0 !important;
 }
 
 .story-tile .feature-list li {
@@ -1567,11 +1573,12 @@ details[open] .accordion-header::after {
   .story-fill-text {
     font-size: 1.02rem;
     line-height: 1.5;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.95rem;
   }
 
   .story-tile .feature-list {
     gap: 0.45rem;
+    margin-bottom: 0.95rem;
   }
 
   .story-tile .feature-list li {
