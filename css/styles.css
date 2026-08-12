@@ -1470,20 +1470,18 @@ details[open] .accordion-header::after {
   aspect-ratio: 16/10 !important;
   object-fit: cover !important;
   border-radius: 18px;
-}
-
-.story-tile h3 {
-  font-size: clamp(1.5rem, 3.2vw, 2.0rem);
+}.story-tile h3 {
+  font-size: clamp(1.4rem, 2.8vw, 1.85rem);
   font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Word-by-Word Color Fill Effect (Prominent & Fixed Weight for Zero Layout Shift) */
+/* Word-by-Word Color Fill Effect */
 .story-fill-text {
-  font-size: clamp(1.05rem, 2.2vw, 1.2rem);
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
+  font-size: clamp(1.0rem, 2.0vw, 1.15rem);
+  line-height: 1.5;
+  margin-bottom: 0.9rem !important;
 }
 
 .story-fill-text .word {
@@ -1499,22 +1497,28 @@ details[open] .accordion-header::after {
   text-shadow: 0 0 10px rgba(255, 107, 0, 0.35);
 }
 
-/* Feature Bullets Progressive Reveal in Story Stage (Symmetrical Top & Bottom Spacing) */
+/* Feature Bullets Progressive Reveal in Story Stage (Tight Bullet Gap & Centered Block) */
 .story-tile .feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 0;
-  margin-bottom: 1.25rem;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.9rem !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-.story-tile .btn {
+.story-tile .btn,
+.story-tile a.btn {
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  align-self: flex-start !important;
 }
 
 .story-tile .feature-list li {
-  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
-  line-height: 1.5;
+  font-size: clamp(0.9rem, 1.6vw, 1.0rem);
+  line-height: 1.4;
+  margin-bottom: 0 !important;
   opacity: 0.28;
   transform: translateY(6px);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1529,8 +1533,8 @@ details[open] .accordion-header::after {
 }
 
 .story-tile .feature-list svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 /* Story Progress Dots Indicator */
@@ -1557,32 +1561,55 @@ details[open] .accordion-header::after {
   box-shadow: 0 0 12px rgba(255, 107, 0, 0.5);
 }
 
-/* Responsive Sizing for Compact Windows & Smartphones (Screen-Filling Layout) */
+/* Responsive Sizing for Compact Windows & Smartphones (Fits 100% inside Viewport) */
 @media (max-width: 768px), (max-height: 720px) {
+  .interactive-story-section .section-header {
+    margin-bottom: 0.3rem !important;
+    padding: 0.8rem 1rem 2.0rem 1rem !important;
+  }
+
   .story-tile.track-card {
     grid-template-columns: 1fr;
-    gap: 1.0rem;
-    padding: 1.4rem 1.6rem;
+    gap: 0.75rem;
+    padding: 1.1rem 1.3rem !important;
   }
 
   .story-tile.track-card img {
-    max-height: 210px;
-    margin-bottom: 0.4rem !important;
+    max-height: 165px !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .story-tile h3 {
+    font-size: 1.35rem !important;
+    margin-bottom: 0.35rem !important;
   }
 
   .story-fill-text {
-    font-size: 1.02rem;
-    line-height: 1.5;
-    margin-bottom: 0.95rem;
+    font-size: 0.96rem !important;
+    line-height: 1.45 !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .story-tile .feature-list {
-    gap: 0.45rem;
-    margin-bottom: 0.95rem;
+    gap: 0.3rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.75rem !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .story-tile .feature-list li {
-    font-size: 0.95rem;
+    font-size: 0.9rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .story-tile .btn,
+  .story-tile a.btn {
+    padding: 0.45rem 1.2rem !important;
+    font-size: 0.88rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   .story-progress-dots {
