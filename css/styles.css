@@ -2564,6 +2564,7 @@ a.event-card-time:hover {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  padding: 3rem 0; /* Add padding to enforce a minimum gap from the header and bottom */
   overflow: hidden; 
 }
 

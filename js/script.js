@@ -743,7 +743,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const viewportInner = section.querySelector('.stepped-viewport');
-                const availableHeight = viewportInner ? viewportInner.getBoundingClientRect().height : window.innerHeight;
+                // Subtract the 6rem (approx 96px) vertical padding we added to .stepped-viewport in CSS
+                const availableHeight = viewportInner ? viewportInner.getBoundingClientRect().height - 96 : window.innerHeight;
                 
                 visibleRows = Math.floor(availableHeight / (rowHeight || 1));
                 if (visibleRows < 1) visibleRows = 1;
