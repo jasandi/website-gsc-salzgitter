@@ -2567,6 +2567,12 @@ a.event-card-time:hover {
   overflow: hidden; 
 }
 
+@media (max-width: 768px) {
+  .stepped-viewport {
+    padding: 1rem 0;
+  }
+}
+
 .stepped-viewport-inner {
   position: relative;
   width: 100%;

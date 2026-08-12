@@ -742,18 +742,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     rowHeight = rows[0][0].offsetHeight + 20; // fallback
                 }
 
-                const viewportInner = section.querySelector('.stepped-viewport');
-                // Subtract the 6rem (approx 96px) vertical padding we added to .stepped-viewport in CSS
-                const availableHeight = viewportInner ? viewportInner.getBoundingClientRect().height - 96 : window.innerHeight;
+                let availableHeight = window.innerHeight;
+                if (viewportInner) {
+                    const style = window.getComputedStyle(viewportInner);
+                    const paddingToRemove = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
+                    availableHeight = viewportInner.getBoundingClientRect().height - paddingToRemove;
+                }
                 
-                visibleRows = Math.floor(availableHeight / (rowHeight || 1));
+                const gap = rowHeight - (cards[0] ? cards[0].offsetHeight : 0);
+                visibleRows = Math.floor((availableHeight + gap) / (rowHeight || 1));
                 if (visibleRows < 1) visibleRows = 1;
                 if (visibleRows > rows.length) visibleRows = rows.length;
 
                 const innerWrapper = section.querySelector('.stepped-viewport-inner');
                 if (innerWrapper) {
                     // True height is visibleRows * rowHeight minus one gap, where gap = rowHeight - cardHeight
-                    const gap = rowHeight - (cards[0] ? cards[0].offsetHeight : 0);
                     const trueHeight = (visibleRows * rowHeight) - gap;
                     innerWrapper.style.height = trueHeight + 'px';
                 }
