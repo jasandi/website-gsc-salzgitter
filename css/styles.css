@@ -2555,10 +2555,9 @@ a.event-card-time:hover {
 
 .stepped-viewport {
   position: relative;
-  /* We remove fixed height so we can set it dynamically in JS */
-  /* height: 100%; */
-  /* Remove width: 100% to inherit container's 90% */
-  /* We use flex to center the dynamic height container if needed */
+  /* Fill the remaining space in the sticky container */
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

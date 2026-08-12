@@ -752,7 +752,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const innerWrapper = section.querySelector('.stepped-viewport-inner');
                 if (innerWrapper) {
-                    innerWrapper.style.height = (visibleRows * rowHeight) + 'px';
+                    // True height is visibleRows * rowHeight minus one gap, where gap = rowHeight - cardHeight
+                    const gap = rowHeight - (cards[0] ? cards[0].offsetHeight : 0);
+                    const trueHeight = (visibleRows * rowHeight) - gap;
+                    innerWrapper.style.height = trueHeight + 'px';
                 }
 
                 if (visibleRows < rows.length) {
