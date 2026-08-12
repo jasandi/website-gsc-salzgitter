@@ -709,7 +709,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. Interactive Storytelling Scroll Engine (GPU Hardware-Accelerated & rAF-Throttled)
+    // 9. Horizontal Scroll Engine (Termine)
+    function initHorizontalScrollSections() {
+        const horizontalSections = document.querySelectorAll('.interactive-horizontal-section');
+        if (!horizontalSections.length) return;
+
+        horizontalSections.forEach(section => {
+            const track = section.querySelector('.horizontal-track');
+            if (!track) return;
+
+            let isTicking = false;
+
+            function updateHorizontalScroll() {
+                const rect = section.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                
+                // Calculate how much we've scrolled vertically into the section
+                const maxVerticalScroll = rect.height - viewportHeight;
+                if (maxVerticalScroll <= 0) return;
+                
+                const scrolled = -rect.top;
+                
+                // Clamp progress between 0 and 1
+                let progress = Math.max(0, Math.min(1, scrolled / maxVerticalScroll));
+
+                // Calculate the max horizontal translation
+                // The track width minus the viewport width plus some padding
+                const maxTranslate = track.scrollWidth - window.innerWidth;
+                
+                // Only animate if the track is actually wider than the screen
+                if (maxTranslate > 0) {
+                    const translateX = progress * -maxTranslate;
+                    track.style.transform = `translate3d(${translateX}px, 0, 0)`;
+                }
+                
+                isTicking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(updateHorizontalScroll);
+                    isTicking = true;
+                }
+            }, { passive: true });
+            
+            // Initial call to set correct position on load
+            updateHorizontalScroll();
+        });
+    }
+
+    // 10. Interactive Storytelling Scroll Engine (GPU Hardware-Accelerated & rAF-Throttled)
     function initInteractiveStorySections() {
         const storySections = document.querySelectorAll('.interactive-story-section');
         if (!storySections.length) return;
@@ -866,6 +915,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initInteractiveStorySections();
     initInteractiveTrackSections();
+    initHorizontalScrollSections();
 
     // 10. Interactive Timetable Scroll Engine
     function initInteractiveTimetableSections() {
