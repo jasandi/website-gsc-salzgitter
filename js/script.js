@@ -731,6 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 let availableHeight = window.innerHeight;
+                const viewportInner = section.querySelector('.stepped-viewport');
                 if (viewportInner) {
                     const style = window.getComputedStyle(viewportInner);
                     const paddingToRemove = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
@@ -758,15 +759,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     numSteps = 0;
                     section.style.height = 'auto'; // No scrolling needed
                 }
+
+                // DEBUG OVERLAY (temporary)
+                let debugEl = section.querySelector('.debug-overlay');
+                if (!debugEl) {
+                    debugEl = document.createElement('div');
+                    debugEl.className = 'debug-overlay';
+                    debugEl.style.position = 'absolute';
+                    debugEl.style.top = '10px';
+                    debugEl.style.left = '10px';
+                    debugEl.style.background = 'red';
+                    debugEl.style.color = 'white';
+                    debugEl.style.padding = '5px';
+                    debugEl.style.zIndex = '9999';
+                    debugEl.style.fontSize = '12px';
+                    section.appendChild(debugEl);
+                }
+                debugEl.innerHTML = `cards: ${numCards}, rowH: ${rowHeight}, availH: ${availableHeight}, visRows: ${visibleRows}, steps: ${numSteps}, maxScr: ${section.getBoundingClientRect().height - window.innerHeight}`;
             }
 
             function updateScroll() {
-                if (numSteps === 0) return;
+                if (numSteps === 0) {
+                    isTicking = false;
+                    return;
+                }
 
                 const rect = section.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
                 const maxScroll = rect.height - viewportHeight;
-                if (maxScroll <= 0) return;
+                if (maxScroll <= 0) {
+                    isTicking = false;
+                    return;
+                }
 
                 const scrolled = -rect.top;
                 let progress = Math.max(0, Math.min(1, scrolled / maxScroll));
@@ -787,6 +811,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
                 
+                let debugEl = section.querySelector('.debug-overlay');
+                if (debugEl) {
+                    debugEl.innerHTML = `cards: ${cards.length}, vis: ${visibleRows}, steps: ${numSteps}, maxScr: ${maxScroll}, prgrs: ${progress.toFixed(2)}, act: ${activeStep}, trans: ${translateY}`;
+                }
+
                 isTicking = false;
             }
 
