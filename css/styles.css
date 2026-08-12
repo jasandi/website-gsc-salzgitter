@@ -1725,50 +1725,87 @@ details[open] .accordion-header::after {
 
 @media (max-width: 1024px) {
   :root {
-    --nav-height: 70px;
+    --nav-height: 0px;
   }
 
+  /* Remove full-width translucent bar on mobile */
   .navbar {
-    top: 15px;
-    width: 95%;
-    border-radius: 30px;
+    position: fixed !important;
+    top: 1.2rem !important;
+    right: 1.2rem !important;
+    left: auto !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-radius: 0 !important;
+    z-index: 1002 !important;
   }
 
   .nav-container {
-    justify-content: space-between;
-    padding: 0 1.5rem;
-    /* Re-enable space-between for hamburger */
+    padding: 0 !important;
+    width: auto !important;
+    background: transparent !important;
   }
 
+  /* Floating Circular Glassmorphic Hamburger Button in Top-Right Corner */
   .menu-toggle {
-    display: block;
-    margin-left: auto;
-    position: relative;
-    /* Push hamburger to right if alone */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(18, 19, 24, 0.88) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 107, 0, 0.2) !important;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
+  .menu-toggle:active {
+    transform: scale(0.92);
+  }
+
+  .hamburger {
+    position: relative;
+  }
+
+  /* Fullscreen Blur Overlay Menu when Active */
   .nav-links {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: calc(100vh - 30px);
-    padding-top: calc(var(--nav-height) + 20px);
-    background-color: rgba(10, 10, 12, 0.98);
-    backdrop-filter: blur(15px);
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    background-color: rgba(10, 10, 12, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 0;
+    border: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transform: translateX(120%);
-    transition: transform var(--transition-normal);
+    transform: translateY(-100%);
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
     opacity: 0;
     pointer-events: none;
+    z-index: 1001;
   }
 
   .nav-links.active {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
     pointer-events: all;
   }
@@ -1776,7 +1813,7 @@ details[open] .accordion-header::after {
   .nav-links ul {
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 2.2rem;
   }
 
   .nav-links a {
