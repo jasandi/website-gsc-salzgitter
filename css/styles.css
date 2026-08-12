@@ -1754,7 +1754,7 @@ details[open] .accordion-header::after {
     background: transparent !important;
   }
 
-  /* Floating Circular Glassmorphic Hamburger Button in Top-Right Corner */
+  /* Floating Circular Glassmorphic Hamburger Button with Smart Hide/Show */
   .menu-toggle {
     display: flex !important;
     align-items: center;
@@ -1768,9 +1768,18 @@ details[open] .accordion-header::after {
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 107, 0, 0.2) !important;
     cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s, background-color 0.2s;
     margin: 0 !important;
     padding: 0 !important;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .menu-toggle.is-hidden:not(.active) {
+    opacity: 0;
+    transform: translateY(-80px);
+    pointer-events: none;
   }
 
   .menu-toggle:active {
@@ -1781,22 +1790,23 @@ details[open] .accordion-header::after {
     position: relative;
   }
 
-  /* Fullscreen Blur Overlay Menu when Active */
+  /* Fullscreen Blur Overlay Menu with Top Safety Margin */
   .nav-links {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    padding: 0;
+    padding: 6.5rem 1.5rem 3rem 1.5rem !important; /* Safety distance from top status bar */
     background-color: rgba(10, 10, 12, 0.96);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     border-radius: 0;
     border: none;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start !important;
+    overflow-y: auto;
     transform: translateY(-100%);
     transition: transform var(--transition-normal), opacity var(--transition-normal);
     opacity: 0;

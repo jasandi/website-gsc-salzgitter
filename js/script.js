@@ -49,65 +49,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // 1. Mobile Navigation Toggle
+    // 1. Mobile Navigation & Smart Floating Button Logic
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const navItems = document.querySelectorAll('.nav-links a');
+    const menuCloseBtn = document.querySelector('.menu-close-btn');
 
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-        menuToggle.setAttribute('aria-expanded', !isExpanded);
+    function closeMobileMenu() {
+        if (navLinks && navLinks.classList.contains('active')) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+    }
 
-        // Prevent body scroll when menu is open
-        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            const isActive = navLinks.classList.contains('active');
+            if (isActive) {
+                closeMobileMenu();
+            } else {
+                menuToggle.classList.add('active');
+                navLinks.classList.add('active');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    }
+
+    if (menuCloseBtn) {
+        menuCloseBtn.addEventListener('click', closeMobileMenu);
+    }
+
+    // Close menu when tapping dark overlay outside of navigation items
+    if (navLinks) {
+        navLinks.addEventListener('click', (e) => {
+            if (e.target === navLinks) {
+                closeMobileMenu();
+            }
+        });
+    }
 
     // Close mobile menu on link click
     navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (navLinks.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
-        });
+        item.addEventListener('click', closeMobileMenu);
     });
 
-    // 2. Navbar Scroll Effect & Hide on Scroll Down
+    // 2. Smart Scroll Visibility for Floating Hamburger Button & Desktop Navbar
     const navbar = document.querySelector('.navbar');
     let lastScrollTop = 0;
-    const scrollThreshold = 100;
+    const scrollThreshold = 60;
 
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Add solid background after scrolling down
+        // Desktop navbar scrolled class
         if (scrollTop > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
 
-        // Hide navbar on scroll down, show on scroll up
-        if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
-            // Downscroll
-            navbar.classList.add('hidden');
-            // Close mobile menu if open during scroll
-            if (navLinks.classList.contains('active')) {
-                menuToggle.click();
+        // Smart Floating Mobile Button & Desktop Navbar Hide/Show
+        if (menuToggle && navLinks && !navLinks.classList.contains('active')) {
+            if (scrollTop <= 50) {
+                // At top of page -> ALWAYS SHOW
+                menuToggle.classList.remove('is-hidden');
+                if (navbar) navbar.classList.remove('hidden');
+            } else if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                // Scrolling DOWN -> HIDE
+                menuToggle.classList.add('is-hidden');
+                if (navbar) navbar.classList.add('hidden');
+            } else if (scrollTop < lastScrollTop) {
+                // Scrolling UP -> SHOW
+                menuToggle.classList.remove('is-hidden');
+                if (navbar) navbar.classList.remove('hidden');
             }
-        } else {
-            // Upscroll
-            navbar.classList.remove('hidden');
         }
-
-        // Helper to update sticky section header top offset dynamically
-        const isHidden = navbar.classList.contains('hidden');
-        const offset = isHidden ? 15 : (navbar.offsetHeight + 25);
-        document.documentElement.style.setProperty('--sticky-header-top', `${offset}px`);
 
         lastScrollTop = scrollTop;
     }, { passive: true }); // Passive listener for better scroll performance
