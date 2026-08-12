@@ -803,9 +803,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 isTicking = false;
             }
 
+            let lastWidth = window.innerWidth;
             window.addEventListener('resize', () => {
-                calculateRows();
-                updateScroll();
+                if (window.innerWidth !== lastWidth) {
+                    lastWidth = window.innerWidth;
+                    calculateRows();
+                    updateScroll();
+                }
             });
             window.addEventListener('scroll', () => {
                 if (!isTicking) {
