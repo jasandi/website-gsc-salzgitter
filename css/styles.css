@@ -2505,14 +2505,9 @@ a.event-card-time:hover {
 .track-reveal-item .stagger-4 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.4s; }
 .track-reveal-item .stagger-img img { transform: scale(1.05); opacity: 0.8; transition: all 0.8s ease; }
 
-/* Staggered Active States */
 .track-reveal-item.active .stagger-1,
-.track-reveal-item.active .stagger-2 {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.track-reveal-item.active.show-details .stagger-3 {
+.track-reveal-item.active .stagger-2,
+.track-reveal-item.active .stagger-3 {
   transform: translateY(0);
   opacity: 1;
 }
