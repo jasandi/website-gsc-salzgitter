@@ -730,6 +730,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     rowHeight = cards[0].offsetHeight + 20; // fallback
                 }
 
+                // If elements are not yet laid out by the browser (e.g. Safari deferring off-screen layout),
+                // offsetHeight will be 0, making rowHeight abnormally small. We must retry.
+                if (rowHeight < 50) {
+                    section.dataset.retries = (parseInt(section.dataset.retries) || 0) + 1;
+                    if (section.dataset.retries < 20) {
+                        setTimeout(() => {
+                            calculateRows();
+                            updateScroll();
+                        }, 50);
+                        return;
+                    }
+                }
+
                 let availableHeight = window.innerHeight;
                 const viewportInner = section.querySelector('.stepped-viewport');
                 if (viewportInner) {
