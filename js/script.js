@@ -654,6 +654,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 9a. Interactive Track Section Engine (Clean Split-Reveal)
+    function initInteractiveTrackSections() {
+        const trackSections = document.querySelectorAll('.interactive-track-section');
+        if (!trackSections.length) return;
+
+        trackSections.forEach(section => {
+            const rawItems = section.querySelectorAll('.track-reveal-item');
+            if (!rawItems.length) return;
+            const items = Array.from(rawItems);
+            
+            const numItems = items.length;
+            const segmentSize = 1 / numItems;
+            let isTicking = false;
+
+            function updateTrackProgress() {
+                const rect = section.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const totalScrollableDistance = rect.height - viewportHeight;
+                if (totalScrollableDistance <= 0) return;
+
+                const scrolled = -rect.top;
+                let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
+
+                let activeIndex = Math.floor(progress / segmentSize);
+                if (activeIndex >= numItems) activeIndex = numItems - 1;
+
+                items.forEach((item, i) => {
+                    if (i === activeIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                isTicking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!isTicking) {
+                    window.requestAnimationFrame(updateTrackProgress);
+                    isTicking = true;
+                }
+            }, { passive: true });
+            
+            updateTrackProgress();
+        });
+    }
+
     // 9. Interactive Storytelling Scroll Engine (GPU Hardware-Accelerated & rAF-Throttled)
     function initInteractiveStorySections() {
         const storySections = document.querySelectorAll('.interactive-story-section');
@@ -810,6 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initInteractiveStorySections();
+    initInteractiveTrackSections();
 
     // 10. Interactive Timetable Scroll Engine
     function initInteractiveTimetableSections() {

@@ -1368,7 +1368,8 @@ details[open] .accordion-header::after {
 
 /* Interactive Storytelling Scroll Section (Rose Bikes / Apple Style) */
 .interactive-story-section,
-.interactive-timetable-section {
+.interactive-timetable-section,
+.interactive-track-section {
   position: relative;
   height: 480vh; /* Extended scroll track distance for relaxed threshold scrolling */
   padding: 0 !important;
@@ -1393,7 +1394,8 @@ details[open] .accordion-header::after {
 }
 
 .interactive-story-section .section-header,
-.interactive-timetable-section .section-header {
+.interactive-timetable-section .section-header,
+.interactive-track-section .section-header {
   position: relative;
   z-index: 100 !important;
   width: 100%;
@@ -1404,7 +1406,8 @@ details[open] .accordion-header::after {
 }
 
 .dark-bg.interactive-story-section .section-header,
-.dark-bg.interactive-timetable-section .section-header {
+.dark-bg.interactive-timetable-section .section-header,
+.dark-bg.interactive-track-section .section-header {
   background: linear-gradient(180deg, var(--color-bg-dark) 0%, var(--color-bg-dark) 78%, rgba(17, 18, 22, 0) 100%) !important;
 }
 
@@ -1413,7 +1416,8 @@ details[open] .accordion-header::after {
 }
 
 .interactive-story-section .section-header *,
-.interactive-timetable-section .section-header * {
+.interactive-timetable-section .section-header *,
+.interactive-track-section .section-header * {
   pointer-events: auto;
 }
 
@@ -2412,4 +2416,126 @@ a.event-card-time:hover {
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;
+}
+/* Interactive Track Section (Clean Split-Reveal) */
+.track-stage-container {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+.track-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-reveal-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  /* Instead of full transform we just use opacity and minor translate, controlled by JS or CSS */
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.track-reveal-item.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.track-content-row {
+  display: flex;
+  width: 100%;
+  gap: 3rem;
+  align-items: center;
+}
+
+.track-text-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.track-image-col {
+  flex: 1;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  /* The image wrapper can have a baseline state */
+}
+
+.track-image-col img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.track-text-col h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Staggered Initial States */
+.track-reveal-item .stagger-1 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.1s; }
+.track-reveal-item .stagger-2 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.2s; }
+.track-reveal-item .stagger-3 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.3s; }
+.track-reveal-item .stagger-4 { transform: translateY(20px); opacity: 0; transition: all 0.5s ease 0.4s; }
+.track-reveal-item .stagger-img img { transform: scale(1.05); opacity: 0.8; transition: all 0.8s ease; }
+
+/* Staggered Active States */
+.track-reveal-item.active .stagger-1,
+.track-reveal-item.active .stagger-2,
+.track-reveal-item.active .stagger-3,
+.track-reveal-item.active .stagger-4 {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.track-reveal-item.active .stagger-img img {
+  transform: scale(1);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .track-content-row {
+    flex-direction: column-reverse;
+    gap: 1.5rem;
+  }
+  
+  .track-text-col {
+    text-align: center;
+    align-items: center;
+  }
+  
+  .track-text-col h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .track-image-col {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .track-text-col .feature-list {
+    text-align: left;
+  }
 }
