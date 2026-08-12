@@ -901,7 +901,7 @@ img {
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
-  top: 0.25rem;
+  top: 0.35rem;
 }
 
 .feature-list li.li-level::before {
@@ -2503,9 +2503,12 @@ a.event-card-time:hover {
 
 /* Staggered Active States */
 .track-reveal-item.active .stagger-1,
-.track-reveal-item.active .stagger-2,
-.track-reveal-item.active .stagger-3,
-.track-reveal-item.active .stagger-4 {
+.track-reveal-item.active .stagger-2 {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.track-reveal-item.active.show-details .stagger-3 {
   transform: translateY(0);
   opacity: 1;
 }
@@ -2523,8 +2526,8 @@ a.event-card-time:hover {
   }
   
   .track-text-col {
-    text-align: center;
-    align-items: center;
+    text-align: left;
+    align-items: flex-start;
   }
   
   .track-text-col h3 {

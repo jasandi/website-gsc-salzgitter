@@ -683,8 +683,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach((item, i) => {
                     if (i === activeIndex) {
                         item.classList.add('active');
+                        const segStart = i * segmentSize;
+                        const tileP = Math.max(0, Math.min(1, (progress - segStart) / segmentSize));
+                        if (tileP >= 0.4) {
+                            item.classList.add('show-details');
+                        } else {
+                            item.classList.remove('show-details');
+                        }
                     } else {
                         item.classList.remove('active');
+                        item.classList.remove('show-details');
                     }
                 });
                 isTicking = false;
