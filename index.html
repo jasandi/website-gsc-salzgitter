@@ -9,7 +9,7 @@
     <title>GSC Salzgitter e.V. im ADAC</title>
     <meta name="description" content="Offizielle Website des Motocross Vereins GSC Salzgitter e.V. im ADAC">
     <meta name="theme-color" content="#4c4c4e">
-    <link rel="stylesheet" href="css/styles.css?v=3.5.1">
+    <link rel="stylesheet" href="css/styles.css?v=3.6.1">
     <link rel="icon" type="image/png" href="assets/favicon.png">
 
     <!-- Open Graph / Facebook -->
@@ -95,45 +95,54 @@
         </section>
 
         <!-- Öffnungszeiten Section -->
-        <section id="oeffnungszeiten" class="section dark-bg">
-            <header class="section-header">
-                <div class="container">
-                    <h2>Unsere <span class="highlight">Trainingszeiten</span></h2>
-                    <p>Hier siehst du unsere regulären Öffnungszeiten. Für jedes Training gilt eine Anmeldepflicht für
-                        Gastfahrer und Mitglieder.</p>
-                </div>
-            </header>
-            <div class="container">
-                <div class="timetable-wrapper tile-scroll-reveal">
-                    <table class="timetable">
-                        <thead>
-                            <tr>
-                                <th class="day">Wochentag</th>
-                                <th class="time">Zeit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="day">Di, Mi, Do, Fr</td>
-                                <td class="time">15.00 - 19.00 Uhr <span class="note">Do. nur Kinder,
-                                        Jugendliche,
-                                        Anfänger bis 16 Jahre</span></td>
-                            </tr>
-                            <tr>
-                                <td class="day">Sa</td>
-                                <td class="time">10.00 - 13.00 Uhr &bull; 15.00 - 19.00 Uhr</td>
-                            </tr>
-                            <tr>
-                                <td class="day">So</td>
-                                <td class="time">10.00 - 13.00 Uhr <span class="note">nur bis 85ccm</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-center tile-scroll-reveal" style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; align-items: center;">
-                    <a href="https://mx-tickets.com/de-DE/t/gsc-salzgitter/events" target="_blank"
-                        rel="noopener noreferrer" class="btn btn-primary">Anmelden mit MX-Tickets</a>
-                    <button type="button" id="open-nutzungshinweise-btn" class="btn btn-outline">Nutzungshinweise</button>
+        <section id="oeffnungszeiten" class="interactive-timetable-section dark-bg">
+            <div class="story-sticky-container">
+                <header class="section-header">
+                    <div class="container">
+                        <h2>Unsere <span class="highlight">Trainingszeiten</span></h2>
+                        <p>Unsere regulären Öffnungszeiten. Für jedes Training gilt eine Anmeldepflicht für
+                            Gastfahrer und Mitglieder.</p>
+                    </div>
+                </header>
+                <div class="container" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; padding-bottom: 2rem;">
+                    <div class="timetable-wrapper">
+                        <table class="timetable">
+                            <thead>
+                                <tr>
+                                    <th class="day">Wochentag</th>
+                                    <th class="time">Zeit</th>
+                                </tr>
+                                <tr class="progress-row">
+                                    <td colspan="2">
+                                        <div class="timetable-progress-bar-container">
+                                            <div class="timetable-progress-bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="day">Di, Mi, Do, Fr</td>
+                                    <td class="time">15.00 - 19.00 Uhr <span class="note">Do. nur Kinder,
+                                            Jugendliche,
+                                            Anfänger bis 16 Jahre</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="day">Sa</td>
+                                    <td class="time">10.00 - 13.00 Uhr &bull; 15.00 - 19.00 Uhr</td>
+                                </tr>
+                                <tr>
+                                    <td class="day">So</td>
+                                    <td class="time">10.00 - 13.00 Uhr <span class="note">nur bis 85ccm</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center" style="margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                        <a href="https://mx-tickets.com/de-DE/t/gsc-salzgitter/events" target="_blank"
+                            rel="noopener noreferrer" class="btn btn-primary">Anmelden mit MX-Tickets</a>
+                        <button type="button" id="open-nutzungshinweise-btn" class="btn btn-outline">Nutzungshinweise</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -678,7 +687,7 @@
         </div>
     </div>
 
-    <script src="js/script.js?v=3.5.1"></script>
+    <script src="js/script.js?v=3.6.1"></script>
 
 </body>
 

@@ -810,5 +810,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initInteractiveStorySections();
+
+    // 10. Interactive Timetable Scroll Engine
+    function initInteractiveTimetableSections() {
+        const timetableSections = document.querySelectorAll('.interactive-timetable-section');
+        if (!timetableSections.length) return;
+
+        timetableSections.forEach(section => {
+            const progressBar = section.querySelector('.timetable-progress-bar');
+            if (!progressBar) return;
+
+            let isTicking = false;
+
+            function updateTimetableProgress() {
+                const rect = section.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const totalScrollableDistance = rect.height - viewportHeight;
+                if (totalScrollableDistance <= 0) return;
+
+                const scrolled = -rect.top;
+                let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
+
+                // Update progress bar width
+                progressBar.style.width = `${progress * 100}%`;
+            }
+
+            function requestUpdate() {
+                if (!isTicking) {
+                    requestAnimationFrame(() => {
+                        updateTimetableProgress();
+                        isTicking = false;
+                    });
+                    isTicking = true;
+                }
+            }
+
+            window.addEventListener('scroll', requestUpdate, { passive: true });
+            window.addEventListener('resize', requestUpdate, { passive: true });
+            updateTimetableProgress();
+        });
+    }
+
+    initInteractiveTimetableSections();
 });
 

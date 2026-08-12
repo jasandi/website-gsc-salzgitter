@@ -1703,7 +1703,7 @@ details[open] .accordion-header::after {
   line-height: 1.2;
 }
 
-.track-card p {
+.track-card:not(.story-tile) p {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.5;
@@ -1908,7 +1908,7 @@ details[open] .accordion-header::after {
     line-height: 1.2;
   }
 
-  .track-card p {
+  .track-card:not(.story-tile) p {
     font-size: 0.88rem;
     line-height: 1.35;
     margin-bottom: 0.8rem;
@@ -2012,9 +2012,41 @@ details[open] .accordion-header::after {
 }
 
 .timetable thead th {
-  border-bottom: 2px solid var(--color-primary);
   font-size: 1.1rem;
   text-transform: uppercase;
+  border-bottom: none; /* Removed border to use custom progress row */
+}
+
+/* Interactive Timetable Progress Bar */
+.interactive-timetable-section {
+  position: relative;
+  height: 200vh; /* Scroll track distance for animation */
+  padding: 0 !important;
+}
+
+.interactive-timetable-section .story-sticky-container {
+  /* Using the same sticky container class as stories */
+}
+
+.timetable .progress-row td {
+  padding: 0;
+  border: none;
+  height: 2px;
+}
+
+.timetable-progress-bar-container {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 107, 0, 0.2); /* Darkened orange */
+  position: relative;
+}
+
+.timetable-progress-bar {
+  height: 100%;
+  background-color: var(--color-primary); /* Bright orange */
+  width: 0%;
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+  transition: width 0.1s linear;
 }
 
 .timetable .day {
