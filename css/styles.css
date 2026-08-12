@@ -270,8 +270,9 @@ img {
   width: 100%;
 }
 
-.menu-toggle {
-  display: none;
+.menu-toggle,
+.menu-close-btn {
+  display: none !important;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -1815,6 +1816,10 @@ details[open] .accordion-header::after {
 
   .hamburger {
     position: relative;
+  }
+
+  .menu-close-btn {
+    display: inline-block !important;
   }
 
   /* Fullscreen Blur Overlay Menu with Top Safety Margin */
