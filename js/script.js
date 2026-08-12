@@ -709,52 +709,91 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. Horizontal Scroll Engine (Termine)
-    function initHorizontalScrollSections() {
-        const horizontalSections = document.querySelectorAll('.interactive-horizontal-section');
-        if (!horizontalSections.length) return;
+    // 9. Stepped Vertical Scroll Engine (Termine)
+    function initSteppedVerticalScroll() {
+        const sections = document.querySelectorAll('.interactive-stepped-section');
+        if (!sections.length) return;
 
-        horizontalSections.forEach(section => {
-            const track = section.querySelector('.horizontal-track');
-            if (!track) return;
+        sections.forEach(section => {
+            const track = section.querySelector('.stepped-track');
+            const cards = Array.from(track.querySelectorAll('.stepped-card'));
+            if (!cards.length) return;
 
             let isTicking = false;
+            let rows = [];
+            let rowHeight = 0;
 
-            function updateHorizontalScroll() {
+            function calculateRows() {
+                // reset transform for measurement
+                track.style.transform = 'none';
+                rows = [];
+                let currentY = -1;
+                let currentRow = [];
+                
+                cards.forEach(card => {
+                    let top = card.offsetTop;
+                    if (Math.abs(top - currentY) > 10) {
+                        if (currentRow.length) rows.push(currentRow);
+                        currentRow = [card];
+                        currentY = top;
+                    } else {
+                        currentRow.push(card);
+                    }
+                });
+                if (currentRow.length) rows.push(currentRow);
+                
+                if (rows.length > 1) {
+                    // Calculate height of a row + gap
+                    rowHeight = rows[1][0].offsetTop - rows[0][0].offsetTop;
+                }
+            }
+
+            function updateScroll() {
                 const rect = section.getBoundingClientRect();
                 const viewportHeight = window.innerHeight;
-                
-                // Calculate how much we've scrolled vertically into the section
-                const maxVerticalScroll = rect.height - viewportHeight;
-                if (maxVerticalScroll <= 0) return;
-                
-                const scrolled = -rect.top;
-                
-                // Clamp progress between 0 and 1
-                let progress = Math.max(0, Math.min(1, scrolled / maxVerticalScroll));
+                const maxScroll = rect.height - viewportHeight;
+                if (maxScroll <= 0) return;
 
-                // Calculate the max horizontal translation
-                // The track width minus the viewport width plus some padding
-                const maxTranslate = track.scrollWidth - window.innerWidth;
-                
-                // Only animate if the track is actually wider than the screen
-                if (maxTranslate > 0) {
-                    const translateX = progress * -maxTranslate;
-                    track.style.transform = `translate3d(${translateX}px, 0, 0)`;
-                }
+                const scrolled = -rect.top;
+                let progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+
+                const numSteps = rows.length;
+                let activeStep = Math.floor(progress * numSteps);
+                if (activeStep >= numSteps) activeStep = numSteps - 1;
+
+                // Step translation
+                track.style.transform = `translateY(-${activeStep * rowHeight}px)`;
+
+                // Update row classes for animation
+                rows.forEach((row, i) => {
+                    row.forEach(card => {
+                        if (i < activeStep) {
+                            card.classList.add('fading-out-up');
+                        } else {
+                            card.classList.remove('fading-out-up');
+                        }
+                    });
+                });
                 
                 isTicking = false;
             }
 
+            window.addEventListener('resize', () => {
+                calculateRows();
+                updateScroll();
+            });
             window.addEventListener('scroll', () => {
                 if (!isTicking) {
-                    window.requestAnimationFrame(updateHorizontalScroll);
+                    window.requestAnimationFrame(updateScroll);
                     isTicking = true;
                 }
             }, { passive: true });
             
-            // Initial call to set correct position on load
-            updateHorizontalScroll();
+            // Allow layout to render first before calculation
+            setTimeout(() => {
+                calculateRows();
+                updateScroll();
+            }, 100);
         });
     }
 
@@ -915,7 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initInteractiveStorySections();
     initInteractiveTrackSections();
-    initHorizontalScrollSections();
+    initSteppedVerticalScroll();
 
     // 10. Interactive Timetable Scroll Engine
     function initInteractiveTimetableSections() {
