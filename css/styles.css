@@ -1231,7 +1231,16 @@ details[open] .accordion-header::after {
   min-height: 100vh; /* Takes up at least the whole screen */
 }
 
+.termine-sticky-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 100vh; /* Wrapper ends exactly 100vh before the section ends, allowing title to scroll away naturally */
+  width: 100%;
+  pointer-events: none; /* Allows clicks to pass through to the scrolling content if needed */
+}
+
 .termine-sticky-header {
+  pointer-events: auto; /* Restores clicks for Instagram link */
   position: sticky;
   top: 0;
   width: 100%;
@@ -1251,6 +1260,7 @@ details[open] .accordion-header::after {
 .termine-scroll-container {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
+  padding-top: clamp(120px, 20vh, 180px); /* Adjust spacing to push first card down from under absolute header */
   padding-bottom: clamp(4rem, 10vh, 8rem);
 }
 
