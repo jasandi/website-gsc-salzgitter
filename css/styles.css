@@ -1234,7 +1234,7 @@ details[open] .accordion-header::after {
 .termine-sticky-wrapper {
   position: absolute;
   top: 0;
-  bottom: 100vh; /* Wrapper ends exactly 100vh before the section ends, allowing title to scroll away naturally */
+  bottom: 15vh; /* Wrapper ends near the bottom so title sticks until last card is ~75% up the screen */
   width: 100%;
   pointer-events: none; /* Allows clicks to pass through to the scrolling content if needed */
 }
@@ -2730,8 +2730,8 @@ a.event-card-time:hover {
 /* Intersection Observer Reveal Classes for Termine */
 .reveal-item {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal-item.is-visible {
   opacity: 1;
