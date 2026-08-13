@@ -665,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.ScrollScenes.register(section, {
                 // Ein Schritt pro Strecke, die erste ist beim Eintreten schon da
                 measure: () => items.length,
-                stepVh: 110,
+                stepVh: 70,
 
                 render: (progress) => {
                     const segment = 1 / items.length;
