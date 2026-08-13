@@ -1234,7 +1234,7 @@ details[open] .accordion-header::after {
 .termine-sticky-wrapper {
   position: absolute;
   top: 0;
-  bottom: 15vh; /* Wrapper ends near the bottom so title sticks until last card is ~75% up the screen */
+  bottom: 100vh; /* Wrapper ends exactly 100vh before the section ends, allowing title to scroll away naturally exactly when the next section enters */
   width: 100%;
   pointer-events: none; /* Allows clicks to pass through to the scrolling content if needed */
 }
@@ -1261,7 +1261,7 @@ details[open] .accordion-header::after {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
   padding-top: clamp(260px, 30vh, 290px); /* Pushes the first card cleanly below the sticky header and its gradient on all devices */
-  padding-bottom: clamp(4rem, 10vh, 8rem);
+  padding-bottom: 70vh; /* Scroll padding so the last card reaches the top before the section unlocks and scrolls up */
 }
 
 .centered-grid {
