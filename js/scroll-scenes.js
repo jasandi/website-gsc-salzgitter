@@ -27,7 +27,7 @@ window.ScrollScenes = (function () {
     var mqMotion = window.matchMedia('(prefers-reduced-motion: no-preference)');
 
     function canPin() {
-        return mqSize.matches && mqMotion.matches;
+        return mqMotion.matches;
     }
 
     /**
