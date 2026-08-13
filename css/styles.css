@@ -1235,13 +1235,10 @@ details[open] .accordion-header::after {
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: var(--color-bg-black);
+  background: linear-gradient(180deg, var(--color-bg-black) 0%, var(--color-bg-black) 85%, rgba(10, 10, 12, 0) 100%);
   z-index: 20;
-  /* Top padding ensures text is below notch/navbar, but background covers it */
-  padding-top: calc(max(env(safe-area-inset-top, 0px), 20px) + clamp(60px, 10vh, 100px));
-  padding-bottom: 2rem;
+  padding: clamp(1.5rem, 4vh, 2.5rem) 0 clamp(1rem, 4vh, 2.8rem) 0;
   text-align: center;
-  box-shadow: 0 15px 30px -15px rgba(0,0,0, 0.9);
 }
 
 .termine-sticky-header .section-header {
@@ -1632,7 +1629,8 @@ details[open] .accordion-header::after {
 /* Responsive Sizing for Compact Windows & Smartphones (Fits 100% inside Viewport) */
 @media (max-width: 768px), (max-height: 720px) {
   .interactive-story-section .section-header,
-  .interactive-track-section .section-header {
+  .interactive-track-section .section-header,
+  .termine-sticky-header {
     margin-bottom: 0.3rem !important;
     padding: 0.8rem 1rem 2.0rem 1rem !important;
   }
