@@ -654,204 +654,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9a. Interactive Track Section Engine (Clean Split-Reveal)
+    // 9a. Strecken-Sektion — läuft über die gemeinsame ScrollScenes-Engine
     function initInteractiveTrackSections() {
-        const trackSections = document.querySelectorAll('.interactive-track-section');
-        if (!trackSections.length) return;
+        if (!window.ScrollScenes) return;
 
-        trackSections.forEach(section => {
-            const rawItems = section.querySelectorAll('.track-reveal-item');
-            if (!rawItems.length) return;
-            const items = Array.from(rawItems);
-            
-            const numItems = items.length;
-            const segmentSize = 1 / numItems;
-            let isTicking = false;
+        document.querySelectorAll('.interactive-track-section').forEach(section => {
+            const items = Array.from(section.querySelectorAll('.track-reveal-item'));
+            if (!items.length) return;
 
-            function updateTrackProgress() {
-                const rect = section.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-                const totalScrollableDistance = rect.height - viewportHeight;
-                if (totalScrollableDistance <= 0) return;
+            window.ScrollScenes.register(section, {
+                // Ein Schritt pro Strecke, die erste ist beim Eintreten schon da
+                measure: () => items.length,
+                stepVh: 110,
 
-                const scrolled = -rect.top;
-                let progress = Math.max(0, Math.min(1, scrolled / totalScrollableDistance));
+                render: (progress) => {
+                    const segment = 1 / items.length;
+                    let activeIndex = Math.floor(progress / segment);
+                    if (activeIndex >= items.length) activeIndex = items.length - 1;
 
-                let activeIndex = Math.floor(progress / segmentSize);
-                if (activeIndex >= numItems) activeIndex = numItems - 1;
+                    items.forEach((item, i) => {
+                        item.classList.toggle('active', i === activeIndex);
+                    });
+                },
 
-                items.forEach((item, i) => {
-                    if (i === activeIndex) {
-                        item.classList.add('active');
-                    } else {
+                // Statischer Modus: alle Strecken untereinander, Einblenden per Observer
+                onStatic: () => {
+                    items.forEach(item => {
                         item.classList.remove('active');
-                    }
-                });
-                isTicking = false;
-            }
-
-            window.addEventListener('scroll', () => {
-                if (!isTicking) {
-                    window.requestAnimationFrame(updateTrackProgress);
-                    isTicking = true;
+                        if (!item.dataset.observed) {
+                            scrollObserver.observe(item);
+                            item.dataset.observed = 'true';
+                        }
+                    });
                 }
-            }, { passive: true });
-            
-            updateTrackProgress();
+            });
         });
     }
 
-    // 9. Stepped Vertical Scroll Engine (Termine)
-    function initSteppedVerticalScroll() {
-        const sections = document.querySelectorAll('.interactive-stepped-section');
-        if (!sections.length) return;
+    // 9. Intersection Observer for Reveal Items (Termine)
+    function initRevealItems() {
+        const revealItems = document.querySelectorAll('.reveal-item');
+        if (!revealItems.length) return;
 
-        sections.forEach(section => {
-            const track = section.querySelector('.stepped-track');
-            const cards = Array.from(track.querySelectorAll('.stepped-card'));
-            if (!cards.length) return;
-
-            let isTicking = false;
-            let rowHeight = 0;
-            let numSteps = 0;
-            let visibleRows = 1;
-
-            function calculateRows() {
-                // reset transform for measurement
-                track.style.transform = 'none';
-                
-                const numCards = cards.length;
-                rowHeight = 0;
-
-                if (numCards > 1) {
-                    rowHeight = cards[1].offsetTop - cards[0].offsetTop;
-                    if (rowHeight < 10) rowHeight = cards[0].offsetHeight + 20; // fallback
-                } else if (numCards === 1) {
-                    rowHeight = cards[0].offsetHeight + 20; // fallback
-                }
-
-                // If elements are not yet laid out by the browser (e.g. Safari deferring off-screen layout),
-                // offsetHeight will be 0, making rowHeight abnormally small. We must retry.
-                if (rowHeight < 50) {
-                    section.dataset.retries = (parseInt(section.dataset.retries) || 0) + 1;
-                    if (section.dataset.retries < 20) {
-                        setTimeout(() => {
-                            calculateRows();
-                            updateScroll();
-                        }, 50);
-                        return;
-                    }
-                }
-
-                let availableHeight = window.innerHeight;
-                const viewportInner = section.querySelector('.stepped-viewport');
-                if (viewportInner) {
-                    const style = window.getComputedStyle(viewportInner);
-                    const paddingToRemove = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
-                    availableHeight = viewportInner.getBoundingClientRect().height - paddingToRemove;
-                }
-                
-                const gap = rowHeight - (cards[0] ? cards[0].offsetHeight : 0);
-                visibleRows = Math.floor((availableHeight + gap) / (rowHeight || 1));
-                if (visibleRows < 1) visibleRows = 1;
-                if (visibleRows > numCards) visibleRows = numCards;
-
-                const innerWrapper = section.querySelector('.stepped-viewport-inner');
-                if (innerWrapper) {
-                    // True height is visibleRows * rowHeight minus one gap
-                    const trueHeight = (visibleRows * rowHeight) - gap;
-                    innerWrapper.style.height = trueHeight + 'px';
-                }
-
-                if (visibleRows < numCards) {
-                    numSteps = numCards - visibleRows;
-                    // Dynamic height based on how many steps we actually need
-                    // Use a smaller scroll distance per step (50vh) so it iterates faster
-                    section.style.height = (100 + numSteps * 50) + 'vh';
-                } else {
-                    numSteps = 0;
-                    section.style.height = 'auto'; // No scrolling needed
-                }
-
-                // DEBUG OVERLAY (temporary)
-                let debugEl = section.querySelector('.debug-overlay');
-                if (!debugEl) {
-                    debugEl = document.createElement('div');
-                    debugEl.className = 'debug-overlay';
-                    debugEl.style.position = 'absolute';
-                    debugEl.style.top = '10px';
-                    debugEl.style.left = '10px';
-                    debugEl.style.background = 'red';
-                    debugEl.style.color = 'white';
-                    debugEl.style.padding = '5px';
-                    debugEl.style.zIndex = '9999';
-                    debugEl.style.fontSize = '12px';
-                    section.appendChild(debugEl);
-                }
-                debugEl.innerHTML = `cards: ${numCards}, rowH: ${rowHeight}, availH: ${availableHeight}, visRows: ${visibleRows}, steps: ${numSteps}, maxScr: ${section.getBoundingClientRect().height - window.innerHeight}`;
-            }
-
-            function updateScroll() {
-                if (numSteps === 0) {
-                    isTicking = false;
-                    return;
-                }
-
-                const rect = section.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-                const maxScroll = rect.height - viewportHeight;
-                if (maxScroll <= 0) {
-                    isTicking = false;
-                    return;
-                }
-
-                const scrolled = -rect.top;
-                let progress = Math.max(0, Math.min(1, scrolled / maxScroll));
-
-                let activeStep = Math.floor(progress * (numSteps + 1));
-                if (activeStep > numSteps) activeStep = numSteps;
-
-                // Step translation
-                let translateY = activeStep * rowHeight;
-                track.style.transform = `translateY(-${translateY}px)`;
-
-                // Update classes for animation
-                cards.forEach((card, i) => {
-                    if (i < activeStep) {
-                        card.classList.add('fading-out-up');
-                    } else {
-                        card.classList.remove('fading-out-up');
-                    }
-                });
-                
-                let debugEl = section.querySelector('.debug-overlay');
-                if (debugEl) {
-                    debugEl.innerHTML = `cards: ${cards.length}, vis: ${visibleRows}, steps: ${numSteps}, maxScr: ${maxScroll}, prgrs: ${progress.toFixed(2)}, act: ${activeStep}, trans: ${translateY}`;
-                }
-
-                isTicking = false;
-            }
-
-            let lastWidth = window.innerWidth;
-            window.addEventListener('resize', () => {
-                if (window.innerWidth !== lastWidth) {
-                    lastWidth = window.innerWidth;
-                    calculateRows();
-                    updateScroll();
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
                 }
             });
-            window.addEventListener('scroll', () => {
-                if (!isTicking) {
-                    window.requestAnimationFrame(updateScroll);
-                    isTicking = true;
-                }
-            }, { passive: true });
-            
-            // Allow layout to render first before calculation
-            setTimeout(() => {
-                calculateRows();
-                updateScroll();
-            }, 100);
+        }, {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealItems.forEach(item => {
+            revealObserver.observe(item);
         });
     }
 
@@ -1010,9 +869,129 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 9b. Zahl einmalig hochzählen
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function animateCount(el) {
+        if (!el || el.dataset.counted) return;
+        el.dataset.counted = 'true';
+
+        const target = parseInt(el.dataset.count, 10);
+        if (isNaN(target)) return;
+
+        // Jahreszahlen weder hochzählen noch mit Tausenderpunkt setzen (1985, nicht 1.985)
+        if (el.hasAttribute('data-count-plain')) {
+            el.textContent = String(target);
+            return;
+        }
+
+        if (prefersReducedMotion) {
+            el.textContent = target.toLocaleString('de-DE');
+            return;
+        }
+
+        const duration = 1100;
+        const start = performance.now();
+
+        const tick = (now) => {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased).toLocaleString('de-DE');
+            if (p < 1) requestAnimationFrame(tick);
+        };
+
+        el.textContent = '0';
+        requestAnimationFrame(tick);
+    }
+
+    // 9c. Verein-Statement — läuft über die gemeinsame ScrollScenes-Engine
+    function initStatementSections() {
+        if (!window.ScrollScenes) return;
+
+        document.querySelectorAll('.interactive-statement-section').forEach(section => {
+            const lines = Array.from(section.querySelectorAll('.st-line'));
+            const details = section.querySelector('.st-details');
+            if (!lines.length) return;
+
+            // Zeilen plus Detailblock ergeben die Schritte
+            const total = lines.length + (details ? 1 : 0);
+            let lastIndex = -1;
+
+            window.ScrollScenes.register(section, {
+                measure: () => total,
+                stepVh: 45,
+
+                render: (progress) => {
+                    const segment = 1 / total;
+                    let index = Math.floor(progress / segment);
+                    if (index >= total) index = total - 1;
+
+                    if (index === lastIndex) return;
+                    lastIndex = index;
+
+                    lines.forEach((line, i) => {
+                        const shown = i <= index;
+                        line.classList.toggle('is-active', shown);
+                        // Ältere Zeilen treten zurück, die neueste bleibt vorn
+                        line.classList.toggle('is-past', shown && i < index && index < lines.length);
+
+                        if (shown) {
+                            const num = line.querySelector('[data-count]');
+                            if (num) animateCount(num);
+                        }
+                    });
+
+                    if (details) {
+                        details.classList.toggle('is-active', index >= lines.length);
+                    }
+                },
+
+                // Statischer Modus: alles untereinander, Einblenden per Observer
+                onStatic: () => {
+                    lastIndex = -1;
+
+                    lines.forEach(line => {
+                        line.classList.remove('is-active', 'is-past');
+                        if (!line.dataset.observed) {
+                            scrollObserver.observe(line);
+                            line.dataset.observed = 'true';
+                        }
+                    });
+
+                    if (details) {
+                        details.classList.remove('is-active');
+                        if (!details.dataset.observed) {
+                            scrollObserver.observe(details);
+                            details.dataset.observed = 'true';
+                        }
+                    }
+
+                    // Zahlen zählen hoch, sobald ihre Zeile sichtbar wird
+                    if ('IntersectionObserver' in window) {
+                        const numObserver = new IntersectionObserver((entries, obs) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    animateCount(entry.target);
+                                    obs.unobserve(entry.target);
+                                }
+                            });
+                        }, { threshold: 0.8 });
+                        section.querySelectorAll('[data-count]').forEach(n => numObserver.observe(n));
+                    } else {
+                        section.querySelectorAll('[data-count]').forEach(animateCount);
+                    }
+                }
+            });
+        });
+    }
+
     initInteractiveStorySections();
     initInteractiveTrackSections();
-    initSteppedVerticalScroll();
+    initStatementSections();
+    initRevealItems();
+
+    // Engine erst starten, wenn alle Szenen registriert sind
+    if (window.ScrollScenes) window.ScrollScenes.start();
 
     // 10. Interactive Timetable Scroll Engine
     function initInteractiveTimetableSections() {
