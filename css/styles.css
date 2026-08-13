@@ -1638,12 +1638,6 @@ details[open] .accordion-header::after {
 
 /* Responsive Sizing for Compact Windows & Smartphones (Fits 100% inside Viewport) */
 @media (max-width: 768px), (max-height: 720px) {
-  .interactive-story-section .section-header,
-  .interactive-track-section .section-header,
-  .termine-sticky-header {
-    margin-bottom: 0.3rem !important;
-    padding: 0.8rem 1rem 2.0rem 1rem !important;
-  }
 
   .story-tile.track-card {
     grid-template-columns: 1fr;
