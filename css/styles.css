@@ -1228,15 +1228,18 @@ details[open] .accordion-header::after {
   position: relative;
   overflow: visible;
   padding-top: 0 !important; /* Managed by sticky header */
+  padding-bottom: 0 !important; /* Managed by scroll container */
   min-height: 100vh; /* Takes up at least the whole screen */
+  display: grid; /* Used to perfectly overlap wrapper and scroll container */
 }
 
 .termine-sticky-wrapper {
-  position: absolute;
+  position: sticky;
   top: 0;
-  bottom: 100dvh; /* Unlocks the title exactly when the next section enters from the bottom, accounting for mobile UI bars */
+  height: 100dvh; /* Sticks until its 100dvh bottom edge hits the section bottom */
   width: 100%;
   pointer-events: none; /* Allows clicks to pass through to the scrolling content if needed */
+  grid-area: 1 / 1; /* Overlap with scroll container */
 }
 
 .termine-sticky-header {
@@ -1276,6 +1279,8 @@ details[open] .accordion-header::after {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
   padding-bottom: clamp(3rem, 8vh, 6rem); /* Small buffer below last card before next section */
+  grid-area: 1 / 1; /* Overlap with sticky wrapper */
+  align-self: start;
 }
 
 .centered-grid {
