@@ -1236,10 +1236,12 @@ details[open] .accordion-header::after {
 .termine-sticky-wrapper {
   position: sticky;
   top: 0;
+  height: 100vh; /* Fallback for older browsers */
   height: 100dvh; /* Sticks until its 100dvh bottom edge hits the section bottom */
   width: 100%;
   pointer-events: none; /* Allows clicks to pass through to the scrolling content if needed */
   grid-area: 1 / 1; /* Overlap with scroll container */
+  align-self: start; /* Prevents grid from stretching the wrapper */
   z-index: 10; /* Ensures the wrapper (and header) renders on top of the scroll container */
 }
 
@@ -1279,7 +1281,7 @@ details[open] .accordion-header::after {
 .termine-scroll-container {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
-  padding-bottom: clamp(3rem, 8vh, 6rem); /* Small buffer below last card before next section */
+  padding-bottom: clamp(1.5rem, 4vh, 3rem); /* Very small gap to the next section */
   grid-area: 1 / 1; /* Overlap with sticky wrapper */
   align-self: start;
 }
