@@ -985,43 +985,48 @@ document.addEventListener('DOMContentLoaded', () => {
                     const segment = 1 / pages.length;
                     
                     pages.forEach((page, i) => {
-                        const segStart = i * segment;
-                        const segEnd = (i + 1) * segment;
+                        const slotStart = i * segment;
                         
-                        // Active range + transition buffer (10% of segment)
-                        const buffer = segment * 0.15;
+                        // local ist der Fortschritt INNERHALB des eigenen Segments (0 bis 1)
+                        const local = (progress - slotStart) / segment;
                         
-                        if (progress >= segStart - buffer && progress <= segEnd + buffer) {
-                            const localProgress = (progress - segStart) / segment; 
-                            
-                            if (localProgress >= 0 && localProgress <= 1) {
-                                // Fully active
-                                page.className = 'termine-page is-active';
-                                page.style.opacity = 1;
-                                page.style.transform = `translate3d(0, 0, 0)`;
-                            } else if (localProgress < 0) {
-                                // Transitioning in from below
-                                const t = 1 + (localProgress / 0.15); // 0 to 1
-                                page.className = 'termine-page';
-                                page.style.opacity = Math.max(0, t);
-                                page.style.transform = `translate3d(0, ${(1-t) * 40}px, 0)`;
-                            } else {
-                                // Transitioning out to top
-                                const t = 1 - ((localProgress - 1) / 0.15); // 1 to 0
-                                page.className = 'termine-page is-past';
-                                page.style.opacity = Math.max(0, t);
-                                page.style.transform = `translate3d(0, -${(1-t) * 40}px, 0)`;
-                            }
-                        } else if (progress < segStart) {
-                            // Future
-                            page.className = 'termine-page';
-                            page.style.opacity = 0;
-                            page.style.transform = `translate3d(0, 40px, 0)`;
+                        let opacity = 0;
+                        let translateY = 0;
+                        
+                        // Wir machen einen strikt sequenziellen Fade (kein Overlap!)
+                        if (local <= 0) {
+                            // Noch nicht dran
+                            opacity = 0;
+                            translateY = 40;
+                        } else if (local < 0.15) {
+                            // Fading in
+                            const t = local / 0.15; // 0 bis 1
+                            opacity = t;
+                            translateY = (1 - t) * 40;
+                        } else if (local <= 0.85) {
+                            // Voll sichtbar
+                            opacity = 1;
+                            translateY = 0;
+                        } else if (local < 1.0) {
+                            // Fading out
+                            const t = (1.0 - local) / 0.15; // 1 bis 0
+                            opacity = t;
+                            translateY = -(1 - t) * 40;
                         } else {
-                            // Past
+                            // Schon vorbei
+                            opacity = 0;
+                            translateY = -40;
+                        }
+                        
+                        page.style.opacity = opacity;
+                        page.style.transform = `translate3d(0, ${translateY}px, 0)`;
+                        
+                        if (opacity > 0) {
+                            page.className = 'termine-page is-active';
+                        } else if (local >= 1.0) {
                             page.className = 'termine-page is-past';
-                            page.style.opacity = 0;
-                            page.style.transform = `translate3d(0, -40px, 0)`;
+                        } else {
+                            page.className = 'termine-page';
                         }
                     });
                 },
