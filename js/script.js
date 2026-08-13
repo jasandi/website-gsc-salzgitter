@@ -937,11 +937,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Append cards back to container temporarily to measure properly if needed
             // Actually they are just detached, we can put them in new wrappers
             
-            const headerHeight = 200; // rough sticky header mask
-            const cardHeight = 140;   // approx card + gap
-            const availableHeight = window.innerHeight - headerHeight - 100; // 100px bottom padding
+            // Measure real header height if possible, fallback to 180
+            const header = termineSection.querySelector('.termine-sticky-header');
+            const headerHeight = header ? header.offsetHeight : 180;
+            const cardHeight = 130;   // approx card (100px) + gap (30px)
+            const availableHeight = window.innerHeight - headerHeight - 60; // 60px bottom buffer
             
-            let itemsPerPage = Math.floor(availableHeight / cardHeight);
+            // Use Math.round instead of Math.floor to be more generous with space
+            let itemsPerPage = Math.round(availableHeight / cardHeight);
+            
             if (itemsPerPage > 5) itemsPerPage = 5;
             if (itemsPerPage < 2) itemsPerPage = 2; // Mobile minimal guarantee
 
