@@ -995,14 +995,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         // Wir machen einen strikt sequenziellen Fade (kein Overlap!)
                         if (local <= 0) {
-                            // Noch nicht dran
-                            opacity = 0;
-                            translateY = 40;
+                            // Noch nicht dran (Ausnahme: Seite 0 ist von Anfang an sichtbar!)
+                            opacity = (i === 0) ? 1 : 0;
+                            translateY = (i === 0) ? 0 : 40;
                         } else if (local < 0.15) {
                             // Fading in
-                            const t = local / 0.15; // 0 bis 1
-                            opacity = t;
-                            translateY = (1 - t) * 40;
+                            if (i === 0) {
+                                opacity = 1;
+                                translateY = 0;
+                            } else {
+                                const t = local / 0.15; // 0 bis 1
+                                opacity = t;
+                                translateY = (1 - t) * 40;
+                            }
                         } else if (local <= 0.85) {
                             // Voll sichtbar
                             opacity = 1;
