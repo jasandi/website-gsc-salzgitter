@@ -934,19 +934,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const existingPages = scrollContainer.querySelectorAll('.termine-page');
             existingPages.forEach(p => p.remove());
 
-            // Append cards back to container temporarily to measure properly if needed
-            // Actually they are just detached, we can put them in new wrappers
-            
             // Measure real header height if possible, fallback to 180
             const header = termineSection.querySelector('.termine-sticky-header');
             const headerHeight = header ? header.offsetHeight : 180;
-            const cardHeight = 130;   // approx card (100px) + gap (30px)
-            const availableHeight = window.innerHeight - headerHeight - 60; // 60px bottom buffer
             
-            // Use Math.round instead of Math.floor to be more generous with space
-            let itemsPerPage = Math.round(availableHeight / cardHeight);
+            const isMobile = window.innerWidth <= 768;
+            const cardHeight = isMobile ? 160 : 130; // Mobile cards are taller due to text wrapping
+            const bottomBuffer = isMobile ? 20 : 40;
             
-            if (itemsPerPage > 5) itemsPerPage = 5;
+            const availableHeight = window.innerHeight - headerHeight - bottomBuffer;
+            
+            // Use Math.floor to ensure we NEVER overflow into the header fade
+            let itemsPerPage = Math.floor(availableHeight / cardHeight);
+            
+            const maxItems = isMobile ? 3 : 5;
+            if (itemsPerPage > maxItems) itemsPerPage = maxItems;
             if (itemsPerPage < 2) itemsPerPage = 2; // Mobile minimal guarantee
 
             const numPages = Math.ceil(allCards.length / itemsPerPage);
@@ -955,6 +957,8 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < numPages; i++) {
                 const pageDiv = document.createElement('div');
                 pageDiv.className = 'termine-page';
+                // Apply dynamic padding to exactly avoid the real header height
+                pageDiv.style.paddingTop = headerHeight + 'px';
                 
                 const slice = allCards.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
                 slice.forEach(card => {
