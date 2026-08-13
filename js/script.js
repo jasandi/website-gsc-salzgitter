@@ -1014,13 +1014,25 @@ document.addEventListener('DOMContentLoaded', () => {
                             translateY = 0;
                         } else if (local < 1.0) {
                             // Fading out
-                            const t = (1.0 - local) / 0.15; // 1 bis 0
-                            opacity = t;
-                            translateY = -(1 - t) * 40;
+                            if (i === pages.length - 1) {
+                                // Die allerletzte Seite fadet NICHT aus, sondern bleibt statisch,
+                                // damit sie synchron mit der gesamten Sektion nach oben weggescrollt wird!
+                                opacity = 1;
+                                translateY = 0;
+                            } else {
+                                const t = (1.0 - local) / 0.15; // 1 bis 0
+                                opacity = t;
+                                translateY = -(1 - t) * 40;
+                            }
                         } else {
                             // Schon vorbei
-                            opacity = 0;
-                            translateY = -40;
+                            if (i === pages.length - 1) {
+                                opacity = 1;
+                                translateY = 0;
+                            } else {
+                                opacity = 0;
+                                translateY = -40;
+                            }
                         }
                         
                         page.style.opacity = opacity;
