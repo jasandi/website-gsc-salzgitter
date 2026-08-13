@@ -1234,7 +1234,7 @@ details[open] .accordion-header::after {
 .termine-sticky-wrapper {
   position: absolute;
   top: 0;
-  bottom: 35vh; /* Starts scrolling the title up when the next section is 35vh from the top (safely below the title) */
+  bottom: 100vh; /* Wrapper ends exactly when the next section enters the viewport, making the entire block scroll out naturally */
   width: 100%;
   pointer-events: none; /* Allows clicks to pass through to the scrolling content if needed */
 }
