@@ -1244,7 +1244,7 @@ details[open] .accordion-header::after {
   position: sticky;
   top: 0;
   width: 100%;
-  background: linear-gradient(180deg, var(--color-bg-black) 0%, var(--color-bg-black) 60%, rgba(10, 10, 12, 0) 100%);
+  background: linear-gradient(180deg, var(--color-bg-black) 0%, var(--color-bg-black) 65%, rgba(10, 10, 12, 0) 95%);
   z-index: 20;
   padding: clamp(1.5rem, 4vh, 2.5rem) 0 clamp(1rem, 4vh, 2.8rem) 0;
   text-align: center;
@@ -1260,7 +1260,7 @@ details[open] .accordion-header::after {
 .termine-scroll-container {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
-  padding-top: clamp(260px, 30vh, 290px); /* Pushes the first card cleanly below the sticky header and its gradient on all devices */
+  padding-top: clamp(205px, 24vh, 250px); /* Tighter gap so the first card sits right below the text and fade */
   padding-bottom: clamp(4rem, 10vh, 8rem); /* Normal gap to the next section */
 }
 
