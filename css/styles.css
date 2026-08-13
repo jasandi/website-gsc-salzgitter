@@ -1223,60 +1223,43 @@ details[open] .accordion-header::after {
 }
 
 /* Event Cards Vertical Stack (Redesigned Matching Screenshot) */
-/* Termine Split-Layout (Scrollytelling with Title Freeze) */
-.termine-split-section {
+/* Termine Centered-Layout (Scrollytelling with Title Freeze) */
+.termine-centered-section {
   position: relative;
-  overflow: visible; /* Important for sticky to work across the section */
+  overflow: visible;
+  padding-top: 0 !important; /* Managed by sticky header */
+  min-height: 100vh; /* Takes up at least the whole screen */
 }
 
-.termine-layout-container {
-  display: grid;
-  grid-template-columns: minmax(300px, 40%) 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-
-.termine-sticky-col {
+.termine-sticky-header {
   position: sticky;
-  top: clamp(80px, 15vh, 120px);
-  z-index: 10;
+  top: 0;
+  width: 100%;
+  background-color: var(--color-bg-black);
+  z-index: 20;
+  /* Top padding ensures text is below notch/navbar, but background covers it */
+  padding-top: calc(max(env(safe-area-inset-top, 0px), 20px) + clamp(60px, 10vh, 100px));
+  padding-bottom: 2rem;
+  text-align: center;
+  box-shadow: 0 15px 30px -15px rgba(0,0,0, 0.9);
 }
 
-.termine-sticky-col .section-header {
+.termine-sticky-header .section-header {
+  margin: 0 auto;
+  max-width: 800px;
   padding-top: 0;
-  text-align: left;
   margin-bottom: 0;
 }
 
-.termine-sticky-col .section-header p {
-  margin-left: 0;
-  margin-right: 0;
+.termine-scroll-container {
+  position: relative;
+  z-index: 1; /* Scroll behind the sticky header's solid background */
+  padding-bottom: clamp(4rem, 10vh, 8rem);
 }
 
-.termine-scroll-col {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-@media (max-width: 992px) {
-  .termine-layout-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .termine-sticky-col {
-    position: sticky;
-    top: 60px; /* Below mobile navbar */
-    background-color: var(--color-bg-black);
-    padding: 1.5rem 5.5vw 1rem 5.5vw;
-    margin: 0 -5.5vw; /* Full bleed background */
-    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.8);
-    z-index: 20;
-  }
-
-  .termine-sticky-col .section-header {
-    text-align: center;
-  }
+.centered-grid {
+  max-width: 700px !important; /* Constrain width as requested */
+  margin: 0 auto;
 }
 
 .stacked-tiles-grid.events-grid {
