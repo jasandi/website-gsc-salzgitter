@@ -1275,7 +1275,7 @@ details[open] .accordion-header::after {
 .termine-scroll-container {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
-  padding-bottom: clamp(4rem, 10vh, 8rem); /* Normal gap to the next section */
+  padding-bottom: clamp(1.5rem, 4vh, 3rem); /* Very small gap to the next section */
 }
 
 .centered-grid {
