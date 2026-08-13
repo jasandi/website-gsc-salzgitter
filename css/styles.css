@@ -1260,7 +1260,7 @@ details[open] .accordion-header::after {
 .termine-scroll-container {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
-  padding-top: clamp(120px, 20vh, 180px); /* Adjust spacing to push first card down from under absolute header */
+  padding-top: clamp(280px, 40vh, 400px); /* Pushes the first card cleanly below the sticky header and its gradient */
   padding-bottom: clamp(4rem, 10vh, 8rem);
 }
 
