@@ -1281,7 +1281,7 @@ details[open] .accordion-header::after {
 .termine-scroll-container {
   position: relative;
   z-index: 1; /* Scroll behind the sticky header's solid background */
-  padding-bottom: clamp(1.5rem, 4vh, 3rem); /* Very small gap to the next section */
+  padding-bottom: 70vh; /* Allows the last card to scroll all the way to the top before the next section appears */
   grid-area: 1 / 1; /* Overlap with sticky wrapper */
   align-self: start;
 }
