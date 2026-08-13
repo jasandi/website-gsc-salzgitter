@@ -906,12 +906,148 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initInteractiveStorySections();
     initInteractiveTrackSections();
+    initInteractiveTermineSections();
     initRevealItems();
 
     // Engine erst starten, wenn alle Szenen registriert sind
     if (window.ScrollScenes) window.ScrollScenes.start();
 
     // 10. Interactive Timetable Scroll Engine
+    // 9c. Interactive Termine ScrollScenes Engine
+    function initInteractiveTermineSections() {
+        const termineSection = document.getElementById('termine');
+        if (!termineSection) return;
+
+        const scrollContainer = termineSection.querySelector('.termine-scroll-container');
+        if (!scrollContainer) return;
+
+        // Ensure we only initialize once
+        if (termineSection.dataset.termineInitialized) return;
+        termineSection.dataset.termineInitialized = 'true';
+
+        // Read all visible cards. (Some might be hidden by the past-event filter above).
+        const allCards = Array.from(scrollContainer.querySelectorAll('.event-card')).filter(c => c.style.display !== 'none');
+        if (!allCards.length) return;
+
+        function buildPages() {
+            // Remove existing pages if any (for resize re-calculation)
+            const existingPages = scrollContainer.querySelectorAll('.termine-page');
+            existingPages.forEach(p => p.remove());
+
+            // Append cards back to container temporarily to measure properly if needed
+            // Actually they are just detached, we can put them in new wrappers
+            
+            const headerHeight = 200; // rough sticky header mask
+            const cardHeight = 140;   // approx card + gap
+            const availableHeight = window.innerHeight - headerHeight - 100; // 100px bottom padding
+            
+            let itemsPerPage = Math.floor(availableHeight / cardHeight);
+            if (itemsPerPage > 5) itemsPerPage = 5;
+            if (itemsPerPage < 2) itemsPerPage = 2; // Mobile minimal guarantee
+
+            const numPages = Math.ceil(allCards.length / itemsPerPage);
+            const pages = [];
+
+            for (let i = 0; i < numPages; i++) {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'termine-page';
+                
+                const slice = allCards.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
+                slice.forEach(card => {
+                    // Remove any old absolute styles if we had them
+                    card.style.position = '';
+                    card.style.top = '';
+                    pageDiv.appendChild(card);
+                });
+                
+                scrollContainer.appendChild(pageDiv);
+                pages.push(pageDiv);
+            }
+
+            return pages;
+        }
+
+        let pages = buildPages();
+
+        if (window.ScrollScenes) {
+            let currentScene = window.ScrollScenes.register(termineSection, {
+                measure: () => pages.length,
+                stepVh: 80, // Each page is 80vh of scroll distance
+                render: (progress) => {
+                    const segment = 1 / pages.length;
+                    
+                    pages.forEach((page, i) => {
+                        const segStart = i * segment;
+                        const segEnd = (i + 1) * segment;
+                        
+                        // Active range + transition buffer (10% of segment)
+                        const buffer = segment * 0.15;
+                        
+                        if (progress >= segStart - buffer && progress <= segEnd + buffer) {
+                            const localProgress = (progress - segStart) / segment; 
+                            
+                            if (localProgress >= 0 && localProgress <= 1) {
+                                // Fully active
+                                page.className = 'termine-page is-active';
+                                page.style.opacity = 1;
+                                page.style.transform = `translate3d(0, 0, 0)`;
+                            } else if (localProgress < 0) {
+                                // Transitioning in from below
+                                const t = 1 + (localProgress / 0.15); // 0 to 1
+                                page.className = 'termine-page';
+                                page.style.opacity = Math.max(0, t);
+                                page.style.transform = `translate3d(0, ${(1-t) * 40}px, 0)`;
+                            } else {
+                                // Transitioning out to top
+                                const t = 1 - ((localProgress - 1) / 0.15); // 1 to 0
+                                page.className = 'termine-page is-past';
+                                page.style.opacity = Math.max(0, t);
+                                page.style.transform = `translate3d(0, -${(1-t) * 40}px, 0)`;
+                            }
+                        } else if (progress < segStart) {
+                            // Future
+                            page.className = 'termine-page';
+                            page.style.opacity = 0;
+                            page.style.transform = `translate3d(0, 40px, 0)`;
+                        } else {
+                            // Past
+                            page.className = 'termine-page is-past';
+                            page.style.opacity = 0;
+                            page.style.transform = `translate3d(0, -40px, 0)`;
+                        }
+                    });
+                },
+                onStatic: () => {
+                    pages.forEach(p => {
+                        p.className = 'termine-page is-active';
+                        p.style.position = 'relative';
+                        p.style.transform = 'none';
+                        p.style.opacity = 1;
+                        p.style.paddingTop = '1rem';
+                    });
+                    scrollContainer.style.position = 'relative';
+                    scrollContainer.style.height = 'auto';
+                }
+            });
+
+            // Rebuild pages on resize if itemsPerPage would change
+            let lastInnerHeight = window.innerHeight;
+            window.addEventListener('resize', () => {
+                if (Math.abs(window.innerHeight - lastInnerHeight) > 100) {
+                    lastInnerHeight = window.innerHeight;
+                    
+                    // We must unregister the old scene somehow... 
+                    // ScrollScenes doesn't have an unregister, but we can just update the scene properties.
+                    // To keep it simple, we just update the pages array and trigger layout.
+                    pages = buildPages();
+                    if (currentScene) {
+                        currentScene.measure = () => pages.length;
+                        window.ScrollScenes.refresh();
+                    }
+                }
+            }, { passive: true });
+        }
+    }
     function initInteractiveTimetableSections() {
         const timetableSections = document.querySelectorAll('.interactive-timetable-section');
         if (!timetableSections.length) return;
