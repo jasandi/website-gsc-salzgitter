@@ -1504,10 +1504,12 @@ details[open] .accordion-header::after {
 }
 
 /* Word-by-Word Color Fill Effect */
-.story-fill-text {
+.story-tile p,
+.story-tile .story-fill-text {
   font-size: clamp(1.0rem, 2.0vw, 1.15rem);
-  line-height: 1.5;
-  margin-bottom: 0.9rem !important;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  color: var(--color-text-muted);
 }
 
 .story-fill-text .word {
@@ -1542,8 +1544,9 @@ details[open] .accordion-header::after {
 }
 
 .story-tile .feature-list li {
-  font-size: clamp(0.9rem, 1.6vw, 1.0rem);
-  line-height: 1.4;
+  position: relative;
+  font-size: clamp(1.0rem, 2.0vw, 1.15rem);
+  line-height: 1.6;
   margin-bottom: 0 !important;
   opacity: 0.28;
   transform: translateY(6px);
@@ -1625,8 +1628,8 @@ details[open] .accordion-header::after {
   }
 
   .story-tile .feature-list li {
-    font-size: 0.9rem !important;
-    line-height: 1.35 !important;
+    font-size: 0.96rem !important;
+    line-height: 1.45 !important;
     margin-bottom: 0 !important;
   }
 
