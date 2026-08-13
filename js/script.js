@@ -957,8 +957,8 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < numPages; i++) {
                 const pageDiv = document.createElement('div');
                 pageDiv.className = 'termine-page';
-                // Apply dynamic padding to exactly avoid the real header height
-                pageDiv.style.paddingTop = headerHeight + 'px';
+                // Apply dynamic padding. Subtract 20px to pull the cards higher towards the subtitle.
+                pageDiv.style.paddingTop = (headerHeight - 20) + 'px';
                 
                 const slice = allCards.slice(i * itemsPerPage, (i + 1) * itemsPerPage);
                 slice.forEach(card => {

@@ -1299,7 +1299,7 @@ details[open] .accordion-header::after {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 1.5rem;
   /* Push content down below the sticky header */
