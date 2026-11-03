@@ -268,6 +268,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
+
+            // Show "no events" message if all termine are hidden
+            if (sectionId === 'termine') {
+                const noEventsMsg = carousel.querySelector('#no-events-message');
+                const visibleCards = cards.filter(c => c.style.display !== 'none');
+                if (noEventsMsg) {
+                    noEventsMsg.style.display = visibleCards.length === 0 ? 'block' : 'none';
+                }
+                // Hide carousel arrows if no events
+                if (visibleCards.length === 0) {
+                    if (arrowLeft) arrowLeft.style.display = 'none';
+                    if (arrowRight) arrowRight.style.display = 'none';
+                }
+            }
         }
 
         const updateArrows = () => {
