@@ -46,13 +46,26 @@ html {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 body {
   background-color: var(--color-bg-black);
   color: var(--color-text-main);
   line-height: 1.6;
-  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  position: relative;
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, .heading {

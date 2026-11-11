@@ -628,7 +628,14 @@ import {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    padding: 1.15rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 48em) {
+    .gear-card {
+      padding: 1.5rem;
+    }
   }
 
   .gear-badge {
@@ -656,19 +663,33 @@ import {
   .gear-checklist {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  @media (min-width: 48em) {
+    .gear-checklist {
+      gap: 0.65rem;
+    }
   }
 
   .gear-item {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
-    padding: 0.7rem 0.9rem;
+    gap: 0.5rem;
+    padding: 0.6rem 0.65rem;
+    min-width: 0;
     border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--color-border);
     transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  @media (min-width: 48em) {
+    .gear-item {
+      gap: 0.7rem;
+      padding: 0.7rem 0.9rem;
+    }
   }
 
   .gear-item.is-checked {
@@ -717,7 +738,15 @@ import {
 
   .gear-item strong {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 48em) {
+    .gear-item strong {
+      font-size: 0.95rem;
+    }
   }
 
   .gear-item span {
@@ -1013,29 +1042,50 @@ import {
 
   .counter-strip {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
     margin-bottom: 1.75rem;
+  }
+
+  @media (min-width: 48em) {
+    .counter-strip {
+      gap: 0.75rem;
+    }
   }
 
   .counter-box {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: 1rem;
+    padding: 0.8rem 0.55rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 48em) {
+    .counter-box {
+      padding: 1rem;
+    }
   }
 
   .counter-num {
     display: block;
     font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 3.8vw, 2.3rem);
+    font-size: clamp(1.35rem, 3.8vw, 2.3rem);
     font-weight: 800;
     color: var(--color-primary);
   }
 
   .counter-caption {
-    font-size: 0.78rem;
+    display: block;
+    font-size: 0.74rem;
     color: var(--color-text-muted);
+    overflow-wrap: break-word;
+  }
+
+  @media (min-width: 48em) {
+    .counter-caption {
+      font-size: 0.78rem;
+    }
   }
 
   .verein-cta-row {
@@ -1248,11 +1298,23 @@ import {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: 1.35rem;
+    padding: 1.15rem;
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1.15rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
     align-items: start;
+    min-width: 0;
+  }
+
+  @media (min-width: 48em) {
+    .race-event-card {
+      padding: 1.35rem;
+      gap: 1.15rem;
+    }
+  }
+
+  .race-event-main {
+    min-width: 0;
   }
 
   .race-date-badge {
