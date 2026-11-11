@@ -46,7 +46,10 @@ const isSatzung = entry.slug === 'satzung';
                   aria-pressed="false"
                 >
                   <span class="opt-title">Kinder bis 6 Jahre</span>
-                  <span class="opt-meta">Beitrag: kostenlos · Aufnahme: 25,00 €</span>
+                  <span class="opt-meta">
+                    <span class="opt-meta-fee">Beitrag: kostenlos</span>
+                    <span class="opt-meta-entry">· Aufnahme: 25,00 €</span>
+                  </span>
                 </button>
 
                 <button
@@ -59,7 +62,10 @@ const isSatzung = entry.slug === 'satzung';
                   aria-pressed="false"
                 >
                   <span class="opt-title">7 bis 14 Jahre</span>
-                  <span class="opt-meta">Beitrag: 36,00 € / Jahr · Aufnahme: 25,00 €</span>
+                  <span class="opt-meta">
+                    <span class="opt-meta-fee">Beitrag: 36,00 € / Jahr</span>
+                    <span class="opt-meta-entry">· Aufnahme: 25,00 €</span>
+                  </span>
                 </button>
 
                 <button
@@ -72,7 +78,10 @@ const isSatzung = entry.slug === 'satzung';
                   aria-pressed="false"
                 >
                   <span class="opt-title">15 bis 20 Jahre</span>
-                  <span class="opt-meta">Beitrag: 60,00 € / Jahr · Aufnahme: 25,00 €</span>
+                  <span class="opt-meta">
+                    <span class="opt-meta-fee">Beitrag: 60,00 € / Jahr</span>
+                    <span class="opt-meta-entry">· Aufnahme: 25,00 €</span>
+                  </span>
                 </button>
 
                 <button
@@ -85,7 +94,10 @@ const isSatzung = entry.slug === 'satzung';
                   aria-pressed="true"
                 >
                   <span class="opt-title">Erwachsene ab 21 Jahren</span>
-                  <span class="opt-meta">Beitrag: 96,00 € / Jahr · Aufnahme: 75,00 €</span>
+                  <span class="opt-meta">
+                    <span class="opt-meta-fee">Beitrag: 96,00 € / Jahr</span>
+                    <span class="opt-meta-entry">· Aufnahme: 75,00 €</span>
+                  </span>
                 </button>
               </div>
             </div>
@@ -816,6 +828,13 @@ const isSatzung = entry.slug === 'satzung';
   .opt-meta {
     font-size: 0.8rem;
     color: var(--color-text-muted);
+    line-height: 1.45;
+  }
+
+  .opt-meta-fee,
+  .opt-meta-entry {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   .calc-group.is-disabled {
