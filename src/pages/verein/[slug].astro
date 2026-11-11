@@ -1005,43 +1005,50 @@ const isSatzung = entry.slug === 'satzung';
   }
 
   @media (max-width: 44em) {
-    .subpage-card {
-      padding: 1.1rem 0.8rem;
+    :global(.subpage-card) {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
     }
 
     .calc-shell {
-      padding: 0.95rem 0.7rem;
-      gap: 1.25rem;
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      gap: 1.5rem !important;
     }
 
     .calc-result {
-      padding: 1.1rem 0.85rem;
-      gap: 1rem;
+      padding: 1.35rem 1.15rem !important;
+      border-radius: var(--radius-lg) !important;
+      background: rgba(0, 0, 0, 0.45) !important;
+      border: 1px solid var(--color-border) !important;
+      gap: 1.15rem !important;
     }
 
     .calc-option {
-      padding: 0.75rem 0.85rem;
+      padding: 0.85rem 1rem !important;
     }
 
     .opt-title {
-      font-size: 0.9rem;
+      font-size: 0.95rem !important;
     }
 
     .opt-meta {
-      font-size: 0.76rem;
+      font-size: 0.8rem !important;
     }
 
     .calc-row {
-      gap: 0.5rem;
-      padding-bottom: 0.65rem;
+      gap: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
     }
 
     .calc-row-highlight {
-      padding: 0.85rem 0.9rem;
+      padding: 0.95rem 1.05rem !important;
     }
 
     .calc-row-highlight dd {
-      font-size: 1.35rem;
+      font-size: 1.45rem !important;
     }
   }
 
