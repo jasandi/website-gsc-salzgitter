@@ -17,7 +17,7 @@ export const trainingSchedule: TrainingSlot[] = [
   {
     daysLabel: 'Sa',
     dayIndices: [6],
-    timeLabel: '10.00 - 13.00 Uhr • 15.00 - 19.00 Uhr',
+    timeLabel: '10.00 - 13.00 • 15.00 - 19.00 Uhr',
     windows: [
       { start: '10:00', end: '13:00' },
       { start: '15:00', end: '19:00' },

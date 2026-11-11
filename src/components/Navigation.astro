@@ -6,7 +6,7 @@ const { isHome = false } = Astro.props;
 const prefix = isHome ? '' : '/';
 ---
 
-<header class="site-header" id="site-header">
+<header class="site-header" id="site-header" data-is-home={isHome ? 'true' : 'false'}>
   <div class="container header-inner">
     <a href={isHome ? '#startseite' : '/'} class="brand" aria-label="GSC Salzgitter Startseite">
       <div class="brand-text">
@@ -75,6 +75,16 @@ const prefix = isHome ? '' : '/';
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--color-border);
+    transition: transform 0.32s var(--ease-out), opacity 0.25s ease;
+  }
+
+  @media (max-width: 47.99em) {
+    .site-header[data-is-home='true']:not(.is-mobile-visible):not(.is-menu-open),
+    .site-header.is-mobile-hidden:not(.is-menu-open) {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
   .header-inner {
@@ -328,3 +338,73 @@ const prefix = isHome ? '' : '/';
     }
   }
 </style>
+
+<script>
+  function setupNavigation() {
+    const header = document.getElementById('site-header');
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-top-menu');
+
+    function setMenu(open: boolean) {
+      if (!toggleBtn || !menu) return;
+      menu.hidden = !open;
+      menu.classList.toggle('is-open', open);
+      menu.setAttribute('aria-hidden', String(!open));
+      toggleBtn.setAttribute('aria-expanded', String(open));
+      header?.classList.toggle('is-menu-open', open);
+      if (open) {
+        header?.classList.add('is-mobile-visible');
+        header?.classList.remove('is-mobile-hidden');
+      }
+    }
+
+    toggleBtn?.addEventListener('click', () => {
+      const isOpen = menu?.classList.contains('is-open');
+      setMenu(!isOpen);
+    });
+
+    menu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        setMenu(false);
+        header?.classList.remove('is-mobile-visible');
+        header?.classList.add('is-mobile-hidden');
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setMenu(false);
+    });
+
+    let lastScrollY = window.scrollY;
+    let hasScrolledDown = window.scrollY > 20;
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        const currentY = window.scrollY;
+        if (currentY < 0) return;
+
+        if (menu?.classList.contains('is-open')) {
+          lastScrollY = currentY;
+          return;
+        }
+
+        const delta = currentY - lastScrollY;
+
+        if (delta > 6 && currentY > 20) {
+          hasScrolledDown = true;
+          header?.classList.remove('is-mobile-visible');
+          header?.classList.add('is-mobile-hidden');
+        } else if (delta < -6 && hasScrolledDown) {
+          header?.classList.add('is-mobile-visible');
+          header?.classList.remove('is-mobile-hidden');
+        }
+
+        lastScrollY = currentY;
+      },
+      { passive: true }
+    );
+  }
+
+  document.addEventListener('DOMContentLoaded', setupNavigation);
+</script>
