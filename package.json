@@ -1,0 +1,20 @@
+{
+  "name": "gsc-salzgitter-scrollytelling",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "postbuild": "rm -rf _astro && cp -R dist/. .",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

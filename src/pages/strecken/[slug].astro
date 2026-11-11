@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import { tracksData } from '../../data/gsc';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('strecken');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const spec = tracksData.find((t) => t.id === entry.slug);
+---
+
+<SubpageLayout
+  title={entry.data.titel}
+  subtitle={entry.data.kurzbeschreibung}
+  badge="Strecken · GSC Salzgitter"
+  image={entry.data.bild}
+  backHref="/#strecke"
+  backLabel="← Zurück zur Strecken-Übersicht"
+>
+  {spec && (
+    <div class="spec-bar">
+      <div class="spec-item">
+        <span>Level</span>
+        <strong>{spec.level}</strong>
+      </div>
+      <div class="spec-item">
+        <span>Länge</span>
+        <strong>{spec.lengthLabel}</strong>
+      </div>
+      <div class="spec-item">
+        <span>Sektionen</span>
+        <strong>{spec.jumpsLabel}</strong>
+      </div>
+      <div class="spec-item">
+        <span>Zeiten</span>
+        <strong>{spec.hoursLabel}</strong>
+      </div>
+    </div>
+  )}
+  <Content />
+</SubpageLayout>
+
+<style>
+  .spec-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 48em) {
+    .spec-bar {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .spec-item span {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .spec-item strong {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: var(--color-primary);
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from 'astro:content';
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('verein');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SubpageLayout
+  title={entry.data.titel}
+  subtitle={entry.data.kurzbeschreibung}
+  backHref="/#verein"
+  backLabel="← Zurück zum Verein"
+>
+  <div class="under-construction-box">
+    <h2>Inhalte in Bearbeitung</h2>
+    <p>
+      Die Inhalte dieser Seite befinden sich derzeit noch in Bearbeitung. Ein Update folgt in Kürze.
+    </p>
+  </div>
+</SubpageLayout>
+
+<style>
+  .under-construction-box {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .under-construction-box h2 {
+    margin-top: 0;
+    margin-bottom: 0.65rem;
+    font-size: 1.5rem;
+  }
+
+  .under-construction-box p {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+  }
+</style>

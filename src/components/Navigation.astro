@@ -1,0 +1,330 @@
+---
+interface Props {
+  isHome?: boolean;
+}
+const { isHome = false } = Astro.props;
+const prefix = isHome ? '' : '/';
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href={isHome ? '#startseite' : '/'} class="brand" aria-label="GSC Salzgitter Startseite">
+      <div class="brand-text">
+        <span class="brand-name">GSC <span class="highlight">Salzgitter</span></span>
+      </div>
+    </a>
+
+    <nav class="desktop-nav" id="desktop-nav" aria-label="Hauptnavigation">
+      <a href={`${prefix}#startseite`} data-nav-section="startseite" data-nav-label="Startseite" class="is-active">Startseite</a>
+      <a href={`${prefix}#oeffnungszeiten`} data-nav-section="oeffnungszeiten" data-nav-label="Training">Training</a>
+      <a href={`${prefix}#termine`} data-nav-section="termine" data-nav-label="Termine">Termine</a>
+      <a href={`${prefix}#strecke`} data-nav-section="strecke" data-nav-label="Strecken">Strecken</a>
+      <a href={`${prefix}#verein`} data-nav-section="verein" data-nav-label="Verein">Verein</a>
+      <a href={`${prefix}#initiativen`} data-nav-section="initiativen" data-nav-label="Initiativen">Initiativen</a>
+      <span class="desktop-nav-indicator" id="desktop-nav-indicator" aria-hidden="true"></span>
+    </nav>
+
+    <div class="header-actions">
+      <a
+        href="https://gsccam.openlaptime.de/cam1.jpg"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="live-cam-pill desktop-only-cam"
+        title="Aktuelles Streckenfoto öffnen"
+      >
+        <span class="live-dot" aria-hidden="true"></span>
+        <span>Live-Cam</span>
+      </a>
+      <button
+        type="button"
+        class="menu-toggle"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-top-menu"
+        aria-label="Menü öffnen"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Top Drop-Down Menu for Smartphones & Small Tablets -->
+  <div class="mobile-top-menu" id="mobile-top-menu" aria-hidden="true" hidden>
+    <nav class="container mobile-top-nav" aria-label="Mobile Navigation">
+      <a href={`${prefix}#startseite`} data-nav-section="startseite">Startseite</a>
+      <a href={`${prefix}#oeffnungszeiten`} data-nav-section="oeffnungszeiten">Training</a>
+      <a href={`${prefix}#termine`} data-nav-section="termine">Termine</a>
+      <a href={`${prefix}#strecke`} data-nav-section="strecke">Strecken</a>
+      <a href={`${prefix}#verein`} data-nav-section="verein">Verein</a>
+      <a href={`${prefix}#initiativen`} data-nav-section="initiativen">Initiativen</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 95;
+    background: rgba(8, 8, 10, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .brand-name {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .desktop-nav {
+    display: none;
+    align-items: center;
+    gap: 2rem;
+    font-family: var(--font-heading);
+    font-size: 1.12rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    position: relative;
+  }
+
+  .desktop-nav a {
+    padding: 0.45rem 0.25rem;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .desktop-nav a:hover,
+  .desktop-nav a.is-active {
+    color: #fff;
+  }
+
+  .desktop-nav-indicator {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    height: 3px;
+    width: 0;
+    border-radius: 999px;
+    background: var(--color-primary);
+    box-shadow: 0 0 12px rgba(255, 107, 0, 0.7);
+    transition: transform 0.35s var(--ease-out), width 0.35s var(--ease-out);
+    pointer-events: none;
+  }
+
+  .mobile-section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.38rem 0.78rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    border: 1px solid rgba(255, 107, 0, 0.4);
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .mobile-section-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .live-cam-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.52rem 1rem;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+  }
+
+  .live-cam-pill:hover {
+    border-color: var(--color-primary);
+  }
+
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: pulseDot 2s infinite;
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(1.25); }
+  }
+
+  .header-cta {
+    display: none;
+  }
+
+  /* Hamburger Toggle (Smartphones & Small Tablets) */
+  .menu-toggle {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .menu-toggle .bar {
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  .menu-toggle[aria-expanded='true'] .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded='true'] .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded='true'] .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile / Tablet Full-Screen Menu */
+  .mobile-top-menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100dvh - var(--header-height));
+    background: rgba(12, 12, 16, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow-y: auto;
+    display: none;
+  }
+
+  .mobile-top-menu.is-open {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mobile-top-nav {
+    display: grid;
+    gap: 0.55rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .mobile-top-nav > a {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    padding: 0.9rem 1.15rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-top-nav > a.is-active,
+  .mobile-top-nav > a:hover {
+    background: var(--color-primary-soft);
+    border-color: rgba(255, 107, 0, 0.35);
+    color: var(--color-primary);
+  }
+
+  .mobile-menu-cta {
+    padding-top: 0.65rem;
+    margin-top: 0.35rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .mobile-menu-cta .btn {
+    width: 100%;
+  }
+
+  .desktop-only-cam {
+    display: none;
+  }
+
+  @media (min-width: 64em) {
+    .header-inner {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+    }
+    .brand {
+      justify-self: start;
+    }
+    .brand-name {
+      font-size: 1.55rem;
+    }
+    .desktop-nav {
+      display: flex;
+      justify-self: center;
+    }
+    .header-actions {
+      display: flex;
+      justify-self: end;
+    }
+    .desktop-only-cam {
+      display: inline-flex;
+    }
+    .menu-toggle,
+    .mobile-top-menu {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import { faqCategories } from '../data/gsc';
+---
+
+<SubpageLayout
+  title="Häufige Fragen (FAQ)"
+  subtitle="Antworten auf die meistgestellten Fragen rund um die Streckennutzung, den Verein, unsere Initiativen und Camping."
+  badge="Service & Hilfe · GSC Salzgitter"
+  backHref="/"
+  backLabel="← Zurück zur Startseite"
+>
+  <div class="faq-wrapper">
+    {faqCategories.map((cat) => (
+      <section class="faq-category">
+        <h2>{cat.category}</h2>
+        <div class="faq-list">
+          {cat.items.map((item) => (
+            <details class="faq-item" id={item.id}>
+              <summary class="faq-question">
+                <span>{item.question}</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</SubpageLayout>
+
+<style>
+  .faq-category + .faq-category {
+    margin-top: 2.5rem;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  .faq-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-primary);
+  }
+
+  .faq-question {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    color: var(--color-text-muted);
+    font-size: 0.96rem;
+  }
+</style>
+
+<script>
+  function openHashFaq() {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    const target = document.getElementById(hash) as HTMLDetailsElement | null;
+    if (target && target.tagName === 'DETAILS') {
+      target.open = true;
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', openHashFaq);
+  window.addEventListener('hashchange', openHashFaq);
+</script>

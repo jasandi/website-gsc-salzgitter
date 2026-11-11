@@ -1,0 +1,1447 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  trainingSchedule,
+  nutzungshinweise,
+  tracksData,
+  upcomingEvents,
+  clubMilestones,
+  initiativesCards,
+} from '../data/gsc';
+---
+
+<BaseLayout isHome={true}>
+  <!-- 1. STARTSEITE -->
+  <section id="startseite" class="hero-stage" aria-labelledby="hero-title">
+    <div class="hero-media" id="hero-media">
+      <img
+        src="/assets/hero-bg.png"
+        alt="Motocross-Action auf dem Hüttenring in Salzgitter"
+        width="1200"
+        height="751"
+        fetchpriority="high"
+        decoding="async"
+        class="hero-bg-img"
+      />
+      <div class="hero-scrim"></div>
+    </div>
+
+    <div class="container hero-container hero-centered">
+      <div class="hero-copy" id="hero-copy">
+        <h1 id="hero-title" class="hero-title">
+          GSC <span class="highlight">Salzgitter</span>
+        </h1>
+        <p class="hero-subtitle">
+          Komm vorbei und nutze unser vielseitiges Streckenangebot für dein Training.
+        </p>
+      </div>
+
+      <a href="#oeffnungszeiten" class="scroll-cue" aria-label="Weiter nach unten scrollen">
+        <span class="scroll-cue-label">Scrollen</span>
+        <span class="scroll-cue-wheel"><span></span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 2. TRAINING (UNSERE TRAININGSZEITEN) -->
+  <section id="oeffnungszeiten" class="story-chapter chapter-dark" aria-labelledby="title-training">
+    <div class="container">
+      <header class="chapter-header reveal-up">
+        <h2 id="title-training" class="chapter-title">
+          Unsere <span class="highlight">Trainingszeiten</span>
+        </h2>
+        <p class="chapter-lead">
+          Hier siehst du unsere regulären Öffnungszeiten. Tatsächliche Trainingszeiten können in MX-Tickets eingesehen werden.
+        </p>
+      </header>
+
+      <div class="training-grid">
+        <!-- Compact Single Timetable Box -->
+        <div class="schedule-accordion reveal-up" id="schedule-accordion">
+          {trainingSchedule.map((slot) => (
+            <div
+              class="schedule-row"
+              data-day-indices={slot.dayIndices.join(',')}
+            >
+              <div class="schedule-row-top">
+                <div class="acc-days-group">
+                  <span class="schedule-days">{slot.daysLabel}</span>
+                  <span class="today-tag" hidden>Heute</span>
+                </div>
+                <span class="acc-time-preview">{slot.timeLabel}</span>
+              </div>
+              {slot.note && <p class="schedule-row-note">{slot.note}</p>}
+            </div>
+          ))}
+        </div>
+
+        <!-- Safety Gear Scrollytelling Checklist -->
+        <div class="gear-card reveal-up">
+          <div class="gear-card-header">
+            <span class="gear-badge">Safety First</span>
+            <h3>Deine Pflichten vor dem Training</h3>
+            <p>{nutzungshinweise.registrationRule}</p>
+          </div>
+
+          <ul class="gear-checklist" id="gear-checklist">
+            <li class="gear-item gear-item-ticket" data-gear-step="0">
+              <span class="gear-check-icon" aria-hidden="true">✓</span>
+              <strong>Anmeldung bei MX-Tickets</strong>
+            </li>
+            {nutzungshinweise.gearItems.map((item, idx) => (
+              <li class="gear-item" data-gear-step={idx + 1}>
+                <span class="gear-check-icon" aria-hidden="true">✓</span>
+                <strong>{item}</strong>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="training-cta-row reveal-up">
+          <a
+            href="https://mx-tickets.com/de-DE/t/gsc-salzgitter/events"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            Anmelden mit MX-Tickets
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TERMINE (KOMMENDE TERMINE) -->
+  <section id="termine" class="story-chapter chapter-black" aria-labelledby="title-termine">
+    <div class="container">
+      <header class="chapter-header chapter-header-split reveal-up">
+        <h2 id="title-termine" class="chapter-title">
+          Kommende <span class="highlight">Termine</span>
+        </h2>
+        <p class="chapter-lead">
+          Verpasse keine Rennen, Lehrgänge oder Events auf unserer Strecke. Kurzfristige Ankündigungen
+          findet ihr auf Instagram.
+        </p>
+        <a
+          href="https://www.instagram.com/gsc_salzgitter/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-pill-btn"
+          aria-label="Instagram"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+            />
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </header>
+
+      <div class="starting-grid-events" id="events-grid">
+        {upcomingEvents.map((ev) => (
+          <article class="race-event-card reveal-up" data-event-date={ev.isoStart.slice(0, 8)}>
+            <div class="race-date-badge">
+              <span class="race-day">{ev.day}</span>
+              <span class="race-month">{ev.month}</span>
+            </div>
+            <div class="race-event-main">
+              <div class="race-meta-row">
+                <span class="race-full-date">{ev.dateLabel}</span>
+              </div>
+              <h3>{ev.title}</h3>
+              <p>{ev.description}</p>
+              <div class="race-actions">
+                {ev.ctaHref ? (
+                  <a
+                    href={ev.ctaHref}
+                    target={ev.external ? '_blank' : undefined}
+                    rel={ev.external ? 'noopener noreferrer' : undefined}
+                    class="btn btn-primary btn-sm"
+                  >
+                    {ev.ctaLabel}
+                  </a>
+                ) : (
+                  <span class="race-pill-muted">{ev.ctaLabel}</span>
+                )}
+                <button
+                  type="button"
+                  class="btn btn-outline btn-sm ics-download-btn"
+                  data-ics-title={ev.title}
+                  data-ics-desc={ev.description}
+                  data-ics-start={ev.isoStart}
+                  data-ics-end={ev.isoEnd}
+                >
+                  + Kalender (.ics)
+                </button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="no-events-placeholder" id="no-events-placeholder" hidden>
+        <div class="no-events-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="32" height="32">
+            <path
+              fill="currentColor"
+              d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5v-5z"
+            />
+          </svg>
+        </div>
+        <p>Derzeit sind keine neuen Termine angekündigt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STRECKEN (UNSERE STRECKEN) -->
+  <section id="strecke" class="story-chapter chapter-dark" aria-labelledby="title-strecken">
+    <div class="container">
+      <header class="chapter-header reveal-up">
+        <div class="strecken-header-top">
+          <h2 id="title-strecken" class="chapter-title">
+            Unsere <span class="highlight">Strecken</span>
+          </h2>
+          <div class="strecken-header-actions">
+            <a
+              href="https://gsccam.openlaptime.de/cam1.jpg"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="live-cam-pill"
+              title="Aktuelles Streckenfoto öffnen"
+            >
+              <span class="live-dot" aria-hidden="true"></span>
+              <span>Live-Cam</span>
+            </a>
+            <a
+              href="https://gsccam.openlaptime.de/timelapse.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="live-cam-pill"
+              title="Zeitraffer der Strecke öffnen"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"
+                />
+              </svg>
+              <span>Zeitraffer</span>
+            </a>
+          </div>
+        </div>
+        <p class="chapter-lead">
+          Drei Strecken für jedes Alter und Fahrerniveau. Tagesaktuelles Zeitraffer oder Foto der
+          Streckenverhältnisse einsehen.
+        </p>
+      </header>
+
+      <!-- Track Cards -->
+      <div class="tracks-showcase">
+        {tracksData.map((track) => (
+          <article
+            class="track-showcase-card reveal-up"
+            id={`track-card-${track.id}`}
+            data-track-panel={track.id}
+          >
+            <div class="track-visual-col">
+              <div class="track-photo-wrap">
+                <img
+                  src={track.image}
+                  alt={track.imageAlt}
+                  width="800"
+                  height="600"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <div class="track-info-col">
+              <h3 class="track-name">{track.name}</h3>
+              <p class="track-subtitle">{track.subtitle}</p>
+              <p class="track-desc">{track.description}</p>
+
+              <div class="telemetry-pills">
+                <div class="telemetry-pill">
+                  <span class="telemetry-label">Level</span>
+                  <strong>{track.level}</strong>
+                </div>
+                <div class="telemetry-pill">
+                  <span class="telemetry-label">Distanz</span>
+                  <strong>{track.lengthLabel}</strong>
+                </div>
+                <div class="telemetry-pill">
+                  <span class="telemetry-label">Zeiten</span>
+                  <strong>{track.hoursLabel}</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. VEREIN (UNSER VEREIN) -->
+  <section id="verein" class="story-chapter chapter-black" aria-labelledby="title-verein">
+    <div class="container">
+      <div class="verein-hero-grid">
+        <div class="verein-copy reveal-up">
+          <h2 id="title-verein" class="chapter-title">
+            Unser <span class="highlight">Verein</span>
+          </h2>
+          <p class="chapter-lead">
+            Der Verein wurde im Jahr 1985 gegründet und hat in seiner Zeit äußerst erfolgreiche Mitglieder
+            gehabt, wie einem ehemaligen Vizeweltmeister und einem US Supercross Fahrer. Der Verein ist
+            heute Heimat für fast 600 Mitglieder, darunter über 140 Kinder und Jugendliche.
+          </p>
+          <p class="verein-subtext">
+            Als stolzer ADAC Ortsclub (seit 2025) stehen wir für Zusammenhalt, modernste Sicherheitsstandards
+            und ehrenamtliches Engagement für unseren Sport.
+          </p>
+
+          <!-- Animated Counters -->
+          <div class="counter-strip">
+            <div class="counter-box">
+              <span class="counter-num" data-count-to="1985">1985</span>
+              <span class="counter-caption">Gründungsjahr</span>
+            </div>
+            <div class="counter-box">
+              <span class="counter-num" data-count-to="600" data-count-prefix="~">~600</span>
+              <span class="counter-caption">Aktive &amp; passive Mitglieder</span>
+            </div>
+            <div class="counter-box">
+              <span class="counter-num" data-count-to="140" data-count-prefix=">">&gt;140</span>
+              <span class="counter-caption">Kinder &amp; Jugendliche</span>
+            </div>
+          </div>
+
+          <div class="verein-cta-row">
+            <a
+              href="https://easyverein.com/public/GSCeV/applicationform/9262"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+            >
+              Mitglied werden →
+            </a>
+            <a href="/verein/verein.html" class="btn btn-outline">
+              Mehr erfahren →
+            </a>
+          </div>
+        </div>
+
+        <div class="verein-media reveal-up">
+          <div class="verein-photo-card">
+            <img
+              src="/assets/verein_img.jpeg"
+              alt="GSC Vereinsmitglieder an der Strecke"
+              width="1200"
+              height="900"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. INITIATIVEN (UNSERE INITIATIVEN) -->
+  <section id="initiativen" class="story-chapter chapter-dark" aria-labelledby="title-initiativen">
+    <div class="container">
+      <header class="chapter-header reveal-up">
+        <h2 id="title-initiativen" class="chapter-title">
+          Unsere <span class="highlight">Initiativen</span>
+        </h2>
+        <p class="chapter-lead">
+          Wir fördern den Motocross-Sport aktiv mit gezieltem Training und Nachwuchsprogrammen.
+        </p>
+      </header>
+
+      <div class="stack-deck">
+        {initiativesCards.map((item, idx) => (
+          <article class="stack-card" style={`--stack-index: ${idx};`}>
+            <div class="stack-card-media">
+              <img src={item.image} alt={item.imageAlt} width="800" height="598" loading="lazy" />
+              <span class="stack-tag">{item.tag}</span>
+            </div>
+            <div class="stack-card-body">
+              <h3>
+                {item.title} {item.highlight}
+              </h3>
+              <p>{item.description}</p>
+              <ul class="stack-bullets">
+                {item.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+              <div class="stack-actions">
+                <a href={item.primaryHref} class="btn btn-primary btn-sm">
+                  {item.primaryLabel}
+                </a>
+                {item.secondaryHref && (
+                  <a href={item.secondaryHref} class="btn btn-outline btn-sm">
+                    {item.secondaryLabel}
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Chapters Common */
+  .story-chapter {
+    position: relative;
+    padding: clamp(4rem, 9vw, 7rem) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .chapter-dark {
+    background: var(--color-bg-dark);
+  }
+
+  .chapter-black {
+    background: var(--color-bg-black);
+  }
+
+  .chapter-header {
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  /* HERO STAGE */
+  .hero-stage {
+    position: relative;
+    min-height: 100svh;
+    padding-top: calc(var(--header-height) + 1.5rem);
+    padding-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(1.1) contrast(1.05);
+    transform: scale(1.04);
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(5, 5, 6, 0.72) 0%, rgba(5, 5, 6, 0.58) 45%, rgba(5, 5, 6, 0.96) 100%),
+      radial-gradient(circle at 50% 40%, rgba(255, 107, 0, 0.2), transparent 60%);
+  }
+
+  .hero-container.hero-centered {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: calc(100svh - var(--header-height) - 4rem);
+  }
+
+  .hero-centered .hero-copy {
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    margin-bottom: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+    color: var(--color-text-muted);
+    max-width: 60ch;
+    margin-inline: auto;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+  }
+
+  .scroll-cue {
+    margin-top: 3rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(0.92rem, 1.2vw, 1.02rem);
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  .scroll-cue-wheel {
+    width: 24px;
+    height: 38px;
+    border-radius: 14px;
+    border: 1.5px solid var(--color-border-strong);
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+
+  .scroll-cue-wheel span {
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--color-primary);
+    animation: wheelBounce 1.6s infinite;
+  }
+
+  @keyframes wheelBounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    60% { transform: translateY(8px); opacity: 0.3; }
+  }
+
+  /* TRAINING */
+  .training-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .training-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 56em) {
+    .training-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: start;
+    }
+
+    .schedule-accordion {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .training-cta-row {
+      grid-column: 1;
+      grid-row: 2;
+      justify-content: flex-start;
+    }
+
+    .gear-card {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+  }
+
+  .schedule-accordion {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .schedule-row {
+    padding: 0.95rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.2s ease;
+  }
+
+  .schedule-row:last-child {
+    border-bottom: 0;
+  }
+
+  .schedule-row.is-today {
+    background: rgba(255, 107, 0, 0.07);
+  }
+
+  .schedule-row-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .acc-days-group {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .schedule-days {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--color-primary);
+  }
+
+  .today-tag {
+    background: var(--color-primary);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .acc-time-preview {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .schedule-row-note {
+    margin-top: 0.22rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .gear-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+  }
+
+  .gear-badge {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .gear-card-header h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .gear-card-header p {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.1rem;
+  }
+
+  .gear-checklist {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .gear-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .gear-item.is-checked {
+    border-color: rgba(34, 197, 94, 0.5);
+    background: rgba(34, 197, 94, 0.08);
+  }
+
+  .gear-check-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .gear-item.is-checked .gear-check-icon {
+    background: var(--color-success);
+    color: #050506;
+  }
+
+  .gear-item-ticket {
+    grid-column: 1 / -1;
+    border-color: rgba(245, 158, 11, 0.35);
+    background: rgba(245, 158, 11, 0.06);
+  }
+
+  .gear-item-ticket .gear-check-icon {
+    background: rgba(245, 158, 11, 0.18);
+    color: var(--color-warning);
+  }
+
+  .gear-item-ticket.is-checked {
+    border-color: rgba(245, 158, 11, 0.65);
+    background: rgba(245, 158, 11, 0.14);
+  }
+
+  .gear-item-ticket.is-checked .gear-check-icon {
+    background: var(--color-warning);
+    color: #050506;
+  }
+
+  .gear-item strong {
+    display: block;
+    font-size: 0.95rem;
+  }
+
+  .gear-item span {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .gear-card-footer {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  /* STRECKEN & SPLIT HEADER */
+  .chapter-header-split {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .chapter-header-split .chapter-title {
+    margin-bottom: 0;
+  }
+
+  .chapter-header-split .social-pill-btn {
+    display: none;
+  }
+
+  @media (min-width: 48em) {
+    .chapter-header-split {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 1.5rem;
+      row-gap: 0.75rem;
+      align-items: center;
+    }
+
+    .chapter-header-split .chapter-title {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .chapter-header-split .social-pill-btn {
+      display: inline-flex;
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+
+    .chapter-header-split .chapter-lead {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  .strecken-header-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .strecken-header-top .chapter-title {
+    margin-bottom: 0;
+  }
+
+  .strecken-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .live-cam-pill,
+  .social-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.45rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-strong);
+    font-family: var(--font-heading);
+    font-size: clamp(0.98rem, 1.3vw, 1.08rem);
+    font-weight: 600;
+    color: var(--color-text-main);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .live-cam-pill:hover,
+  .social-pill-btn:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: pulseDot 2s infinite;
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(1.25); }
+  }
+
+  .tracks-showcase {
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  .track-showcase-card {
+    background: var(--color-bg-black);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 3.5vw, 2.25rem);
+    display: grid;
+    gap: 1.75rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .track-showcase-card.is-focused {
+    border-color: rgba(255, 107, 0, 0.55);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  }
+
+  @media (min-width: 48em) {
+    .track-showcase-card {
+      grid-template-columns: 0.78fr 1.22fr;
+      align-items: center;
+    }
+
+    .track-visual-col {
+      display: flex;
+      align-items: center;
+    }
+
+    .track-photo-wrap {
+      width: 100%;
+      height: 235px;
+      aspect-ratio: auto;
+    }
+
+    .track-info-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .track-photo-wrap {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--color-border);
+  }
+
+  .track-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .track-badge-floating {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    background: rgba(5, 5, 6, 0.82);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border-strong);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+
+  .track-name {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: 0.25rem;
+  }
+
+  .track-subtitle {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.65rem;
+  }
+
+  .track-desc {
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .telemetry-pills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+    margin-bottom: 0;
+  }
+
+  .telemetry-pill:first-child {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 48em) {
+    .telemetry-pills {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .telemetry-pill:first-child {
+      grid-column: auto;
+    }
+  }
+
+  .telemetry-pill {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.85rem;
+  }
+
+  .telemetry-label {
+    display: block;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .telemetry-pill strong {
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+  }
+
+  .track-highlights {
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .track-highlights li {
+    position: relative;
+    padding-left: 1.25rem;
+    font-size: 0.92rem;
+    color: var(--color-text);
+  }
+
+  .track-highlights li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+  }
+
+  .track-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  /* VEREIN & TIMELINE */
+  .verein-hero-grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 60em) {
+    .verein-hero-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+
+  .verein-subtext {
+    color: var(--color-text-muted);
+    margin-top: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .counter-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .counter-box {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+  }
+
+  .counter-num {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3.8vw, 2.3rem);
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .counter-caption {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .verein-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .verein-photo-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-bg-card);
+  }
+
+  .adac-ribbon {
+    background: var(--color-primary);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+
+  .timeline-track {
+    display: grid;
+    gap: 1rem;
+    border-left: 2px solid rgba(255, 107, 0, 0.4);
+    padding-left: 1.25rem;
+  }
+
+  @media (min-width: 56em) {
+    .timeline-track {
+      grid-template-columns: repeat(4, 1fr);
+      border-left: 0;
+      border-top: 2px solid rgba(255, 107, 0, 0.4);
+      padding-left: 0;
+      padding-top: 1.25rem;
+    }
+  }
+
+  .timeline-year {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+  }
+
+  .timeline-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-card p {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  /* INITIATIVEN (STICKY STACKING CARDS) */
+  .stack-deck {
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  .stack-card {
+    position: sticky;
+    top: calc(var(--header-height) + 1rem + (var(--stack-index, 0) * 14px));
+    background: var(--color-bg-black);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 3.5vw, 2.25rem);
+    gap: 1.75rem;
+    overflow: hidden;
+    display: grid;
+    box-shadow:
+      0 -28px 50px -10px rgba(0, 0, 0, 0.85),
+      0 20px 45px rgba(0, 0, 0, 0.65);
+  }
+
+  .stack-card-media {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--color-border);
+  }
+
+  .stack-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 48em) {
+    .stack-deck {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .stack-card {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      box-shadow: none;
+      padding: 1.5rem;
+      gap: 1.25rem;
+    }
+
+    .stack-card-media {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .stack-card-body {
+      flex: 1;
+      justify-content: flex-start;
+    }
+
+    .stack-actions {
+      margin-top: auto;
+    }
+  }
+
+  .stack-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(5, 5, 6, 0.82);
+    backdrop-filter: blur(8px);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    border: 1px solid rgba(255, 107, 0, 0.4);
+  }
+
+  .stack-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stack-card-body h3 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin-bottom: 0.65rem;
+  }
+
+  .stack-card-body p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .stack-bullets {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+    margin-bottom: 1.35rem;
+  }
+
+  .stack-bullets li {
+    padding-left: 1.2rem;
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .stack-bullets li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+
+  .stack-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  /* TERMINE */
+  .starting-grid-events {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  @media (min-width: 56em) {
+    .starting-grid-events {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .race-event-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.35rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.15rem;
+    align-items: start;
+  }
+
+  .race-date-badge {
+    width: 64px;
+    height: 68px;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-soft);
+    border: 1px solid rgba(255, 107, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+  }
+
+  .race-day {
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .race-month {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .race-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    font-size: 0.78rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .race-full-date {
+    color: var(--color-text-muted);
+  }
+
+  .race-event-main h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .race-event-main p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .race-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .race-pill-muted {
+    font-size: 0.82rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-text-muted);
+  }
+
+  .no-events-placeholder {
+    background: var(--color-bg-card);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .no-events-placeholder[hidden] {
+    display: none;
+  }
+
+  .no-events-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-overlay.is-open {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-dialog {
+    position: relative;
+    z-index: 1;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    max-width: 540px;
+    width: 100%;
+    padding: 1.5rem;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .modal-close {
+    background: rgba(255, 255, 255, 0.08);
+    border: 0;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+
+  .modal-body p {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .modal-rule-box {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .modal-rule-box strong {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .modal-rule-box ul {
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+</style>
+
+<script>
+  import '../scripts/home-scrollytelling.ts';
+</script>

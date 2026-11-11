@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content';
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('neuigkeiten');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<SubpageLayout
+  title={entry.data.titel}
+  subtitle={entry.data.kurzbeschreibung}
+  badge={entry.data.datum ? `Neuigkeiten · ${entry.data.datum}` : 'Neuigkeiten'}
+  image={entry.data.bild || undefined}
+  backHref="/#neuigkeiten"
+  backLabel="← Zurück zu den Neuigkeiten"
+>
+  <Content />
+</SubpageLayout>
