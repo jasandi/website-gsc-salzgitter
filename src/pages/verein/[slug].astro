@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import SubpageLayout from '../../layouts/SubpageLayout.astro';
 
 export async function getStaticPaths() {
@@ -11,40 +11,1463 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const isMitgliedschaft = entry.slug === 'mitgliedschaft';
+const isSatzung = entry.slug === 'satzung';
 ---
 
 <SubpageLayout
   title={entry.data.titel}
   subtitle={entry.data.kurzbeschreibung}
+  image={entry.data.bild}
   backHref="/#verein"
   backLabel="← Zurück zum Verein"
 >
-  <div class="under-construction-box">
-    <h2>Inhalte in Bearbeitung</h2>
-    <p>
-      Die Inhalte dieser Seite befinden sich derzeit noch in Bearbeitung. Ein Update folgt in Kürze.
-    </p>
+  <div class="verein-page">
+    {isMitgliedschaft && (
+      <!-- MITGLIEDSCHAFT, BEITRÄGE & ARBEITSDIENST -->
+      <section id="mitgliedschaft" class="verein-section">
+        <div class="calc-shell reveal">
+          <div class="calc-controls">
+            <div class="calc-controls-header">
+              <h3>Beitrag berechnen</h3>
+            </div>
+
+            <!-- 1. Altersgruppe -->
+            <div class="calc-group">
+              <label class="calc-label" id="label-age">1. Altersgruppe</label>
+              <div class="calc-options" role="radiogroup" aria-labelledby="label-age">
+                <button
+                  type="button"
+                  class="calc-option"
+                  data-age="u6"
+                  data-yearly="0"
+                  data-entry="25"
+                  data-title="Kinder bis 6 Jahre"
+                  aria-pressed="false"
+                >
+                  <span class="opt-title">Kinder bis 6 Jahre</span>
+                  <span class="opt-meta">Beitrag: kostenlos · Aufnahme: 25,00 €</span>
+                </button>
+
+                <button
+                  type="button"
+                  class="calc-option"
+                  data-age="7to14"
+                  data-yearly="36"
+                  data-entry="25"
+                  data-title="Kinder &amp; Jugendliche (7 – 14 Jahre)"
+                  aria-pressed="false"
+                >
+                  <span class="opt-title">7 bis 14 Jahre</span>
+                  <span class="opt-meta">Beitrag: 36,00 € / Jahr · Aufnahme: 25,00 €</span>
+                </button>
+
+                <button
+                  type="button"
+                  class="calc-option"
+                  data-age="15to20"
+                  data-yearly="60"
+                  data-entry="25"
+                  data-title="Jugendliche (15 – 20 Jahre)"
+                  aria-pressed="false"
+                >
+                  <span class="opt-title">15 bis 20 Jahre</span>
+                  <span class="opt-meta">Beitrag: 60,00 € / Jahr · Aufnahme: 25,00 €</span>
+                </button>
+
+                <button
+                  type="button"
+                  class="calc-option is-selected"
+                  data-age="21plus"
+                  data-yearly="96"
+                  data-entry="75"
+                  data-title="Erwachsene (ab 21 Jahren)"
+                  aria-pressed="true"
+                >
+                  <span class="opt-title">Erwachsene ab 21 Jahren</span>
+                  <span class="opt-meta">Beitrag: 96,00 € / Jahr · Aufnahme: 75,00 €</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Streckennutzung -->
+            <div class="calc-group">
+              <label class="calc-label" id="label-usage">2. Streckennutzung</label>
+              <div class="calc-options" role="radiogroup" aria-labelledby="label-usage">
+                <button
+                  type="button"
+                  class="calc-option is-selected"
+                  data-usage="active"
+                  aria-pressed="true"
+                >
+                  <span class="opt-title">Mindestens 2× im Jahr</span>
+                  <span class="opt-meta">Verpflichtung zu 6 Std. Arbeitsdienst / Jahr</span>
+                </button>
+
+                <button
+                  type="button"
+                  class="calc-option"
+                  data-usage="rare"
+                  aria-pressed="false"
+                >
+                  <span class="opt-title">Weniger als 2× im Jahr</span>
+                  <span class="opt-meta">Keine Arbeitsdienstpflicht</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 3. Arbeitsdienst -->
+            <div class="calc-group" id="calc-work-group">
+              <label class="calc-label" id="label-work">
+                3. Arbeitsdienst
+              </label>
+              <div class="calc-options" role="radiogroup" aria-labelledby="label-work">
+                <button
+                  type="button"
+                  class="calc-option is-selected"
+                  data-work="done"
+                  aria-pressed="true"
+                >
+                  <span class="opt-title">6 Stunden werden geleistet</span>
+                  <span class="opt-meta">Kein Ersatzbetrag (0,00 €)</span>
+                </button>
+
+                <button
+                  type="button"
+                  class="calc-option"
+                  data-work="skipped"
+                  aria-pressed="false"
+                >
+                  <span class="opt-title">Stunden nicht geleistet</span>
+                  <span class="opt-meta">60,00 € Ersatzbetrag am Saisonende</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ergebnis-Panel -->
+          <aside class="calc-result" aria-live="polite">
+            <div class="calc-result-header">
+              <h3>Individuelle Aufschlüsselung</h3>
+            </div>
+
+            <dl class="calc-breakdown">
+              <div class="calc-row">
+                <dt>
+                  <span>Jährlicher Mitgliedsbeitrag</span>
+                  <small id="calc-monthly-hint">Konditionen für Erwachsene (ab 21 Jahren)</small>
+                </dt>
+                <dd id="calc-val-yearly">96,00 €</dd>
+              </div>
+
+              <div class="calc-row">
+                <dt>
+                  <span>Arbeitsdienst</span>
+                  <small id="calc-work-hint">6 Std. geleistet</small>
+                </dt>
+                <dd id="calc-val-work">0,00 €</dd>
+              </div>
+
+              <div class="calc-row-highlight">
+                <dt>
+                  <strong class="highlight-title">Regulärer Beitrag</strong>
+                </dt>
+                <dd class="highlight-amount-wrap">
+                  <strong id="calc-total-recurring" class="highlight-amount">96,00 €</strong><span class="per-year"> / Jahr</span>
+                </dd>
+              </div>
+
+              <div class="calc-row calc-row-entry">
+                <dt>
+                  <span>Einmalige Aufnahmegebühr</span>
+                </dt>
+                <dd id="calc-val-entry">+ 75,00 €</dd>
+              </div>
+
+              <div class="calc-row calc-row-first-year">
+                <dt>
+                  <strong>Im 1. Jahr gesamt</strong>
+                </dt>
+                <dd>
+                  <strong id="calc-total-first">171,00 €</strong>
+                </dd>
+              </div>
+            </dl>
+
+            <a
+              href="https://easyverein.com/public/GSCeV/applicationform/9262"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary calc-cta"
+            >
+              Mitgliedsantrag stellen <span class="calc-cta-arrow" aria-hidden="true">→</span>
+            </a>
+          </aside>
+        </div>
+
+        <!-- Ergänzende organisatorische Hinweise -->
+        <div class="context-grid">
+          <div class="work-context-box reveal">
+            <h3>Arbeitsdienst</h3>
+            <p>
+              Der Erhalt und die Pflege unserer Strecke sowie unseres Vereinsgeländes sind nur durch
+              die tatkräftige Unterstützung unserer Mitglieder möglich. Wir informieren regelmäßig über anstehende
+              Arbeitsdienste und Termine. Wer nicht auf die regulären Termine warten
+              kann, stimmt individuelle Einsätze einfach vorab mit uns ab.
+            </p>
+            <p>
+              Wir bitten alle Mitglieder und Familien um Verständnis und Unterstützung – vielen Dank für euren gemeinsamen Einsatz für unsere Strecke!
+            </p>
+            <p class="work-note">
+              Rückmeldung geleisteter Stunden: Jede ausgeführte Arbeit bitte kurzfristig und formlos per E-Mail an
+              <a href="mailto:arbeit@gsc-salzgitter.de" class="inline-mail-link">arbeit@gsc-salzgitter.de</a>
+              melden.
+            </p>
+          </div>
+
+          <div class="work-context-box reveal">
+            <h3>Passive Mitgliedschaft</h3>
+            <p>
+              Bestehende Mitglieder können ihre Mitgliedschaft jeweils für ein Kalenderjahr zwischen
+              aktiv und passiv umstellen. Der Jahresbeitrag für passive Vereinsmitglieder (ab dem
+              7. Lebensjahr) beträgt <strong>24,00 € pro Jahr</strong>.
+            </p>
+            <p>
+              Passive Mitglieder unterliegen keiner Arbeitsdienstpflicht; bei einer Streckennutzung
+              fällt die reguläre Gastfahrer-Gebühr an.
+            </p>
+            <p class="work-note">
+              Hinweis zur Frist: Die Umstellung für die kommende Saison muss bis spätestens
+              <strong>30. Januar</strong> per E-Mail an
+              <a href="mailto:office@gsc-salzgitter.de" class="inline-mail-link">office@gsc-salzgitter.de</a>
+              erfolgen.
+            </p>
+          </div>
+        </div>
+
+        <!-- Verweis zur Vereinssatzung -->
+        <div class="satzung-referral-card reveal">
+          <div class="satzung-referral-text">
+            <h3>Du möchtest mehr über die Vereinssatzung erfahren?</h3>
+            <p>
+              Alle rechtlichen Grundlagen, Rechte und Pflichten sowie die Vereinsordnung findest du in unserer offiziellen Satzung.
+            </p>
+          </div>
+          <a href="/verein/satzung.html" class="btn btn-outline satzung-referral-btn">
+            Zur Vereinssatzung →
+          </a>
+        </div>
+      </section>
+    )}
+
+    {isSatzung && (
+      <!-- RECHTLICHE GRUNDLAGEN MIT DER SATZUNG -->
+      <section id="satzung" class="verein-section">
+        <div class="satzung-top-bar reveal">
+          <p class="satzung-count">16 Paragraphen · einzeln oder gesamt aufklappbar</p>
+          <button type="button" class="satzung-toggle-all" id="satzung-toggle-all" aria-expanded="false">
+            <span id="satzung-toggle-all-label">Alle aufklappen</span>
+            <span class="satzung-chevron" aria-hidden="true">+</span>
+          </button>
+        </div>
+
+        <div class="satzung-paragraphs">
+          <details class="satzung-item reveal" id="p1" style="--rd: 0">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 1</strong> · Name, Sitz und Geschäftsjahr</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Der am 12.10.1985 in Salzgitter gegründete Ortsclub führt den Namen:
+                  „Geländesportclub (GSC) Salzgitter e.V. im ADAC“. Er hat seinen Sitz in Salzgitter
+                  und ist in das Vereinsregister beim Amtsgericht Braunschweig eingetragen.
+                </li>
+                <li>Sein Geschäftsjahr ist das Kalenderjahr.</li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p2" style="--rd: 1">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 2</strong> · Zweck und Ziele</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Der Ortsclub verfolgt ausschließlich und unmittelbar gemeinnützige Zwecke im Sinne
+                  der Abgabenordnung zur Förderung des Sportes, insbesondere des Offroadsports, und
+                  die Wahrnehmung und Förderung der Interessen des Kraftfahrtwesens.
+                </li>
+                <li>
+                  Der Ortsclub verwirklicht seinen Zweck insbesondere durch:
+                  <ol class="arabic-list">
+                    <li>Schaffung von Trainingsmöglichkeiten,</li>
+                    <li>Betreiben einer Jugendgruppe,</li>
+                    <li>Organisation von Motorsportveranstaltungen,</li>
+                    <li>Durchführung von Veranstaltungen im Zusammenhang mit Zweiradsport sowie</li>
+                    <li>Unterstützung von Maßnahmen zur Hebung der allgemeinen Verkehrssicherheit.</li>
+                  </ol>
+                </li>
+                <li>
+                  Der Ortsclub ist selbstlos tätig, er verfolgt nicht in erster Linie
+                  eigenwirtschaftliche Zwecke.
+                </li>
+                <li>
+                  Mittel des Ortsclubs dürfen nur für satzungsgemäße Zwecke verwendet werden. Die
+                  Mitglieder erhalten keine Zuwendungen aus Mitteln des Ortsclubs.
+                </li>
+                <li>
+                  Es darf keine Person durch Ausgaben, die dem Zweck des Ortsclubs fremd sind, oder
+                  durch unverhältnismäßig hohe Vergütungen begünstigt werden.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p3" style="--rd: 2">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 3</strong> · Mitgliedschaft</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Jede an den Zwecken und Zielen des Ortsclubs interessierte Person kann Mitglied
+                  werden. Ordentliche Mitglieder des Ortsclubs können nur Volljährige sein. Auf
+                  Antrag kann ein ordentliches Mitglied eine passive Mitgliedschaft führen. Passive
+                  Mitglieder haben die Rechte und Pflichten gemäß den Beschlüssen der
+                  Mitgliederversammlung.
+                </li>
+                <li>
+                  Kinder und (minderjährige) Jugendliche können Jugendmitglied sein. Sie sind
+                  außerordentliches Mitglied des Ortsclubs und haben die Rechte und Pflichten gemäß
+                  dieser Satzung und den Beschlüssen der Mitgliederversammlung.
+                </li>
+                <li>
+                  Zu Ehrenmitgliedern kann der Ortsclub Mitglieder ernennen, die sich besondere
+                  Verdienste um den Ortsclub erworben haben. Ehrenmitglieder besitzen die gleichen
+                  Rechte wie ordentliche Mitglieder.
+                </li>
+                <li>
+                  Der Ortsclub kann Fördermitglieder aufnehmen, die dem Ortsclub Beiträge in Geld,
+                  als Sachzuwendungen oder Dienste leisten. Fördermitglieder kann aufgrund eines
+                  Vorstandsbeschlusses das Recht zur Teilnahme an Vereinsveranstaltungen gewährt
+                  werde. Fördermitglieder haben kein aktives und passives Wahlrecht in einer
+                  Mitgliederversammlung.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p4" style="--rd: 3">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 4</strong> · Aufnahme</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Die Aufnahme in den Ortsclub muss bei diesem beantragt werden. Der Vorstand
+                  entscheidet über die Aufnahme mit einfacher Stimmenmehrheit.
+                </li>
+                <li>
+                  Im Falle der Ablehnung brauchen die Gründe der Ablehnung nicht bekannt gegeben
+                  werden. Gegen die Ablehnung kann innerhalb von zwei Wochen schriftlich oder in
+                  Textform Einspruch beim Vorstand eingelegt werden. Über den Einspruch entscheidet
+                  die Mitgliederversammlung endgültig. Wird nicht oder nicht rechtzeitig Einspruch
+                  eingelegt, so ist die Ablehnung rechtsverbindlich.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p5" style="--rd: 4">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 5</strong> · Beiträge</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>
+                Der Ortsclub erhebt zur Bestreitung seiner Auslagen von seinen Mitgliedern
+                angemessene Beiträge deren Höhe und Zahlungsweise die Mitgliederversammlung festlegt.
+                Die Mitgliederversammlung keine eine Beitragsordnung beschließen.
+              </p>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p6" style="--rd: 5">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 6</strong> · Beendigung der Mitgliedschaft</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Die Mitgliedschaft endet durch Austritt, Tod, Streichung aus der Mitgliederliste
+                  oder Ausschluss.
+                </li>
+                <li>
+                  Der Austritt kann nur durch Erklärung in Textform für den Schluss eines
+                  Geschäftsjahres unter Einhaltung einer Kündigungsfrist von 14 Tagen erfolgen.
+                </li>
+                <li>
+                  Ein Mitglied kann vom Vorstand aus der Mitgliederliste des Ortsclubs gestrichen
+                  werden, wenn das Mitglied trotz Mahnung den fälligen Beitrag nicht bezahlt. Gegen
+                  die Streichung kann innerhalb von 2 Wochen nach Kenntnis von der Streichung
+                  schriftlich oder in Textform Einspruch beim Vorstand eingelegt werden. Über den
+                  Einspruch entscheidet die nächste ordentliche Mitgliederversammlung. Bis zur
+                  Entscheidung der Mitgliederversammlung ruhen alle Rechte aus der Mitgliedschaft.
+                  Wird nicht oder nicht rechtzeitig Einspruch eingelegt, so ist die Streichung
+                  rechtswirksam.
+                </li>
+                <li>
+                  Wenn es im Interesse des Ortsclubs notwendig erscheint, kann ein Mitglied durch
+                  Beschluss des Vorstands aus dem Ortsclub ausgeschlossen werden. Vor der
+                  Beschlussfassung ist dem Mitglied unter Setzung einer angemessenen Frist
+                  Gelegenheit zu geben, persönlich gegenüber dem Vorstand oder schriftlich Stellung
+                  zu nehmen. Eine schriftliche Stellungnahme des Betroffenen ist in der
+                  Vorstandssitzung zu verlesen. Der Beschluss über den Ausschluss ist mit Gründen zu
+                  versehen und dem Mitglied mittels eingeschriebenen Briefes bekanntzumachen. Gegen
+                  den Ausschließungsbeschluss des Vorstands steht dem Mitglied das Recht der Berufung
+                  an die Mitgliederversammlung zu. Die Berufung hat aufschiebende Wirkung. Die
+                  Berufung muss innerhalb einer Frist von einem Monat ab Zugang des
+                  Ausschließungsbeschlusses beim Vorstand schriftlich eingelegt werden. Ist die
+                  Berufung rechtzeitig eingelegt, entscheidet die nächstfolgende
+                  Mitgliederversammlung abschließend über die Berufung. Geschieht das nicht, gilt der
+                  Ausschließungsbeschluss als nicht erlassen. Macht das Mitglied von dem Recht der
+                  Berufung gegen den Ausschließungsbeschluss keinen Gebrauch oder versäumt es die
+                  Berufungsfrist, so unterwirft es sich damit dem Ausschließungsbeschluss mit der
+                  Folge, dass die Mitgliedschaft als beendet gilt.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p7" style="--rd: 6">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 7</strong> · Organe</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>Die Organe des Ortsclubs sind:</p>
+              <ol class="alpha-list">
+                <li>die Mitgliederversammlung sowie</li>
+                <li>der Vorstand.</li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p8" style="--rd: 7">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 8</strong> · Mitgliederversammlung</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Die Mitgliederversammlung ist das oberste Organ des Ortsclubs. Sie wird durch den
+                  Vorstand des Ortsclubs jährlich einberufen. Alle Mitglieder sind in Textform
+                  mindestens 2 Wochen vor der Mitgliederversammlung des Ortsclubs unter Bekanntgabe
+                  der Tagesordnung einzuladen.
+                </li>
+                <li>
+                  Die Tagesordnung muss mindestens folgende Punkte enthalten:
+                  <ol class="arabic-list">
+                    <li>Feststellung der Beschlussfähigkeit,</li>
+                    <li>Genehmigung des Protokolls,</li>
+                    <li>Bericht des Vorstandes,</li>
+                    <li>Bericht der Rechnungsprüfer,</li>
+                    <li>Entlastung des Vorstandes,</li>
+                    <li>Wahlen,</li>
+                    <li>Voranschlag für das Geschäftsjahr sowie</li>
+                    <li>Anträge mit Inhaltsangabe</li>
+                  </ol>
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p9" style="--rd: 8">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 9</strong> · Durchführung der Mitgliederversammlung</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  In der Mitgliederversammlung hat jedes anwesende ordentliche sowie passive Mitglied
+                  eine Stimme. Stimmübertragung ist unzulässig. Jugendmitglieder (§ 3 II.) sind
+                  teilnahme- und redeberechtigt, jedoch ohne Antrags-, Stimm- und (aktives und
+                  passives) Wahlrecht.
+                </li>
+                <li>
+                  Die Mitgliederversammlung ist ohne Rücksicht auf die Zahl der erschienenen
+                  Stimmberechtigten beschlussfähig. Es entscheidet regelmäßig einfache
+                  Stimmenmehrheit. Unter einfacher Mehrheit ist eine Mehrheit zu verstehen, die mehr
+                  Stimmen beträgt als die Hälfte der abgegebenen Stimmen. Stimmenthaltungen werden
+                  wie nicht abgegebene Stimmen behandelt, ebenso abgegebene ungültige Stimmen und –
+                  bei Abstimmung mit Stimmzetteln – unbeschriftete Stimmzettel. Stimmengleichheit
+                  gilt als Ablehnung. Zweidrittelmehrheit der abgegebenen Stimmen ist erforderlich
+                  bei Beschlüssen über:
+                  <ol class="arabic-list">
+                    <li>Satzungsänderungen,</li>
+                    <li>die Zulassung von Dringlichkeitsanträgen,</li>
+                    <li>
+                      Anträge auf Abberufung des Vorstandes oder eines Vorstandsmitgliedes sowie der
+                    </li>
+                    <li>Auflösung des Ortsclubs.</li>
+                  </ol>
+                </li>
+                <li>
+                  Die Wahlen erfolgen in geheimer Abstimmung. Die Mitgliederversammlung kann mit
+                  einfacher Mehrheit beschließen, eine Wahl durch Handzeichen durchzuführen.
+                </li>
+                <li>
+                  Über Anträge kann mit Zustimmung der Mehrheit der Stimmberechtigten auch durch
+                  Handzeichen entschieden werden.
+                </li>
+                <li>
+                  Anträge für die Mitgliederversammlung des Ortsclubs können von jedem Mitglied
+                  gestellt werden. Sie müssen mindestens 8 Tage vor der Mitgliederversammlung in
+                  Schrift- oder in Textform beim Vorsitzenden eingereicht sein. Dringlichkeitsanträge
+                  sind zulässig, soweit sie nicht auf Abberufung von Vorstandsmitgliedern oder
+                  Satzungsänderung gerichtet sind.
+                </li>
+                <li>
+                  Über die Verhandlungen und Beschlüsse jeder Mitgliederversammlung ist eine
+                  Niederschrift zu führen, aus der mindestens die gefassten Beschlüsse hervorgehen
+                  müssen. Die Niederschrift muss von zwei Vorstandsmitgliedern unterzeichnet werden.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p10" style="--rd: 9">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 10</strong> · Außerordentliche Mitgliederversammlung</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>
+                Der Vorstand kann Außerordentliche Mitgliederversammlungen einberufen.
+                Außerordentliche Mitgliederversammlungen sind auf Antrag von mindestens einem Drittel
+                der Mitglieder des Ortsclubs vom Vorstand einzuberufen:
+              </p>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p11" style="--rd: 10">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 11</strong> · Der Vorstand</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Vorstand im Sinne des § 26 BGB sind:
+                  <ol class="arabic-list">
+                    <li>der/die Vorsitzende</li>
+                    <li>der stellvertretende Vorsitzende sowie</li>
+                    <li>der Schatzmeister.</li>
+                  </ol>
+                </li>
+                <li>
+                  Der erweiterte Vorstand umfasst zusätzlich:
+                  <ol class="arabic-list" start="4">
+                    <li>den Schriftführer,</li>
+                    <li>den Sportleiter,</li>
+                    <li>den Jugendwart sowie</li>
+                    <li>weitere Beisitzer nach Bedarf.</li>
+                  </ol>
+                </li>
+                <li>Je zwei Vorstandsmitglieder aus Abs. 1 vertreten den Ortsclub gemeinsam.</li>
+                <li>
+                  Die Sitzungen des Vorstandes werden vom Vorsitzenden einberufen und geleitet. Über
+                  die Beschlüsse des Vorstandes ist ein Protokoll zu führen, das vom Vorsitzenden zu
+                  unterzeichnen ist. Der Vorstand ist beschlussfähig, wenn mindestens 3 Mitglieder
+                  anwesend sind. Er fasst seine Beschlüsse mit einfacher Stimmenmehrheit der
+                  erschienenen Mitglieder. Bei Stimmengleichheit gibt die Stimme des Vorsitzenden den
+                  Ausschlag. Sitzungen des Vorstandes können mit Zustimmung aller Vorstandsmitglieder
+                  auch als Telefon- oder Videokonferenzen oder in ähnlichen Verfahren durchgeführt
+                  werden. Der Vorstand kann einen Beschluss auch ganz oder teilweise schriftlich,
+                  auch per E-Mail oder auf den im vorstehenden Satz genannten Kommunikationswegen
+                  fassen, wenn zugleich mit diesem Beschluss alle Mitglieder dieser Form der
+                  Beschlussfassung ihre Zustimmung erteilen. Der Beschluss des Vorstands ist bei der
+                  darauffolgenden Vorstandssitzung in das Protokoll aufzunehmen.
+                </li>
+                <li>
+                  Der Vorstand vertritt den Ortsclub in allen Angelegenheiten nach den Beschlüssen
+                  und Weisungen der Mitgliederversammlung unter Einhaltung der Ortsclubsatzung.
+                </li>
+                <li>
+                  Die Mitglieder des Vorstandes werden in der Mitgliederversammlung gewählt. Die
+                  Amtsdauer beträgt 2 Jahre gerechnet von ordentlicher Mitgliederversammlung zu
+                  ordentlicher Mitgliederversammlung.
+                </li>
+                <li>
+                  Die Haftung der Vorstandsmitglieder bei Wahrnehmung ihrer Pflichten ist gegenüber
+                  dem Ortsclub und seinen Mitgliedern auf Vorsatz und grobe Fahrlässigkeit
+                  beschränkt. Die Beweislast für das Vorliegen von Vorsatz oder grober
+                  Fahrlässigkeit trägt der Anspruchsteller.
+                </li>
+                <li>
+                  Die Zusammenlegung von Vorstandsämtern ist mit Ausnahme der Ämter des Vorsitzenden
+                  und des für die Finanzen zuständigen Vorstandsmitglieds zulässig.
+                </li>
+                <li>
+                  Sämtliche Ämter sind Ehrenämter. Die Inhaber der Ämter sowie mit Aufgaben zur
+                  Förderung des Vereins betraute Mitglieder haben Anspruch auf Ersatz der im
+                  Interesse des Ortsclubs gemachten Auslagen. Die Höhe bestimmt der Vorstand. Es
+                  besteht die Möglichkeit eine Trainingspauschale oder sonstige
+                  einkommenssteuerbefreite Zahlungen zu leisten, wenn das Mitglied Leistungen für den
+                  Ortsclub erbringt, die rechtlichen Voraussetzungen dafür vorliegen und der
+                  Gemeinnützigkeit des Ortsclubs nicht entgegensteht.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p12" style="--rd: 11">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 12</strong> · Rechnungsprüfer</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>
+                Zur Prüfung des Finanzgebarens werden zwei Rechnungsprüfer gewählt. Die
+                Rechnungsprüfer werden durch die Mitgliederversammlung auf die Dauer von 2 Jahren
+                gewählt. Sie dürfen kein Amt im Vorstand bekleiden. Sie haben mindestens einmal im
+                Jahr vor der Mitgliederversammlung Buchführung und Kasse zu prüfen und der
+                Mitgliederversammlung Bericht zu erstatten.
+              </p>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p13" style="--rd: 12">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 13</strong> · Satzungsänderungen</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>
+                Anträge auf Satzungsänderungen können nicht als Dringlichkeitsanträge gestellt
+                werden. Sie werden vom Vorstand geprüft und der Mitgliederversammlung vorgelegt.
+                Diese entscheidet mit Zweidrittelmehrheit der abgegebenen Stimmen.
+              </p>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p14" style="--rd: 13">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 14</strong> · Auflösung</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <ol class="roman-list">
+                <li>
+                  Die Auflösung des Ortsclubs kann nur in einer eigens zu diesem Zwecke einberufenen
+                  Mitgliederversammlung mit Zweidrittelmehrheit der abgegebenen Stimmen erfolgen.
+                </li>
+                <li>
+                  Im Falle einer Auflösung ernennt die Mitgliederversammlung mindestens zwei
+                  Liquidatoren.
+                </li>
+              </ol>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p15" style="--rd: 14">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 15</strong> · Vermögensverwendung</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>
+                Bei der Auflösung oder Aufhebung des Ortsclubs oder bei Wegfall seines bisherigen
+                Zweckes fällt das verbleibende Vermögen an die ADAC Luftrettungs gGmbH zur Erfüllung
+                gemeinnütziger Zwecke.
+              </p>
+            </div>
+          </details>
+
+          <details class="satzung-item reveal" id="p16" style="--rd: 15">
+            <summary class="satzung-item-summary">
+              <span class="satzung-item-title"><strong>§ 16</strong> · Erfüllungsort und Gerichtsstand</span>
+              <span class="satzung-item-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="satzung-item-body">
+              <p>
+                Erfüllungsort und Gerichtsstand für alle Rechte und Pflichten als Ortsclub-Mitglied
+                ist Salzgitter.
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <!-- Verweis zu Mitgliedschaft & Konditionen -->
+        <div class="satzung-referral-card reveal">
+          <div class="satzung-referral-text">
+            <h3>Du möchtest mehr über die Mitgliedschaft erfahren?</h3>
+            <p>
+              Informiere dich über Mitgliedsbeiträge, Arbeitsdienste und nutze unseren interaktiven Kostenrechner für deinen Online-Antrag.
+            </p>
+          </div>
+          <a href="/verein/mitgliedschaft.html" class="btn btn-outline satzung-referral-btn">
+            Zu Mitgliedschaft &amp; Konditionen →
+          </a>
+        </div>
+      </section>
+    )}
   </div>
 </SubpageLayout>
 
 <style>
-  .under-construction-box {
-    text-align: center;
-    padding: 2.5rem 1.5rem;
-    border: 1px dashed var(--color-border-strong);
-    border-radius: var(--radius-md);
+  .verein-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Sections */
+  .verein-section {
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+
+  /* Calculator */
+  .calc-shell {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
     background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.15rem, 3vw, 1.75rem);
   }
 
-  .under-construction-box h2 {
-    margin-top: 0;
-    margin-bottom: 0.65rem;
-    font-size: 1.5rem;
+  @media (min-width: 52em) {
+    .calc-shell {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: start;
+    }
   }
 
-  .under-construction-box p {
-    margin-bottom: 0;
+  .calc-controls {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .calc-label {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.96rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+
+  .calc-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  @media (min-width: 36em) {
+    .calc-options {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .calc-option {
+    appearance: none;
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-main);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    transition: all 0.18s ease;
+  }
+
+  .calc-option:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .calc-option.is-selected {
+    background: var(--color-primary-soft);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px rgba(255, 107, 0, 0.35);
+  }
+
+  .opt-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+  }
+
+  .opt-meta {
+    font-size: 0.8rem;
     color: var(--color-text-muted);
   }
+
+  .calc-group.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  /* Result Panel */
+  .calc-result {
+    background: var(--color-bg-black);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .calc-result-tag {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+  }
+
+  .calc-controls-header {
+    margin-bottom: 0.35rem;
+  }
+
+  .calc-controls-header h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: clamp(1.4rem, 2.5vw, 1.65rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .calc-result-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #ffffffeb;
+  }
+
+  .calc-breakdown {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .calc-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .calc-row dt {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.92rem;
+    color: var(--color-text-main);
+  }
+
+  .calc-row dt small {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .calc-row dd {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .calc-row-highlight {
+    padding: 0.95rem 1.05rem;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.16), rgba(255, 107, 0, 0.05));
+    border: 1px solid rgba(255, 107, 0, 0.4) !important;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0.35rem 0;
+  }
+
+  .calc-row-highlight dt {
+    margin: 0;
+  }
+
+  .calc-row-highlight .highlight-title {
+    font-size: 0.98rem;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .calc-row-highlight dd,
+  .calc-row-highlight .highlight-amount-wrap {
+    margin: 0;
+    text-align: right;
+    margin-left: auto;
+    white-space: nowrap;
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .calc-row-highlight .highlight-amount {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.45rem;
+    color: var(--color-primary) !important;
+  }
+
+  .calc-row-highlight .per-year {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary) !important;
+    opacity: 0.9;
+  }
+
+  .calc-row-entry {
+    border-bottom: none !important;
+    padding-bottom: 0.35rem;
+  }
+
+  .calc-row-first-year {
+    border-top: 4px double rgba(255, 255, 255, 0.45) !important;
+    border-bottom: none !important;
+    padding-top: 0.65rem;
+    margin-top: 0.1rem;
+  }
+
+  .calc-row-first-year dt strong {
+    font-size: 0.95rem;
+    color: #fff;
+  }
+
+  .calc-row-first-year dd strong {
+    font-size: 1.05rem;
+    color: #fff;
+  }
+
+  @media (max-width: 44em) {
+    .subpage-card {
+      padding: 1.1rem 0.8rem;
+    }
+
+    .calc-shell {
+      padding: 0.95rem 0.7rem;
+      gap: 1.25rem;
+    }
+
+    .calc-result {
+      padding: 1.1rem 0.85rem;
+      gap: 1rem;
+    }
+
+    .calc-option {
+      padding: 0.75rem 0.85rem;
+    }
+
+    .opt-title {
+      font-size: 0.9rem;
+    }
+
+    .opt-meta {
+      font-size: 0.76rem;
+    }
+
+    .calc-row {
+      gap: 0.5rem;
+      padding-bottom: 0.65rem;
+    }
+
+    .calc-row-highlight {
+      padding: 0.85rem 0.9rem;
+    }
+
+    .calc-row-highlight dd {
+      font-size: 1.35rem;
+    }
+  }
+
+  .calc-cta {
+    width: auto;
+    align-self: center;
+    min-height: auto;
+    padding: 0.62rem 1.4rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--color-primary), #ff8533);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 18px rgba(255, 107, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .calc-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 107, 0, 0.65);
+  }
+
+  .calc-cta:active {
+    transform: scale(0.98);
+  }
+
+  .calc-cta-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    margin-left: 0.35rem;
+  }
+
+  .calc-cta:hover .calc-cta-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Organisatorischer Kontext zum Arbeitsdienst & Passiv-Mitgliedschaft (stets untereinander) */
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .work-context-box {
+    padding: 1.25rem 1.4rem;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .work-context-box h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .work-context-box p {
+    margin: 0 0 0.65rem;
+    font-size: 0.94rem;
+    color: var(--color-text-main);
+    line-height: 1.6;
+  }
+
+  .work-context-box .work-note {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .inline-mail-link {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Verweis zur Vereinssatzung */
+  .satzung-referral-card {
+    margin-top: 1.5rem;
+    padding: 1.35rem 1.5rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .satzung-referral-text {
+    flex: 1 1 300px;
+  }
+
+  .satzung-referral-text h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.15rem;
+    color: #fff;
+  }
+
+  .satzung-referral-text p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .satzung-referral-btn {
+    white-space: nowrap;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 44em) {
+    .satzung-referral-card {
+      margin-top: 1.25rem;
+      padding: 1.1rem 1rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.85rem;
+    }
+
+    .satzung-referral-text {
+      flex: none;
+      width: 100%;
+    }
+
+    .satzung-referral-text h3 {
+      margin: 0 0 0.35rem 0;
+      font-size: 1.08rem;
+    }
+
+    .satzung-referral-text p {
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .satzung-referral-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  /* Satzung (Einzeln & komplett aufklappbar) */
+  .satzung-top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .satzung-stand {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .satzung-toggle-all {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.05rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    border: 1px solid rgba(255, 107, 0, 0.4);
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .satzung-toggle-all:hover {
+    background: rgba(255, 107, 0, 0.22);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .satzung-chevron {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 107, 0, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+  }
+
+  .satzung-toggle-all[aria-expanded='true'] .satzung-chevron {
+    transform: rotate(45deg);
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .satzung-paragraphs {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .satzung-item {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .satzung-item[open] {
+    border-color: rgba(255, 107, 0, 0.45);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .satzung-item-summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+
+  .satzung-item-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .satzung-item-summary:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .satzung-item-title strong {
+    color: var(--color-primary);
+  }
+
+  .satzung-item-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .satzung-item[open] .satzung-item-icon {
+    transform: rotate(45deg);
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .satzung-item-body {
+    padding: 0.2rem 1.2rem 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .satzung-item-body p {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .satzung-item-body .roman-list {
+    margin-top: 0.75rem;
+  }
+
+  .roman-list {
+    list-style-type: upper-roman;
+    padding-left: 1.6rem;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .arabic-list {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .alpha-list {
+    list-style: none;
+    counter-reset: alpha-counter;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    display: grid;
+    gap: 0.35rem;
+    color: var(--color-text-muted);
+  }
+
+  .alpha-list > li {
+    counter-increment: alpha-counter;
+    position: relative;
+  }
+
+  .alpha-list > li::before {
+    content: counter(alpha-counter, lower-alpha) ') ';
+    position: absolute;
+    left: -1.5rem;
+  }
 </style>
+
+<script>
+  function initClubCalculator() {
+    const ageButtons = document.querySelectorAll<HTMLButtonElement>('[data-age]');
+    if (ageButtons.length === 0) return;
+
+    const usageButtons = document.querySelectorAll<HTMLButtonElement>('[data-usage]');
+    const workButtons = document.querySelectorAll<HTMLButtonElement>('[data-work]');
+    const workGroup = document.getElementById('calc-work-group');
+
+    const summaryTitle = document.getElementById('calc-summary-title');
+    const monthlyHint = document.getElementById('calc-monthly-hint');
+    const valYearly = document.getElementById('calc-val-yearly');
+    const workHint = document.getElementById('calc-work-hint');
+    const valWork = document.getElementById('calc-val-work');
+    const totalRecurring = document.getElementById('calc-total-recurring');
+    const entryHint = document.getElementById('calc-entry-hint');
+    const valEntry = document.getElementById('calc-val-entry');
+    const totalFirst = document.getElementById('calc-total-first');
+    const nextYears = document.getElementById('calc-next-years');
+
+    let yearlyFee = 96;
+    let entryFee = 75;
+    let titleText = 'Erwachsene (ab 21 Jahren)';
+    let usageMode: 'active' | 'rare' = 'active';
+    let workMode: 'done' | 'skipped' = 'done';
+
+    const formatEUR = (n: number) =>
+      n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+
+    function updateCalculator() {
+      const requiresWork = usageMode === 'active';
+      const workFee = requiresWork && workMode === 'skipped' ? 60 : 0;
+      const recurringTotal = yearlyFee + workFee;
+      const firstYearTotal = recurringTotal + entryFee;
+
+      if (workGroup) {
+        workGroup.classList.toggle('is-disabled', !requiresWork);
+      }
+
+      if (monthlyHint) {
+        monthlyHint.textContent = `Konditionen für ${titleText}`;
+      }
+      if (valYearly) valYearly.textContent = formatEUR(yearlyFee);
+
+      if (workHint) {
+        if (!requiresWork) {
+          workHint.textContent = 'Unter 2× Streckennutzung';
+        } else if (workMode === 'done') {
+          workHint.textContent = '6 Std. geleistet';
+        } else {
+          workHint.textContent = 'Keine Std. geleistet';
+        }
+      }
+
+      if (valWork) valWork.textContent = formatEUR(workFee);
+      if (totalRecurring) totalRecurring.textContent = formatEUR(recurringTotal);
+      if (valEntry) valEntry.textContent = '+ ' + formatEUR(entryFee);
+      if (totalFirst) totalFirst.textContent = formatEUR(firstYearTotal);
+      if (nextYears) nextYears.textContent = `${formatEUR(recurringTotal)} / Jahr`;
+    }
+
+    ageButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        ageButtons.forEach((b) => {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+        yearlyFee = Number(btn.dataset.yearly || 0);
+        entryFee = Number(btn.dataset.entry || 0);
+        titleText = btn.dataset.title || '';
+        updateCalculator();
+      });
+    });
+
+    usageButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        usageButtons.forEach((b) => {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+        usageMode = (btn.dataset.usage as 'active' | 'rare') || 'active';
+        updateCalculator();
+      });
+    });
+
+    workButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        workButtons.forEach((b) => {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+        workMode = (btn.dataset.work as 'done' | 'skipped') || 'done';
+        updateCalculator();
+      });
+    });
+
+    updateCalculator();
+  }
+
+  function initSatzungAccordion() {
+    const toggleAllBtn = document.getElementById('satzung-toggle-all');
+    const toggleAllLabel = document.getElementById('satzung-toggle-all-label');
+    const satzungItems = Array.from(document.querySelectorAll<HTMLDetailsElement>('.satzung-item'));
+    if (!toggleAllBtn || satzungItems.length === 0) return;
+
+    function syncToggleAllState() {
+      if (!toggleAllBtn || !toggleAllLabel) return;
+      const allOpen = satzungItems.every((item) => item.open);
+      toggleAllBtn.setAttribute('aria-expanded', String(allOpen));
+      toggleAllLabel.textContent = allOpen ? 'Alle zuklappen' : 'Alle aufklappen';
+    }
+
+    toggleAllBtn.addEventListener('click', () => {
+      const allOpen = satzungItems.every((item) => item.open);
+      const nextState = !allOpen;
+      satzungItems.forEach((item) => {
+        item.open = nextState;
+      });
+      syncToggleAllState();
+    });
+
+    satzungItems.forEach((item) => {
+      item.addEventListener('toggle', syncToggleAllState);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initClubCalculator();
+    initSatzungAccordion();
+  });
+</script>

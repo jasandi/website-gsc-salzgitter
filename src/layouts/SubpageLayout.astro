@@ -23,25 +23,14 @@ const {
 <BaseLayout title={`${title} – GSC Salzgitter e.V.`} description={subtitle || title}>
   <article class="subpage">
     <header class="subpage-hero">
-      {image && (
-        <div class="subpage-hero-bg" aria-hidden="true">
-          <img src={image} alt="" loading="eager" />
-          <div class="subpage-hero-scrim"></div>
-        </div>
-      )}
       <div class="container subpage-hero-content">
         <a href={backHref} class="back-pill">{backLabel}</a>
-        <h1 class="subpage-title">{title}</h1>
-        {subtitle && <p class="subpage-lead">{subtitle}</p>}
+        <h1 class="chapter-title subpage-title">{title}</h1>
+        {subtitle && <p class="chapter-lead subpage-lead">{subtitle}</p>}
       </div>
     </header>
 
     <div class="container subpage-body">
-      {image && (
-        <figure class="subpage-featured-media">
-          <img src={image} alt={title} loading="eager" />
-        </figure>
-      )}
       <div class="subpage-card prose">
         <slot />
       </div>
@@ -57,31 +46,10 @@ const {
 
   .subpage-hero {
     position: relative;
-    padding: 3rem 0 2.5rem;
+    padding: 2.75rem 0 2rem;
     overflow: hidden;
     border-bottom: 1px solid var(--color-border);
-    background: radial-gradient(circle at 20% 0%, rgba(255, 107, 0, 0.16), transparent 60%), var(--color-bg-dark);
-  }
-
-  .subpage-hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.22;
-    filter: blur(22px) saturate(1.2);
-    transform: scale(1.1);
-  }
-
-  .subpage-hero-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .subpage-hero-scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(5, 5, 6, 0.4), var(--color-bg-black));
+    background: radial-gradient(circle at 20% 0%, rgba(255, 107, 0, 0.12), transparent 60%), var(--color-bg-dark);
   }
 
   .subpage-hero-content {
@@ -103,6 +71,8 @@ const {
     border-radius: var(--radius-pill);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: all 0.2s ease;
   }
 
   .back-pill:hover {
@@ -111,33 +81,21 @@ const {
   }
 
   .subpage-title {
-    font-size: clamp(2rem, 5.5vw, 3.35rem);
+    font-size: clamp(2.1rem, 5vw, 3.2rem);
     margin-bottom: 0.75rem;
   }
 
   .subpage-lead {
-    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem);
     color: var(--color-text-muted);
-    max-width: 65ch;
+    max-width: 60ch;
+    line-height: 1.6;
+    margin-bottom: 0;
   }
 
   .subpage-body {
     max-width: 880px;
     margin-top: 2rem;
-  }
-
-  .subpage-featured-media {
-    margin-bottom: 2rem;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--color-border-strong);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-  }
-
-  .subpage-featured-media img {
-    width: 100%;
-    max-height: 460px;
-    object-fit: cover;
   }
 
   .subpage-card {
