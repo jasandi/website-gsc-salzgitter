@@ -75,16 +75,6 @@ const prefix = isHome ? '' : '/';
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--color-border);
-    transition: transform 0.32s var(--ease-out), opacity 0.25s ease;
-  }
-
-  @media (max-width: 47.99em) {
-    .site-header[data-is-home='true']:not(.is-mobile-visible):not(.is-menu-open),
-    .site-header.is-mobile-hidden:not(.is-menu-open) {
-      transform: translateY(-100%);
-      opacity: 0;
-      pointer-events: none;
-    }
   }
 
   .header-inner {
@@ -352,10 +342,6 @@ const prefix = isHome ? '' : '/';
       menu.setAttribute('aria-hidden', String(!open));
       toggleBtn.setAttribute('aria-expanded', String(open));
       header?.classList.toggle('is-menu-open', open);
-      if (open) {
-        header?.classList.add('is-mobile-visible');
-        header?.classList.remove('is-mobile-hidden');
-      }
     }
 
     toggleBtn?.addEventListener('click', () => {
@@ -364,46 +350,12 @@ const prefix = isHome ? '' : '/';
     });
 
     menu?.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        setMenu(false);
-        header?.classList.remove('is-mobile-visible');
-        header?.classList.add('is-mobile-hidden');
-      });
+      link.addEventListener('click', () => setMenu(false));
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') setMenu(false);
     });
-
-    let lastScrollY = window.scrollY;
-    let hasScrolledDown = window.scrollY > 20;
-
-    window.addEventListener(
-      'scroll',
-      () => {
-        const currentY = window.scrollY;
-        if (currentY < 0) return;
-
-        if (menu?.classList.contains('is-open')) {
-          lastScrollY = currentY;
-          return;
-        }
-
-        const delta = currentY - lastScrollY;
-
-        if (delta > 6 && currentY > 20) {
-          hasScrolledDown = true;
-          header?.classList.remove('is-mobile-visible');
-          header?.classList.add('is-mobile-hidden');
-        } else if (delta < -6 && hasScrolledDown) {
-          header?.classList.add('is-mobile-visible');
-          header?.classList.remove('is-mobile-hidden');
-        }
-
-        lastScrollY = currentY;
-      },
-      { passive: true }
-    );
   }
 
   document.addEventListener('DOMContentLoaded', setupNavigation);
