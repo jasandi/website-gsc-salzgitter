@@ -47,9 +47,43 @@ import {
   <section id="oeffnungszeiten" class="story-chapter chapter-dark" aria-labelledby="title-training">
     <div class="container">
       <header class="chapter-header reveal-up">
-        <h2 id="title-training" class="chapter-title">
-          Unsere <span class="highlight">Trainingszeiten</span>
-        </h2>
+        <div class="strecken-header-top">
+          <h2 id="title-training" class="chapter-title">
+            Unsere <span class="highlight">Trainingszeiten</span>
+          </h2>
+          <div class="strecken-header-actions">
+            <a
+              href="https://mx-tickets.com/de-DE/t/gsc-salzgitter/events"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-pill-btn"
+              aria-label="Anmelden"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M22 10V6a2 2 0 0 0-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM11 15h2v2h-2zm0-4h2v2h-2zm0-4h2v2h-2z"
+                />
+              </svg>
+              <span>Anmelden</span>
+            </a>
+            <a
+              href="https://maps.app.goo.gl/q1ZRSGnqr6sYocmD9"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-pill-btn"
+              aria-label="Navigation"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                />
+              </svg>
+              <span>Navigation</span>
+            </a>
+          </div>
+        </div>
         <p class="chapter-lead">
           Hier siehst du unsere regulären Öffnungszeiten. Tatsächliche Trainingszeiten können in MX-Tickets eingesehen werden.
         </p>
@@ -59,14 +93,10 @@ import {
         <!-- Compact Single Timetable Box -->
         <div class="schedule-accordion reveal-up" id="schedule-accordion">
           {trainingSchedule.map((slot) => (
-            <div
-              class="schedule-row"
-              data-day-indices={slot.dayIndices.join(',')}
-            >
+            <div class="schedule-row">
               <div class="schedule-row-top">
                 <div class="acc-days-group">
                   <span class="schedule-days">{slot.daysLabel}</span>
-                  <span class="today-tag" hidden>Heute</span>
                 </div>
                 <span class="acc-time-preview">{slot.timeLabel}</span>
               </div>
@@ -102,9 +132,31 @@ import {
             href="https://mx-tickets.com/de-DE/t/gsc-salzgitter/events"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-primary"
+            class="social-pill-btn"
+            aria-label="Anmelden"
           >
-            Anmelden mit MX-Tickets
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M22 10V6a2 2 0 0 0-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54zM11 15h2v2h-2zm0-4h2v2h-2zm0-4h2v2h-2z"
+              />
+            </svg>
+            <span>Anmelden</span>
+          </a>
+          <a
+            href="https://maps.app.goo.gl/q1ZRSGnqr6sYocmD9"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-pill-btn"
+            aria-label="Navigation"
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+              />
+            </svg>
+            <span>Navigation</span>
           </a>
         </div>
       </div>
@@ -120,7 +172,21 @@ import {
         </h2>
         <p class="chapter-lead">
           Verpasse keine Rennen, Lehrgänge oder Events auf unserer Strecke. Kurzfristige Ankündigungen
-          findet ihr auf Instagram.
+          findet ihr auf{' '}
+          <a
+            href="https://www.instagram.com/gsc_salzgitter/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="subtle-inline-link"
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="transform: rotate(-45deg);">
+              <path
+                fill="currentColor"
+                d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"
+              />
+            </svg>
+            <span>Instagram</span>
+          </a>.
         </p>
         <a
           href="https://www.instagram.com/gsc_salzgitter/"
@@ -198,43 +264,41 @@ import {
   <!-- 4. STRECKEN (UNSERE STRECKEN) -->
   <section id="strecke" class="story-chapter chapter-dark" aria-labelledby="title-strecken">
     <div class="container">
-      <header class="chapter-header reveal-up">
-        <div class="strecken-header-top">
-          <h2 id="title-strecken" class="chapter-title">
-            Unsere <span class="highlight">Strecken</span>
-          </h2>
-          <div class="strecken-header-actions">
-            <a
-              href="https://gsccam.openlaptime.de/cam1.jpg"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="live-cam-pill"
-              title="Aktuelles Streckenfoto öffnen"
-            >
-              <span class="live-dot" aria-hidden="true"></span>
-              <span>Live-Cam</span>
-            </a>
-            <a
-              href="https://gsccam.openlaptime.de/timelapse.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="live-cam-pill"
-              title="Zeitraffer der Strecke öffnen"
-            >
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"
-                />
-              </svg>
-              <span>Zeitraffer</span>
-            </a>
-          </div>
-        </div>
+      <header class="chapter-header chapter-header-split reveal-up">
+        <h2 id="title-strecken" class="chapter-title">
+          Unsere <span class="highlight">Strecken</span>
+        </h2>
         <p class="chapter-lead">
           Drei Strecken für jedes Alter und Fahrerniveau. Tagesaktuelles Zeitraffer oder Foto der
           Streckenverhältnisse einsehen.
         </p>
+        <div class="strecken-header-actions">
+          <a
+            href="https://gsccam.openlaptime.de/cam1.jpg"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="live-cam-pill"
+            title="Aktuelles Streckenfoto öffnen"
+          >
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>Live-Cam</span>
+          </a>
+          <a
+            href="https://gsccam.openlaptime.de/timelapse.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="live-cam-pill"
+            title="Zeitraffer der Strecke öffnen"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"
+              />
+            </svg>
+            <span>Zeitraffer</span>
+          </a>
+        </div>
       </header>
 
       <!-- Track Cards -->
@@ -286,11 +350,35 @@ import {
   <!-- 5. VEREIN (UNSER VEREIN) -->
   <section id="verein" class="story-chapter chapter-black" aria-labelledby="title-verein">
     <div class="container">
-      <div class="verein-hero-grid">
-        <div class="verein-copy reveal-up">
+      <header class="chapter-header reveal-up">
+        <div class="strecken-header-top">
           <h2 id="title-verein" class="chapter-title">
             Unser <span class="highlight">Verein</span>
           </h2>
+          <div class="strecken-header-actions">
+            <a
+              href="https://easyverein.com/public/GSCeV/applicationform/9262"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-pill-btn"
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+              <span>Mitglied werden</span>
+            </a>
+            <a href="/verein/verein.html" class="social-pill-btn">
+              <span>Mehr erfahren →</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <div class="verein-hero-grid">
+        <div class="verein-copy reveal-up">
           <p class="chapter-lead">
             Der Verein wurde im Jahr 1985 gegründet und hat in seiner Zeit äußerst erfolgreiche Mitglieder
             gehabt, wie einem ehemaligen Vizeweltmeister und einem US Supercross Fahrer. Der Verein ist
@@ -322,12 +410,18 @@ import {
               href="https://easyverein.com/public/GSCeV/applicationform/9262"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-primary"
+              class="social-pill-btn"
             >
-              Mitglied werden →
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+              <span>Mitglied werden</span>
             </a>
-            <a href="/verein/verein.html" class="btn btn-outline">
-              Mehr erfahren →
+            <a href="/verein/verein.html" class="social-pill-btn">
+              <span>Mehr erfahren →</span>
             </a>
           </div>
         </div>
@@ -377,12 +471,20 @@ import {
                 ))}
               </ul>
               <div class="stack-actions">
-                <a href={item.primaryHref} class="btn btn-primary btn-sm">
-                  {item.primaryLabel}
+                <a href={item.primaryHref} class="social-pill-btn">
+                  {item.primaryLabel === 'Kontakt' && (
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                      <path
+                        fill="currentColor"
+                        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+                      />
+                    </svg>
+                  )}
+                  <span>{item.primaryLabel}</span>
                 </a>
                 {item.secondaryHref && (
-                  <a href={item.secondaryHref} class="btn btn-outline btn-sm">
-                    {item.secondaryLabel}
+                  <a href={item.secondaryHref} class="social-pill-btn">
+                    <span>{item.secondaryLabel}</span>
                   </a>
                 )}
               </div>
@@ -547,26 +649,37 @@ import {
     gap: 0.75rem;
   }
 
+  @media (min-width: 48em) {
+    .training-cta-row {
+      display: none;
+    }
+  }
+
   @media (min-width: 56em) {
     .training-grid {
       grid-template-columns: 1.15fr 0.85fr;
-      align-items: start;
+      align-items: stretch;
     }
 
     .schedule-accordion {
       grid-column: 1;
       grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
-    .training-cta-row {
-      grid-column: 1;
-      grid-row: 2;
-      justify-content: flex-start;
+    .schedule-row {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .gear-card {
       grid-column: 2;
-      grid-row: 1 / span 2;
+      grid-row: 1;
+      height: 100%;
     }
   }
 
@@ -585,10 +698,6 @@ import {
 
   .schedule-row:last-child {
     border-bottom: 0;
-  }
-
-  .schedule-row.is-today {
-    background: rgba(255, 107, 0, 0.07);
   }
 
   .schedule-row-top {
@@ -790,8 +899,38 @@ import {
     margin-bottom: 0;
   }
 
-  .chapter-header-split .social-pill-btn {
-    display: none;
+  .subtle-inline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255, 255, 255, 0.35);
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .subtle-inline-link:hover {
+    color: #fff;
+    text-decoration-color: #fff;
+  }
+
+  @media (min-width: 48em) {
+    .subtle-inline-link {
+      color: inherit;
+      text-decoration: none;
+      pointer-events: none;
+    }
+
+    .subtle-inline-link svg {
+      display: none;
+    }
+  }
+
+  @media (max-width: 47.99em) {
+    .chapter-header-split .social-pill-btn {
+      display: none;
+    }
   }
 
   @media (min-width: 48em) {
@@ -808,7 +947,8 @@ import {
       grid-row: 1;
     }
 
-    .chapter-header-split .social-pill-btn {
+    .chapter-header-split .social-pill-btn,
+    .chapter-header-split .strecken-header-actions {
       display: inline-flex;
       grid-column: 2;
       grid-row: 1;
@@ -1063,6 +1203,18 @@ import {
   @media (min-width: 48em) {
     .counter-strip {
       gap: 0.75rem;
+      margin-bottom: 0;
+    }
+
+    .verein-cta-row {
+      display: none;
+    }
+  }
+
+  @media (max-width: 47.99em) {
+    #oeffnungszeiten .strecken-header-actions,
+    #verein .strecken-header-actions {
+      display: none;
     }
   }
 
@@ -1105,6 +1257,12 @@ import {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  @media (min-width: 48em) {
+    .verein-cta-row {
+      display: none;
+    }
   }
 
   .verein-photo-card {

@@ -3,23 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function initTodayHighlight() {
-  const now = new Date();
-  const day = now.getDay();
-  const items = document.querySelectorAll<HTMLElement>('.schedule-row[data-day-indices]');
-
-  items.forEach((item) => {
-    const indices = (item.dataset.dayIndices || '')
-      .split(',')
-      .map((n) => parseInt(n, 10));
-    if (indices.includes(day)) {
-      item.classList.add('is-today');
-      const tag = item.querySelector<HTMLElement>('.today-tag');
-      if (tag) tag.hidden = false;
-    }
-  });
-}
-
 function initTrackTabs() {
   const tabs = document.querySelectorAll<HTMLButtonElement>('[data-track-tab]');
   const cards = document.querySelectorAll<HTMLElement>('[data-track-panel]');
@@ -236,7 +219,6 @@ function initUpcomingEventsFilter() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTodayHighlight();
   initUpcomingEventsFilter();
   initTrackTabs();
   initIcsDownload();
