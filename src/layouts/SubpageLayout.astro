@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 
 interface Props {
   title: string;
+  titleHtml?: string;
   subtitle?: string;
   badge?: string;
   image?: string;
@@ -12,20 +13,28 @@ interface Props {
 
 const {
   title,
+  titleHtml,
   subtitle,
   badge = 'GSC Salzgitter e.V.',
   image,
   backHref = '/',
   backLabel = '← Zurück zur Startseite',
 } = Astro.props;
+
+const cleanTitle = title.replace(/<[^>]*>/g, '');
+const displayTitleHtml = titleHtml || (title.includes('<') ? title : null);
 ---
 
-<BaseLayout title={`${title} – GSC Salzgitter e.V.`} description={subtitle || title}>
+<BaseLayout title={`${cleanTitle} – GSC Salzgitter e.V.`} description={subtitle || cleanTitle}>
   <article class="subpage">
     <header class="subpage-hero">
       <div class="container subpage-hero-content">
         <a href={backHref} class="back-pill">{backLabel}</a>
-        <h1 class="chapter-title subpage-title">{title}</h1>
+        {displayTitleHtml ? (
+          <h1 class="chapter-title subpage-title" set:html={displayTitleHtml} />
+        ) : (
+          <h1 class="chapter-title subpage-title">{title}</h1>
+        )}
         {subtitle && <p class="chapter-lead subpage-lead">{subtitle}</p>}
       </div>
     </header>
@@ -83,6 +92,10 @@ const {
   .subpage-title {
     font-size: clamp(2.1rem, 5vw, 3.2rem);
     margin-bottom: 0.75rem;
+  }
+
+  .subpage-title .highlight {
+    color: var(--color-primary);
   }
 
   .subpage-lead {

@@ -13,10 +13,18 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const isMitgliedschaft = entry.slug === 'mitgliedschaft';
 const isSatzung = entry.slug === 'satzung';
+
+let titleHtml = entry.data.titel;
+if (isMitgliedschaft) {
+  titleHtml = 'Mitgliedschaft &amp; <span class="highlight">Konditionen</span>';
+} else if (isSatzung) {
+  titleHtml = 'Vereins<span class="highlight">satzung</span>';
+}
 ---
 
 <SubpageLayout
   title={entry.data.titel}
+  titleHtml={titleHtml}
   subtitle={entry.data.kurzbeschreibung}
   image={entry.data.bild}
   backHref="/#verein"
