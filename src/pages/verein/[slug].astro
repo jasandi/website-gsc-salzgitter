@@ -763,7 +763,7 @@ const isSatzung = entry.slug === 'satzung';
   @media (min-width: 52em) {
     .calc-shell {
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-      align-items: start;
+      align-items: stretch;
     }
   }
 
@@ -862,6 +862,8 @@ const isSatzung = entry.slug === 'satzung';
     display: flex;
     flex-direction: column;
     gap: 1.15rem;
+    height: 100%;
+    box-sizing: border-box;
   }
 
   .calc-result-tag {
@@ -1060,6 +1062,7 @@ const isSatzung = entry.slug === 'satzung';
   .calc-cta {
     width: auto;
     align-self: center;
+    margin-top: auto;
     min-height: auto;
     padding: 0.62rem 1.4rem;
     font-size: 0.92rem;
