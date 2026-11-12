@@ -94,12 +94,12 @@ if (isMitgliedschaft) {
 
                 <button
                   type="button"
-                  class="calc-option is-selected"
+                  class="calc-option"
                   data-age="21plus"
                   data-yearly="96"
                   data-entry="75"
                   data-title="Erwachsene (ab 21 Jahren)"
-                  aria-pressed="true"
+                  aria-pressed="false"
                 >
                   <span class="opt-title">Erwachsene ab 21 Jahren</span>
                   <span class="opt-meta">
@@ -111,14 +111,14 @@ if (isMitgliedschaft) {
             </div>
 
             <!-- 2. Streckennutzung -->
-            <div class="calc-group">
+            <div class="calc-group" id="calc-usage-group">
               <label class="calc-label" id="label-usage">2. Streckennutzung</label>
               <div class="calc-options" role="radiogroup" aria-labelledby="label-usage">
                 <button
                   type="button"
-                  class="calc-option is-selected"
+                  class="calc-option"
                   data-usage="active"
-                  aria-pressed="true"
+                  aria-pressed="false"
                 >
                   <span class="opt-title">Mindestens 2× im Jahr</span>
                   <span class="opt-meta">Verpflichtung zu 6 Std. Arbeitsdienst / Jahr</span>
@@ -137,16 +137,16 @@ if (isMitgliedschaft) {
             </div>
 
             <!-- 3. Arbeitsdienst -->
-            <div class="calc-group" id="calc-work-group">
+            <div class="calc-group is-disabled" id="calc-work-group">
               <label class="calc-label" id="label-work">
                 3. Arbeitsdienst
               </label>
               <div class="calc-options" role="radiogroup" aria-labelledby="label-work">
                 <button
                   type="button"
-                  class="calc-option is-selected"
+                  class="calc-option"
                   data-work="done"
-                  aria-pressed="true"
+                  aria-pressed="false"
                 >
                   <span class="opt-title">6 Stunden werden geleistet</span>
                   <span class="opt-meta">Kein Ersatzbetrag (0,00 €)</span>
@@ -166,7 +166,7 @@ if (isMitgliedschaft) {
           </div>
 
           <!-- Ergebnis-Panel -->
-          <aside class="calc-result" aria-live="polite">
+          <aside class="calc-result" id="calc-result-panel" aria-live="polite">
             <div class="calc-result-header">
               <h3>Individuelle Aufschlüsselung</h3>
             </div>
@@ -175,17 +175,17 @@ if (isMitgliedschaft) {
               <div class="calc-row">
                 <dt>
                   <span>Jährlicher Mitgliedsbeitrag</span>
-                  <small id="calc-monthly-hint">Konditionen für Erwachsene (ab 21 Jahren)</small>
+                  <small id="calc-monthly-hint" style="display: none;"></small>
                 </dt>
-                <dd id="calc-val-yearly">96,00 €</dd>
+                <dd id="calc-val-yearly">–</dd>
               </div>
 
               <div class="calc-row">
                 <dt>
                   <span>Arbeitsdienst</span>
-                  <small id="calc-work-hint">6 Std. geleistet</small>
+                  <small id="calc-work-hint" style="display: none;"></small>
                 </dt>
-                <dd id="calc-val-work">0,00 €</dd>
+                <dd id="calc-val-work">–</dd>
               </div>
 
               <div class="calc-row-highlight">
@@ -193,7 +193,7 @@ if (isMitgliedschaft) {
                   <strong class="highlight-title">Regulärer Beitrag</strong>
                 </dt>
                 <dd class="highlight-amount-wrap">
-                  <strong id="calc-total-recurring" class="highlight-amount">96,00 €</strong>
+                  <strong id="calc-total-recurring" class="highlight-amount">–</strong>
                   <span class="per-year">/ Jahr</span>
                 </dd>
               </div>
@@ -202,7 +202,7 @@ if (isMitgliedschaft) {
                 <dt>
                   <span>Einmalige Aufnahmegebühr</span>
                 </dt>
-                <dd id="calc-val-entry">+ 75,00 €</dd>
+                <dd id="calc-val-entry">–</dd>
               </div>
 
               <div class="calc-row calc-row-first-year">
@@ -210,7 +210,7 @@ if (isMitgliedschaft) {
                   <strong>Im 1. Jahr gesamt</strong>
                 </dt>
                 <dd>
-                  <strong id="calc-total-first">171,00 €</strong>
+                  <strong id="calc-total-first">–</strong>
                 </dd>
               </div>
             </dl>
@@ -932,7 +932,7 @@ if (isMitgliedschaft) {
   }
 
   #calc-monthly-hint {
-    min-height: 2.3em;
+    margin-top: 0.15rem;
   }
 
   .calc-row dd {
@@ -1399,7 +1399,9 @@ if (isMitgliedschaft) {
 
     const usageButtons = document.querySelectorAll<HTMLButtonElement>('[data-usage]');
     const workButtons = document.querySelectorAll<HTMLButtonElement>('[data-work]');
+    const usageGroup = document.getElementById('calc-usage-group');
     const workGroup = document.getElementById('calc-work-group');
+    const resultPanel = document.getElementById('calc-result-panel') || document.querySelector<HTMLElement>('.calc-result');
 
     const summaryTitle = document.getElementById('calc-summary-title');
     const monthlyHint = document.getElementById('calc-monthly-hint');
@@ -1412,45 +1414,101 @@ if (isMitgliedschaft) {
     const totalFirst = document.getElementById('calc-total-first');
     const nextYears = document.getElementById('calc-next-years');
 
-    let yearlyFee = 96;
-    let entryFee = 75;
-    let titleText = 'Erwachsene (ab 21 Jahren)';
-    let usageMode: 'active' | 'rare' = 'active';
-    let workMode: 'done' | 'skipped' = 'done';
+    let yearlyFee: number | null = null;
+    let entryFee: number | null = null;
+    let titleText: string | null = null;
+    let usageMode: 'active' | 'rare' | null = null;
+    let workMode: 'done' | 'skipped' | null = null;
 
     const formatEUR = (n: number) =>
       n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
     function updateCalculator() {
+      const hasAge = yearlyFee !== null && entryFee !== null;
       const requiresWork = usageMode === 'active';
-      const workFee = requiresWork && workMode === 'skipped' ? 60 : 0;
-      const recurringTotal = yearlyFee + workFee;
-      const firstYearTotal = recurringTotal + entryFee;
+      const hasUsage = usageMode !== null;
 
       if (workGroup) {
         workGroup.classList.toggle('is-disabled', !requiresWork);
       }
 
       if (monthlyHint) {
-        monthlyHint.textContent = `Konditionen für ${titleText}`;
-      }
-      if (valYearly) valYearly.textContent = formatEUR(yearlyFee);
-
-      if (workHint) {
-        if (!requiresWork) {
-          workHint.textContent = 'Unter 2× Streckennutzung';
-        } else if (workMode === 'done') {
-          workHint.textContent = '6 Std. geleistet';
+        if (hasAge) {
+          monthlyHint.textContent = `Konditionen für ${titleText}`;
+          monthlyHint.style.display = '';
         } else {
-          workHint.textContent = 'Keine Std. geleistet';
+          monthlyHint.textContent = '';
+          monthlyHint.style.display = 'none';
+        }
+      }
+      if (valYearly) valYearly.textContent = hasAge ? formatEUR(yearlyFee!) : '–';
+      if (valEntry) valEntry.textContent = hasAge ? '+ ' + formatEUR(entryFee!) : '–';
+
+      let workFee = 0;
+      let hasWorkFeeValue = false;
+
+      if (workHint && valWork) {
+        if (!hasUsage) {
+          workHint.textContent = '';
+          workHint.style.display = 'none';
+          valWork.textContent = '–';
+        } else if (!requiresWork) {
+          workHint.textContent = 'Unter 2× Streckennutzung (kein Arbeitsdienst)';
+          workHint.style.display = '';
+          valWork.textContent = formatEUR(0);
+          workFee = 0;
+          hasWorkFeeValue = true;
+        } else {
+          if (workMode === 'done') {
+            workHint.textContent = '6 Std. geleistet';
+            workHint.style.display = '';
+            valWork.textContent = formatEUR(0);
+            workFee = 0;
+            hasWorkFeeValue = true;
+          } else if (workMode === 'skipped') {
+            workHint.textContent = 'Keine Std. geleistet';
+            workHint.style.display = '';
+            valWork.textContent = formatEUR(60);
+            workFee = 60;
+            hasWorkFeeValue = true;
+          } else {
+            workHint.textContent = '6 Std. Arbeitsdienst erforderlich';
+            workHint.style.display = '';
+            valWork.textContent = '–';
+          }
         }
       }
 
-      if (valWork) valWork.textContent = formatEUR(workFee);
-      if (totalRecurring) totalRecurring.textContent = formatEUR(recurringTotal);
-      if (valEntry) valEntry.textContent = '+ ' + formatEUR(entryFee);
-      if (totalFirst) totalFirst.textContent = formatEUR(firstYearTotal);
-      if (nextYears) nextYears.textContent = `${formatEUR(recurringTotal)} / Jahr`;
+      const isComplete = hasAge && (usageMode === 'rare' || (usageMode === 'active' && workMode !== null));
+
+      if (totalRecurring && totalFirst) {
+        if (isComplete) {
+          const recurringTotal = yearlyFee! + workFee;
+          const firstYearTotal = recurringTotal + entryFee!;
+          totalRecurring.textContent = formatEUR(recurringTotal);
+          totalFirst.textContent = formatEUR(firstYearTotal);
+        } else {
+          totalRecurring.textContent = '–';
+          totalFirst.textContent = '–';
+        }
+      }
+    }
+
+    function scrollToBlock(el: HTMLElement | null) {
+      if (!el) return;
+      if (!window.matchMedia('(max-width: 51.99em)').matches) return;
+
+      setTimeout(() => {
+        const header = document.getElementById('site-header');
+        const headerHeight = header ? header.getBoundingClientRect().height : 82;
+        const offset = headerHeight + 12;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: 'smooth',
+        });
+      }, 80);
     }
 
     ageButtons.forEach((btn) => {
@@ -1465,6 +1523,7 @@ if (isMitgliedschaft) {
         entryFee = Number(btn.dataset.entry || 0);
         titleText = btn.dataset.title || '';
         updateCalculator();
+        scrollToBlock(usageGroup);
       });
     });
 
@@ -1477,7 +1536,15 @@ if (isMitgliedschaft) {
         btn.classList.add('is-selected');
         btn.setAttribute('aria-pressed', 'true');
         usageMode = (btn.dataset.usage as 'active' | 'rare') || 'active';
+        if (usageMode === 'rare') {
+          workMode = null;
+          workButtons.forEach((b) => {
+            b.classList.remove('is-selected');
+            b.setAttribute('aria-pressed', 'false');
+          });
+        }
         updateCalculator();
+        scrollToBlock(usageMode === 'active' ? workGroup : resultPanel);
       });
     });
 
@@ -1491,6 +1558,7 @@ if (isMitgliedschaft) {
         btn.setAttribute('aria-pressed', 'true');
         workMode = (btn.dataset.work as 'done' | 'skipped') || 'done';
         updateCalculator();
+        scrollToBlock(resultPanel);
       });
     });
 
