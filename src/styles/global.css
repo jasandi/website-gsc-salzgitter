@@ -41,6 +41,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
   background-color: var(--color-bg-black);
   color: var(--color-text-main);
   font-family: var(--font-body);
