@@ -19,10 +19,8 @@ const resolvedBackHref = backHref || '/';
           </svg>
         </a>
       )}
-      <a href={isHome ? '#startseite' : '/'} class="brand" aria-label="GSC Salzgitter Startseite">
-        <div class="brand-text">
-          <span class="brand-name">GSC <span class="highlight">Salzgitter</span></span>
-        </div>
+      <a href={isHome ? '#startseite' : '/'} class="brand" aria-label="GSC Salzgitter e.V. Startseite">
+        <img src="/assets/favicon.png" alt="GSC Salzgitter e.V." class="brand-logo" />
       </a>
     </div>
 
@@ -136,17 +134,12 @@ const resolvedBackHref = backHref || '/';
     gap: 0.7rem;
   }
 
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-  }
-
-  .brand-name {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 1.35rem;
-    letter-spacing: -0.02em;
+  .brand-logo {
+    height: 50px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    mix-blend-mode: screen;
   }
 
   .desktop-nav {
@@ -374,8 +367,8 @@ const resolvedBackHref = backHref || '/';
     .site-header[data-is-home='false'] .brand {
       display: flex;
     }
-    .brand-name {
-      font-size: 1.55rem;
+    .brand-logo {
+      height: 56px;
     }
     .desktop-nav {
       display: flex;
