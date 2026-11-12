@@ -25,11 +25,10 @@ const cleanTitle = title.replace(/<[^>]*>/g, '');
 const displayTitleHtml = titleHtml || (title.includes('<') ? title : null);
 ---
 
-<BaseLayout title={`${cleanTitle} – GSC Salzgitter e.V.`} description={subtitle || cleanTitle}>
+<BaseLayout title={`${cleanTitle} – GSC Salzgitter e.V.`} description={subtitle || cleanTitle} backHref={backHref} backLabel={backLabel}>
   <article class="subpage">
     <header class="subpage-hero">
       <div class="container subpage-hero-content">
-        <a href={backHref} class="back-pill">{backLabel}</a>
         {displayTitleHtml ? (
           <h1 class="chapter-title subpage-title" set:html={displayTitleHtml} />
         ) : (

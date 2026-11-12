@@ -8,12 +8,16 @@ interface Props {
   title?: string;
   description?: string;
   isHome?: boolean;
+  backHref?: string;
+  backLabel?: string;
 }
 
 const {
   title = 'GSC Salzgitter e.V. im ADAC · Motocross & Supercross am Hüttenring',
   description = 'Motocross Verein und Strecke für alle Altersklassen in Salzgitter-Watenstedt: 1.900m Hüttenring, Supercross & Kinderstrecke.',
   isHome = false,
+  backHref,
+  backLabel,
 } = Astro.props;
 
 const schemaOrg = {
@@ -46,7 +50,7 @@ const schemaOrg = {
     <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
   </head>
   <body>
-    <Navigation isHome={isHome} />
+    <Navigation isHome={isHome} backHref={backHref} backLabel={backLabel} />
     <main id="main-content">
       <slot />
     </main>

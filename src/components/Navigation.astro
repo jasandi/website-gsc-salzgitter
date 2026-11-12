@@ -1,18 +1,30 @@
 ---
 interface Props {
   isHome?: boolean;
+  backHref?: string;
+  backLabel?: string;
 }
-const { isHome = false } = Astro.props;
+const { isHome = false, backHref, backLabel = 'Zurück' } = Astro.props;
 const prefix = isHome ? '' : '/';
+const resolvedBackHref = backHref || '/';
 ---
 
 <header class="site-header" id="site-header" data-is-home={isHome ? 'true' : 'false'}>
   <div class="container header-inner">
-    <a href={isHome ? '#startseite' : '/'} class="brand" aria-label="GSC Salzgitter Startseite">
-      <div class="brand-text">
-        <span class="brand-name">GSC <span class="highlight">Salzgitter</span></span>
-      </div>
-    </a>
+    <div class="header-left">
+      {!isHome && (
+        <a href={resolvedBackHref} class="mobile-back-btn" aria-label={backLabel.replace(/^←\s*/, '')} title={backLabel.replace(/^←\s*/, '')}>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </a>
+      )}
+      <a href={isHome ? '#startseite' : '/'} class="brand" aria-label="GSC Salzgitter Startseite">
+        <div class="brand-text">
+          <span class="brand-name">GSC <span class="highlight">Salzgitter</span></span>
+        </div>
+      </a>
+    </div>
 
     <nav class="desktop-nav" id="desktop-nav" aria-label="Hauptnavigation">
       <a href={`${prefix}#startseite`} data-nav-section="startseite" data-nav-label="Startseite" class="is-active">Startseite</a>
@@ -83,6 +95,39 @@ const prefix = isHome ? '' : '/';
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .mobile-back-btn {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-back-btn:hover,
+  .mobile-back-btn:active {
+    background: var(--color-primary-soft);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .site-header[data-is-home='false'] .brand {
+    display: none;
   }
 
   .brand {
@@ -322,8 +367,12 @@ const prefix = isHome ? '' : '/';
       display: grid;
       grid-template-columns: 1fr auto 1fr;
     }
+    .header-left,
     .brand {
       justify-self: start;
+    }
+    .site-header[data-is-home='false'] .brand {
+      display: flex;
     }
     .brand-name {
       font-size: 1.55rem;
@@ -339,6 +388,7 @@ const prefix = isHome ? '' : '/';
     .desktop-only-cam {
       display: inline-flex;
     }
+    .mobile-back-btn,
     .menu-toggle,
     .mobile-top-menu {
       display: none;
