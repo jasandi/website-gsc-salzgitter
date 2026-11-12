@@ -111,7 +111,7 @@ if (isMitgliedschaft) {
             </div>
 
             <!-- 2. Streckennutzung -->
-            <div class="calc-group" id="calc-usage-group">
+            <div class="calc-group is-disabled" id="calc-usage-group">
               <label class="calc-label" id="label-usage">2. Streckennutzung</label>
               <div class="calc-options" role="radiogroup" aria-labelledby="label-usage">
                 <button
@@ -166,7 +166,7 @@ if (isMitgliedschaft) {
           </div>
 
           <!-- Ergebnis-Panel -->
-          <aside class="calc-result" id="calc-result-panel" aria-live="polite">
+          <aside class="calc-result is-disabled" id="calc-result-panel" aria-live="polite">
             <div class="calc-result-header">
               <h3>Individuelle Aufschlüsselung</h3>
             </div>
@@ -856,6 +856,10 @@ if (isMitgliedschaft) {
     white-space: nowrap;
   }
 
+  .calc-group {
+    transition: opacity 0.25s ease;
+  }
+
   .calc-group.is-disabled {
     opacity: 0.45;
     pointer-events: none;
@@ -872,6 +876,12 @@ if (isMitgliedschaft) {
     gap: 1.15rem;
     height: 100%;
     box-sizing: border-box;
+    transition: opacity 0.25s ease;
+  }
+
+  .calc-result.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
   }
 
   .calc-result-tag {
@@ -892,7 +902,7 @@ if (isMitgliedschaft) {
     margin: 0 0 0.5rem 0;
     font-size: clamp(1.4rem, 2.5vw, 1.65rem);
     font-weight: 800;
-    color: var(--color-primary);
+    color: #fff;
     letter-spacing: -0.01em;
   }
 
@@ -1432,8 +1442,17 @@ if (isMitgliedschaft) {
       const requiresWork = usageMode === 'active';
       const hasUsage = usageMode !== null;
 
+      if (usageGroup) {
+        usageGroup.classList.toggle('is-disabled', !hasAge);
+      }
+
       if (workGroup) {
-        workGroup.classList.toggle('is-disabled', !requiresWork);
+        workGroup.classList.toggle('is-disabled', !hasAge || !requiresWork);
+      }
+
+      const isComplete = hasAge && hasUsage && (!requiresWork || workMode !== null);
+      if (resultPanel) {
+        resultPanel.classList.toggle('is-disabled', !isComplete);
       }
 
       if (monthlyHint) {
@@ -1482,8 +1501,6 @@ if (isMitgliedschaft) {
           }
         }
       }
-
-      const isComplete = hasAge && (usageMode === 'rare' || (usageMode === 'active' && workMode !== null));
 
       if (totalRecurring && totalFirst) {
         if (isComplete) {
