@@ -495,6 +495,23 @@ import {
       </div>
     </div>
   </section>
+
+  <!-- 7. FAQ-VERWEIS -->
+  <section id="faq" class="story-chapter chapter-black faq-referral-section" aria-labelledby="faq-referral-heading">
+    <div class="container">
+      <div class="faq-referral-card reveal-up">
+        <div class="faq-referral-text">
+          <h2 id="faq-referral-heading">Du hast noch Fragen?</h2>
+          <p>
+            Antworten zu Angeboten für Kinder, Gastfahrern, Verein, Initiativen, Camping und Weiterem findest du kompakt in unserem FAQ.
+          </p>
+        </div>
+        <a href="/faq.html" class="btn btn-outline faq-referral-btn">
+          Zum FAQ →
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -1660,6 +1677,77 @@ import {
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+  }
+
+  /* FAQ-Verweis am Seitenende */
+  .faq-referral-section {
+    padding: clamp(2.5rem, 5vw, 3.75rem) 0;
+    border-bottom: none;
+  }
+
+  .faq-referral-card {
+    padding: 1.35rem 1.5rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .faq-referral-text {
+    flex: 1 1 300px;
+  }
+
+  .faq-referral-text h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.15rem;
+    color: #fff;
+  }
+
+  .faq-referral-text p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .faq-referral-btn {
+    white-space: nowrap;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 44em) {
+    .faq-referral-card {
+      padding: 1.1rem 1rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.85rem;
+    }
+
+    .faq-referral-text {
+      flex: none;
+      width: 100%;
+    }
+
+    .faq-referral-text h2 {
+      margin: 0 0 0.35rem 0;
+      font-size: 1.08rem;
+    }
+
+    .faq-referral-text p {
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .faq-referral-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
   }
 </style>
 
