@@ -369,4 +369,15 @@ export const faqCategories = [
       },
     ],
   },
+  {
+    category: 'Verein & Arbeitsdienst',
+    items: [
+      {
+        id: 'faq-arbeitsstunden',
+        question: 'Können Arbeitsstunden anteilig angerechnet werden?',
+        answer:
+          'Nein, können sie nicht. Es müssen mindestens 6 Arbeitsstunden erfolgen, ansonsten fällt der volle Kostenbetrag für die fehlende Arbeitszeit in Höhe von 60 € an.',
+      },
+    ],
+  },
 ];
