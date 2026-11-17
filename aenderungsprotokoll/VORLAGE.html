@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500&display=swap">
 <style>
-/* Layout: einspaltiges Protokoll, Screenshots je Seite als Geräte-Reihe (iPhone · Laptop · Desktop). Farben wie gsc-salzgitter.de. */
+/* Layout: einspaltiges Protokoll, Screenshots je Seite als Geräte-Reihe (iPhone · Laptop). Farben wie gsc-salzgitter.de. */
 :root {
   --bg: #f6f5f3; --surface: #ffffff; --fg: #17171b; --muted: #5d5d66;
   --line: #e3e1dd; --accent: #d95a00; --accent-soft: #fff0e5;
@@ -49,7 +49,7 @@ section { display: flex; flex-direction: column; gap: 10px }
 .page { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 16px }
 .page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px }
 .page-head h3 { margin: 0 }
-.shots { display: grid; grid-template-columns: minmax(0, .55fr) minmax(0, 1.2fr) minmax(0, 1.45fr); gap: 16px; align-items: start }
+.shots { display: grid; grid-template-columns: minmax(0, .5fr) minmax(0, 1.5fr); gap: 16px; align-items: start }
 @media (max-width: 760px) { .shots { grid-template-columns: minmax(0, 1fr) } .shots figure.phone { max-width: 300px } }
 figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0 }
 figure img { display: block; width: 100%; height: auto; border-radius: 8px; background: var(--shot-bg); border: 1px solid var(--line) }
@@ -110,8 +110,6 @@ dialog::backdrop { background: rgba(0,0,0,.7) }
           <figcaption><b>iPhone 17</b><button class="full" data-src="screenshots/start-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
         <figure><img src="screenshots/start-laptop-ansicht.jpg" alt="Startseite auf dem Laptop" loading="lazy">
           <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="screenshots/start-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
-        <figure><img src="screenshots/start-desktop-ansicht.jpg" alt="Startseite auf dem Desktop" loading="lazy">
-          <figcaption><b>Desktop · 1920 × 1080</b><button class="full" data-src="screenshots/start-desktop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
       </div>
     </div>
   </section>

@@ -49,8 +49,9 @@ Die Vorlage `VORLAGE.html` kopieren und alle Platzhalter ersetzen:
 - **Was wurde geändert?** – verständlich, auch für Nicht-Programmierer
 - **Warum?** – Anlass / Wunsch des Nutzers
 - **Betroffene Seiten und Dateien**
-- **Screenshots** – je betroffener Seite ein Block mit **iPhone 17**, **Laptop**
-  und **Desktop**; die Aufnahmen der ganzen Seite öffnen sich per Knopf.
+- **Screenshots** – je betroffener Seite ein Block mit **iPhone 17** und
+  **Laptop** (diese beiden Formate reichen aus); die Aufnahmen der ganzen Seite
+  öffnen sich per Knopf.
   Bei Bedarf Vorher/Nachher als zwei Blöcke.
 - **Prüfhinweise** – worauf bei der Qualitätsprüfung zu achten ist,
   Auffälligkeiten ehrlich nennen
@@ -74,7 +75,6 @@ Aufnahmen in diesen Ansichten:
 |-----------|----------------------------------------------|
 | `iphone17`| iPhone 17 (Playwright-Geräteprofil; WebKit, falls installiert, sonst Chromium) |
 | `laptop`  | 1366 × 768                                   |
-| `desktop` | 1920 × 1080                                  |
 
 Jeweils als erster Bildschirm direkt nach dem Laden (`*-ansicht.jpg`) und als
 ganze Seite (`*-ganzeseite.jpg`), als JPEG komprimiert. Für einen Vorher-Vergleich das Skript zusätzlich

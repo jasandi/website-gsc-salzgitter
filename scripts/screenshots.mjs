@@ -20,7 +20,6 @@ const baseUrl = (process.env.BASE_URL || 'http://localhost:4321').replace(/\/$/,
 const views = [
   { name: 'iphone17', context: devices['iPhone 17'] },
   { name: 'laptop', context: { viewport: { width: 1366, height: 768 }, deviceScaleFactor: 1 } },
-  { name: 'desktop', context: { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 } },
 ];
 
 const slug = (p) => p.replace(/^\/|\/$/g, '').replace(/\.html$/, '').replace(/[^\w-]+/g, '-') || 'start';
