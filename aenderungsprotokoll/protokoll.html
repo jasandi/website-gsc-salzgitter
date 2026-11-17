@@ -1,0 +1,200 @@
+<title>Änderungsprotokoll GSC Salzgitter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500&display=swap">
+<style>
+/* Layout: ein fortlaufendes Protokoll; Stände untereinander, neuester oben; Screenshots je Seite als Reihe iPhone · Laptop. Farben wie gsc-salzgitter.de. */
+:root {
+  --bg: #f6f5f3; --surface: #ffffff; --fg: #17171b; --muted: #5d5d66;
+  --line: #e3e1dd; --accent: #d95a00; --accent-soft: #fff0e5;
+  --warn: #8a5a00; --warn-soft: #fff4d6; --ok: #146c34; --ok-soft: #e3f6ea;
+  --shot-bg: #0e0e11;
+  --font-head: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e0e11; --surface: #18181d; --fg: #f2f2f4; --muted: #a2a2ab;
+  --line: #2b2b33; --accent: #ff7a1a; --accent-soft: #2e1c10;
+  --warn: #f5b942; --warn-soft: #2e2510; --ok: #4ade80; --ok-soft: #12291a;
+  --shot-bg: #050506; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e0e11; --surface: #18181d; --fg: #f2f2f4; --muted: #a2a2ab;
+  --line: #2b2b33; --accent: #ff7a1a; --accent-soft: #2e1c10;
+  --warn: #f5b942; --warn-soft: #2e2510; --ok: #4ade80; --ok-soft: #12291a;
+  --shot-bg: #050506; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px }
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 700 }
+h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 12px }
+h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 12px }
+p, ul { margin: 0; max-width: 68ch }
+ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 6px }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere }
+a { color: var(--accent) }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.eyebrow { font: 500 .78rem var(--font-head); letter-spacing: .12em; text-transform: uppercase; color: var(--accent) }
+header { display: flex; flex-direction: column; gap: 14px; padding-bottom: 28px; border-bottom: 1px solid var(--line) }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--muted); font-size: .92rem }
+.meta b { color: var(--fg); font-weight: 500 }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 999px; font: 500 .85rem var(--font-head) }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor }
+.pill.warten { color: var(--warn); background: var(--warn-soft) }
+.pill.frei { color: var(--ok); background: var(--ok-soft) }
+section { display: flex; flex-direction: column; gap: 10px }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 24px }
+.page { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 16px }
+.page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px }
+.page-head h3 { margin: 0 }
+.shots { display: grid; grid-template-columns: minmax(0, .5fr) minmax(0, 1.5fr); gap: 16px; align-items: start }
+@media (max-width: 760px) { .shots { grid-template-columns: minmax(0, 1fr) } .shots figure.phone { max-width: 300px } }
+figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0 }
+figure img { display: block; width: 100%; height: auto; border-radius: 8px; background: var(--shot-bg); border: 1px solid var(--line) }
+figure.phone img { border-radius: 18px }
+figcaption { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .85rem; color: var(--muted) }
+figcaption b { color: var(--fg); font-weight: 500 }
+button.full { font: 500 .8rem var(--font-head); color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; cursor: pointer }
+button.full:hover { background: var(--accent-soft) }
+.note { background: var(--warn-soft); border-radius: 10px; padding: 14px 18px }
+.approval { border: 1px dashed var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 8px }
+dialog { border: 0; padding: 0; background: var(--surface); color: var(--fg); width: min(1100px, 94vw); max-height: 92vh; border-radius: 14px }
+dialog::backdrop { background: rgba(0,0,0,.7) }
+.dlg-head { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--line) }
+.dlg-body { padding: 16px; display: flex; justify-content: center }
+.dlg-body img { max-width: 100%; height: auto }
+.dlg-body img.phone { max-width: 420px; width: 100% }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+
+.wrap > header p { color: var(--muted) }
+.toc { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden }
+.toc a { display: grid; grid-template-columns: 7.5em minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 16px; color: var(--fg); text-decoration: none; border-top: 1px solid var(--line) }
+.toc a:first-child { border-top: 0 }
+.toc a:hover { background: var(--accent-soft) }
+.toc time { color: var(--muted); font-variant-numeric: tabular-nums; font-size: .9rem }
+@media (max-width: 560px) { .toc a { grid-template-columns: minmax(0, 1fr); gap: 4px } }
+.entry { display: flex; flex-direction: column; gap: 28px; padding-top: 36px; border-top: 2px solid var(--line); scroll-margin-top: 16px }
+.entry-head { display: flex; flex-direction: column; gap: 10px }
+.entry-head h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin: 0 }
+.entry h3.sec { font-size: 1.1rem; font-weight: 700; margin: 0 0 4px }
+.entry.neu .eyebrow::after { content: " · neuester Stand"; color: var(--muted) }
+.page h4 { font-family: var(--font-head); font-size: 1rem; font-weight: 500; margin: 0 }
+.noshots { color: var(--muted); font-style: italic }
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Website gsc-salzgitter.de</span>
+    <h1>Änderungsprotokoll</h1>
+    <p>Jede Änderung an der Website wird hier als neuer Stand ganz oben eingetragen, mit Beschreibung und Screenshots für iPhone 17 und Laptop. Erst nach Freigabe im Chat geht eine Änderung live.</p>
+  </header>
+
+  <nav class="toc" aria-label="Alle Stände">
+<!-- NEUE STÄNDE HIER OBEN EINTRAGEN -->
+    <a href="#stand-4"><time>17.11.2026</time><span>Ein fortlaufendes Änderungsprotokoll</span><span class="pill warten">Wartet auf Freigabe</span></a>
+    <a href="#stand-3"><time>17.11.2026</time><span>Screenshots nur noch für iPhone und Laptop</span><span class="pill warten">Wartet auf Freigabe</span></a>
+    <a href="#stand-2"><time>17.11.2026</time><span>Protokoll als Seite in Claude statt Markdown</span><span class="pill warten">Wartet auf Freigabe</span></a>
+    <a href="#stand-1"><time>17.11.2026</time><span>Arbeitsregeln &amp; Änderungsprotokoll eingeführt</span><span class="pill warten">Wartet auf Freigabe</span></a>
+  </nav>
+<!-- NEUE EINTRÄGE HIER OBEN EINFÜGEN (VORLAGE-eintrag.html) -->
+
+  <!-- STAND 4 -->
+  <article class="entry neu" id="stand-4">
+    <div class="entry-head">
+      <span class="eyebrow">Stand 4</span>
+      <h2>Ein fortlaufendes Änderungsprotokoll</h2>
+      <div class="meta"><span>Datum <b>17.11.2026</b></span><span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/claude/gifted-tesla-myq3dq"><code>claude/gifted-tesla-myq3dq</code></a></span><span class="pill warten">Wartet auf Freigabe</span></div>
+    </div>
+    <section><h3 class="sec">Was wurde geändert?</h3><ul><li>Es gibt nur noch <b>dieses eine Änderungsprotokoll</b> unter einem festen Link. Jede neue Änderung kommt als neuer Stand <b>ganz oben</b> dazu; ältere Stände bleiben darunter erhalten.</li><li>Oben auf der Seite steht eine Liste aller Stände mit Status, die zum jeweiligen Eintrag springt.</li><li>Die Vorlage für einen neuen Stand liegt in <code>aenderungsprotokoll/VORLAGE-eintrag.html</code>. Die bisherige Markdown-Übersicht entfällt, weil diese Seite selbst die Übersicht ist.</li></ul></section>
+    <section><h3 class="sec">Warum?</h3><p>Alle Änderungen sollen an einer Stelle nachvollziehbar sein, statt für jede Änderung eine neue Seite zu öffnen.</p></section>
+    <section><h3 class="sec">Betroffene Seiten und Dateien</h3><ul><li>Webseiten: keine</li><li><code>CLAUDE.md</code>, <code>aenderungsprotokoll/protokoll.html</code>, <code>aenderungsprotokoll/VORLAGE-eintrag.html</code></li></ul></section>
+    <section><h3 class="sec">Screenshots</h3>
+        <p class="noshots">Keine Änderung an der Website, daher keine Screenshots.</p>
+    </section>
+    <section><h3 class="sec">Prüfhinweise</h3><div class="note"><ul><li>Der Link zu diesem Protokoll bleibt gleich. Er steht auch in der <code>CLAUDE.md</code>, damit jede künftige Sitzung dieselbe Seite fortschreibt.</li></ul></div></section>
+  </article>
+
+  <!-- STAND 3 -->
+  <article class="entry" id="stand-3">
+    <div class="entry-head">
+      <span class="eyebrow">Stand 3</span>
+      <h2>Screenshots nur noch für iPhone und Laptop</h2>
+      <div class="meta"><span>Datum <b>17.11.2026</b></span><span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/claude/gifted-tesla-myq3dq"><code>claude/gifted-tesla-myq3dq</code></a></span><span class="pill warten">Wartet auf Freigabe</span></div>
+    </div>
+    <section><h3 class="sec">Was wurde geändert?</h3><ul><li>Das Protokoll und das Screenshot-Skript nutzen nur noch die Formate <b>iPhone 17</b> und <b>Laptop (1366 × 768)</b>. Die Desktop-Ansicht entfällt.</li></ul></section>
+    <section><h3 class="sec">Warum?</h3><p>iPhone- und Laptop-Aufnahmen reichen für die Qualitätsprüfung aus.</p></section>
+    <section><h3 class="sec">Betroffene Seiten und Dateien</h3><ul><li>Webseiten: keine</li><li><code>scripts/screenshots.mjs</code>, <code>CLAUDE.md</code></li></ul></section>
+    <section><h3 class="sec">Screenshots</h3>
+        <p class="noshots">Keine Änderung an der Website, daher keine Screenshots.</p>
+    </section>
+    <section><h3 class="sec">Prüfhinweise</h3><div class="note"><ul><li>Keine.</li></ul></div></section>
+  </article>
+
+  <!-- STAND 2 -->
+  <article class="entry" id="stand-2">
+    <div class="entry-head">
+      <span class="eyebrow">Stand 2</span>
+      <h2>Protokoll als Seite in Claude statt Markdown</h2>
+      <div class="meta"><span>Datum <b>17.11.2026</b></span><span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/claude/gifted-tesla-myq3dq"><code>claude/gifted-tesla-myq3dq</code></a></span><span class="pill warten">Wartet auf Freigabe</span></div>
+    </div>
+    <section><h3 class="sec">Was wurde geändert?</h3><ul><li>Das Änderungsprotokoll ist keine Markdown-Datei mehr, sondern eine Seite in Claude mit allen Screenshots, die nach jeder Änderung im Chat verlinkt wird.</li><li>Aufnahmen der ganzen Seite öffnen sich per Knopf „Ganze Seite“.</li></ul></section>
+    <section><h3 class="sec">Warum?</h3><p>Das Protokoll soll mit Screenshots direkt in Claude angesehen werden können.</p></section>
+    <section><h3 class="sec">Betroffene Seiten und Dateien</h3><ul><li>Webseiten: keine</li><li><code>CLAUDE.md</code>, <code>aenderungsprotokoll/</code></li></ul></section>
+    <section><h3 class="sec">Screenshots</h3>
+        <p class="noshots">Keine Änderung an der Website, daher keine Screenshots.</p>
+    </section>
+    <section><h3 class="sec">Prüfhinweise</h3><div class="note"><ul><li>Die Seite ist privat. Andere Personen können sie erst öffnen, wenn sie über „Teilen“ freigegeben wird.</li></ul></div></section>
+  </article>
+
+  <!-- STAND 1 -->
+  <article class="entry" id="stand-1">
+    <div class="entry-head">
+      <span class="eyebrow">Stand 1</span>
+      <h2>Arbeitsregeln &amp; Änderungsprotokoll eingeführt</h2>
+      <div class="meta"><span>Datum <b>17.11.2026</b></span><span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/claude/gifted-tesla-myq3dq"><code>claude/gifted-tesla-myq3dq</code></a></span><span class="pill warten">Wartet auf Freigabe</span></div>
+    </div>
+    <section><h3 class="sec">Was wurde geändert?</h3><ul><li><b>Neue Arbeitsregeln in <code>CLAUDE.md</code>:</b> Jede Änderung wird zuerst in einem eigenen Branch committet und hier dokumentiert. Erst nach Freigabe wird sie nach <code>main</code> übernommen und geht live.</li><li><b>Screenshot-Skript <code>scripts/screenshots.mjs</code>:</b> macht Aufnahmen der gebauten Website, jeweils den ersten Bildschirm nach dem Laden und die ganze Seite.</li><li>An Inhalt und Aussehen der Website hat sich <b>nichts</b> geändert.</li></ul></section>
+    <section><h3 class="sec">Warum?</h3><p>Jeder Push auf <code>main</code> wird sofort auf www.gsc-salzgitter.de veröffentlicht. Mit dem neuen Ablauf wird jede Änderung vorher geprüft und bewusst freigegeben.</p></section>
+    <section><h3 class="sec">Betroffene Seiten und Dateien</h3><ul><li>Webseiten: keine (Startseite und FAQ nur als Test des Screenshot-Skripts)</li><li><code>CLAUDE.md</code>, <code>scripts/screenshots.mjs</code></li></ul></section>
+    <section><h3 class="sec">Screenshots</h3>
+        <div class="page">
+          <div class="page-head"><h4>Startseite</h4><code>/</code></div>
+          <div class="shots">
+            <figure class="phone"><img src="2026-11-17-arbeitsregeln/screenshots/start-iphone17-ansicht.jpg" alt="Startseite auf dem iPhone 17" loading="lazy">
+              <figcaption><b>iPhone 17</b><button class="full" data-src="2026-11-17-arbeitsregeln/screenshots/start-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
+            <figure><img src="2026-11-17-arbeitsregeln/screenshots/start-laptop-ansicht.jpg" alt="Startseite auf dem Laptop" loading="lazy">
+              <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="2026-11-17-arbeitsregeln/screenshots/start-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+          </div>
+        </div>
+        <div class="page">
+          <div class="page-head"><h4>FAQ</h4><code>/faq</code></div>
+          <div class="shots">
+            <figure class="phone"><img src="2026-11-17-arbeitsregeln/screenshots/faq-iphone17-ansicht.jpg" alt="FAQ auf dem iPhone 17" loading="lazy">
+              <figcaption><b>iPhone 17</b><button class="full" data-src="2026-11-17-arbeitsregeln/screenshots/faq-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
+            <figure><img src="2026-11-17-arbeitsregeln/screenshots/faq-laptop-ansicht.jpg" alt="FAQ auf dem Laptop" loading="lazy">
+              <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="2026-11-17-arbeitsregeln/screenshots/faq-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+          </div>
+        </div>
+    </section>
+    <section><h3 class="sec">Prüfhinweise</h3><div class="note"><ul><li>Die Aufnahmen zeigen den aktuellen, unveränderten Stand der Website.</li><li>Die iPhone-Aufnahmen entstehen mit dem Geräteprofil „iPhone 17“ (402 px breit, 3-fache Pixeldichte) in Chromium, weil die Safari-Engine hier nicht verfügbar ist. Die Schrift kann auf einem echten iPhone minimal anders aussehen.</li><li>Nebenbefund, nicht Teil dieser Änderung: Auf der FAQ-Seite ist in der Navigation „Startseite“ als aktiv markiert.</li></ul></div></section>
+  </article>
+</div>
+
+<dialog id="full-view" aria-label="Ganze Seite">
+  <div class="dlg-head"><b id="full-title">Ganze Seite</b><button class="full" id="full-close">Schließen</button></div>
+  <div class="dlg-body"><img id="full-img" alt=""></div>
+</dialog>
+<script>
+  const dlg = document.getElementById('full-view');
+  const img = document.getElementById('full-img');
+  document.querySelectorAll('button.full[data-src]').forEach((b) => b.addEventListener('click', () => {
+    img.src = b.dataset.src;
+    img.className = 'phone' in b.dataset ? 'phone' : '';
+    img.alt = b.closest('figure').querySelector('img').alt + ' (ganze Seite)';
+    document.getElementById('full-title').textContent = b.closest('.page').querySelector('h4').textContent + ' · ' + b.previousElementSibling.textContent;
+    dlg.showModal();
+  }));
+  document.getElementById('full-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+</script>

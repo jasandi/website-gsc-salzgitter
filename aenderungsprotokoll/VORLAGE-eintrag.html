@@ -1,0 +1,38 @@
+<!--
+  Vorlage für einen neuen Stand im Änderungsprotokoll (protokoll.html).
+
+  1. Den <article>-Block unten kopieren und in protokoll.html direkt unter
+     "NEUE EINTRÄGE HIER OBEN EINFÜGEN" einsetzen (neuester Stand ganz oben).
+  2. N = fortlaufende Nummer (bisherige höchste + 1), ORDNER = Änderungsordner
+     mit den Screenshots, z. B. 2026-11-20-faq-arbeitsstunden.
+  3. Beim bisher obersten Eintrag die Klasse "neu" entfernen.
+  4. In der Liste unter "NEUE STÄNDE HIER OBEN EINTRAGEN" eine Zeile ergänzen:
+     <a href="#stand-N"><time>TT.MM.JJJJ</time><span>TITEL</span><span class="pill warten">Wartet auf Freigabe</span></a>
+  5. Status später ändern: Klasse "warten" → "frei", Text → "In main übernommen am TT.MM.JJJJ"
+     (im Eintrag und in der Liste).
+  6. Ohne Änderung an der Website statt der .page-Blöcke:
+     <p class="noshots">Keine Änderung an der Website, daher keine Screenshots.</p>
+-->
+  <article class="entry neu" id="stand-N">
+    <div class="entry-head">
+      <span class="eyebrow">Stand N</span>
+      <h2>TITEL DER ÄNDERUNG</h2>
+      <div class="meta"><span>Datum <b>TT.MM.JJJJ</b></span><span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/BRANCH"><code>BRANCH</code></a></span><span class="pill warten">Wartet auf Freigabe</span></div>
+    </div>
+    <section><h3 class="sec">Was wurde geändert?</h3><ul><li>…</li></ul></section>
+    <section><h3 class="sec">Warum?</h3><p>…</p></section>
+    <section><h3 class="sec">Betroffene Seiten und Dateien</h3><ul><li>Seite <code>/…</code></li><li><code>src/…</code></li></ul></section>
+    <section><h3 class="sec">Screenshots</h3>
+      <!-- Ein .page-Block je betroffener Seite; SLUG = Dateipräfix des Screenshot-Skripts (start, faq, …) -->
+        <div class="page">
+          <div class="page-head"><h4>SEITENNAME</h4><code>/PFAD</code></div>
+          <div class="shots">
+            <figure class="phone"><img src="ORDNER/screenshots/SLUG-iphone17-ansicht.jpg" alt="SEITENNAME auf dem iPhone 17" loading="lazy">
+              <figcaption><b>iPhone 17</b><button class="full" data-src="ORDNER/screenshots/SLUG-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
+            <figure><img src="ORDNER/screenshots/SLUG-laptop-ansicht.jpg" alt="SEITENNAME auf dem Laptop" loading="lazy">
+              <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="ORDNER/screenshots/SLUG-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+          </div>
+        </div>
+    </section>
+    <section><h3 class="sec">Prüfhinweise</h3><div class="note"><ul><li>…</li></ul></div></section>
+  </article>
