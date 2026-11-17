@@ -11,7 +11,9 @@ Es wurde ein fester Ablauf für künftige Änderungen an der Website festgelegt:
 - **`CLAUDE.md`** (neu): Regeln für die Arbeit am Repository. Änderungen werden zuerst
   in einem eigenen Branch committet. Zu jeder Änderung gibt es ein Protokoll mit
   Beschreibung und Screenshots. Erst nach Freigabe durch den Nutzer wird nach `main`
-  übernommen, und erst dann geht die Änderung live.
+  übernommen, und erst dann geht die Änderung live. Nach jeder Änderung wird das
+  Protokoll samt Screenshots direkt im Chat angezeigt, damit es dort geprüft
+  werden kann.
 - **`aenderungsprotokoll/`** (neu): Übersicht aller Änderungen (`README.md`) und
   Vorlage für neue Einträge (`VORLAGE.md`).
 - **`scripts/screenshots.mjs`** (neu): erstellt automatisch Screenshots der gebauten

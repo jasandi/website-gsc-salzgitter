@@ -14,12 +14,14 @@ Jeder Push auf `main` geht **sofort live** auf www.gsc-salzgitter.de. Deshalb gi
 2. Alle Änderungen dort **committen und pushen** – mit aussagekräftiger
    Commit-Nachricht auf Deutsch.
 3. Für die Änderung ein **Änderungsprotokoll** mit Screenshots erstellen (siehe Abschnitt 2).
-4. Dem Nutzer das Protokoll vorlegen und **auf ausdrückliche Bestätigung warten**.
+4. Das Protokoll dem Nutzer **direkt hier im Chat anzeigen** (siehe Abschnitt 2,
+   „Protokoll im Chat anzeigen“) und **auf ausdrückliche Bestätigung warten**.
 5. **Erst nach Bestätigung des Nutzers** wird der Branch in `main` zurückgeführt
    (Merge bzw. Pull Request). Ohne Freigabe: kein Merge, kein Push auf `main`.
 
 Wünscht der Nutzer Korrekturen, werden diese im selben Branch umgesetzt, das
-Protokoll samt Screenshots aktualisiert und erneut zur Freigabe vorgelegt.
+Protokoll samt Screenshots aktualisiert und erneut im Chat angezeigt und zur
+Freigabe vorgelegt.
 
 ## 2. Änderungsprotokoll (Pflicht für jede Änderung)
 
@@ -72,6 +74,27 @@ auf dem Stand von `main` ausführen und in `screenshots/vorher/` ablegen.
 Die Screenshots selbst prüfen (Layout, Umbrüche, abgeschnittene Texte,
 Kontraste, Animationen/Scrollytelling), bevor das Protokoll dem Nutzer
 vorgelegt wird. Auffälligkeiten ehrlich im Protokoll vermerken.
+
+### Protokoll im Chat anzeigen (Pflicht nach jeder Änderung)
+
+Ein Protokoll, das nur im Repository liegt, reicht nicht. Nach **jeder**
+Änderung, auch nach jeder Korrekturrunde, wird es dem Nutzer im Chat gezeigt,
+damit er es dort prüfen kann:
+
+1. **Protokolldatei und Screenshots als Dateien an den Nutzer senden**
+   (z. B. mit dem Werkzeug zum Senden von Dateien, Anzeigemodus „render“):
+   die `README.md` des Änderungsordners und die `*-ansicht.jpg`-Bilder für
+   iPhone 17, Laptop und Desktop jeder betroffenen Seite. Die Aufnahmen der
+   ganzen Seite mitsenden, wenn sich die Änderung weiter unten auf der Seite befindet.
+2. **In der Chat-Antwort zusammenfassen:** was geändert wurde, welche Seiten
+   betroffen sind, Branch und Link zum Branch auf GitHub, Prüfhinweise und
+   Auffälligkeiten.
+3. **Am Ende ausdrücklich um Freigabe bitten**, z. B. „Soll ich die Änderung
+   nach `main` übernehmen?“
+
+Gibt es kein Werkzeug zum Senden von Dateien, die Pfade der Protokolldatei und
+der Screenshots im Chat nennen und die Beschreibung vollständig in die Antwort
+übernehmen.
 
 ## 3. Sonstiges
 
