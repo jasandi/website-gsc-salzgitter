@@ -13,9 +13,9 @@ Jeder Push auf `main` geht **sofort live** auf www.gsc-salzgitter.de. Deshalb gi
    Arbeits-Branch vorgegeben ist.
 2. Alle Änderungen dort **committen und pushen** – mit aussagekräftiger
    Commit-Nachricht auf Deutsch.
-3. Für die Änderung ein **Änderungsprotokoll** mit Screenshots erstellen (siehe Abschnitt 2).
-4. Das Protokoll dem Nutzer **direkt hier im Chat anzeigen** (siehe Abschnitt 2,
-   „Protokoll im Chat anzeigen“) und **auf ausdrückliche Bestätigung warten**.
+3. Für die Änderung ein **Änderungsprotokoll** mit Screenshots als Claude-Artifact
+   erstellen (siehe Abschnitt 2).
+4. Das Protokoll veröffentlichen, dem Nutzer **im Chat verlinken** (siehe Abschnitt 2) und **auf ausdrückliche Bestätigung warten**.
 5. **Erst nach Bestätigung des Nutzers** wird der Branch in `main` zurückgeführt
    (Merge bzw. Pull Request). Ohne Freigabe: kein Merge, kein Push auf `main`.
 
@@ -25,26 +25,35 @@ Freigabe vorgelegt.
 
 ## 2. Änderungsprotokoll (Pflicht für jede Änderung)
 
+Das Änderungsprotokoll ist **keine Markdown-Datei**, sondern eine
+**HTML-Seite, die als Claude-Artifact veröffentlicht wird**. So kann der Nutzer
+es mit allen Screenshots direkt in Claude ansehen.
+
 Für jede Änderung wird ein Ordner angelegt:
 
 ```
 aenderungsprotokoll/<JJJJ-MM-TT>-<kurzer-name>/
-├── README.md          ← Beschreibung der Änderung (Vorlage: aenderungsprotokoll/VORLAGE.md)
+├── protokoll.html     ← Protokollseite (Vorlage: aenderungsprotokoll/VORLAGE.html)
 └── screenshots/       ← automatisch erzeugte Screenshots
 ```
 
-Zusätzlich wird in `aenderungsprotokoll/README.md` (Übersicht) eine Zeile mit
-Datum, Titel, Branch und Status ergänzt.
+In `aenderungsprotokoll/README.md` (Übersicht) wird eine Zeile mit Datum,
+Titel, Branch, Status und dem **Link zum Artifact** ergänzt.
 
-### Inhalt der Beschreibung (`README.md` im Änderungsordner)
+### Inhalt der Protokollseite
 
+Die Vorlage `VORLAGE.html` kopieren und alle Platzhalter ersetzen:
+
+- **Titel, Datum, Branch** (mit Link auf GitHub) und **Status**
+  (`Wartet auf Freigabe` → `Freigegeben am …` → `In main übernommen am …`)
 - **Was wurde geändert?** – verständlich, auch für Nicht-Programmierer
 - **Warum?** – Anlass / Wunsch des Nutzers
 - **Betroffene Seiten und Dateien**
-- **Screenshots** – je betroffene Seite für **iPhone 17** und **Desktop/Laptop**
-  eingebunden, idealerweise Vorher/Nachher
-- **Prüfhinweise** – worauf bei der Qualitätsprüfung besonders zu achten ist
-- **Status** – `Wartet auf Freigabe` → `Freigegeben am …` → `In main übernommen`
+- **Screenshots** – je betroffener Seite ein Block mit **iPhone 17**, **Laptop**
+  und **Desktop**; die Aufnahmen der ganzen Seite öffnen sich per Knopf.
+  Bei Bedarf Vorher/Nachher als zwei Blöcke.
+- **Prüfhinweise** – worauf bei der Qualitätsprüfung zu achten ist,
+  Auffälligkeiten ehrlich nennen
 
 ### Screenshots direkt aus dem System erzeugen
 
@@ -63,7 +72,7 @@ Aufnahmen in diesen Ansichten:
 
 | Ansicht   | Gerät / Fenstergröße                         |
 |-----------|----------------------------------------------|
-| `iphone17`| iPhone 17 (Playwright-Geräteprofil, Safari/WebKit-Emulation) |
+| `iphone17`| iPhone 17 (Playwright-Geräteprofil; WebKit, falls installiert, sonst Chromium) |
 | `laptop`  | 1366 × 768                                   |
 | `desktop` | 1920 × 1080                                  |
 
@@ -75,26 +84,26 @@ Die Screenshots selbst prüfen (Layout, Umbrüche, abgeschnittene Texte,
 Kontraste, Animationen/Scrollytelling), bevor das Protokoll dem Nutzer
 vorgelegt wird. Auffälligkeiten ehrlich im Protokoll vermerken.
 
-### Protokoll im Chat anzeigen (Pflicht nach jeder Änderung)
+### Protokoll als Artifact veröffentlichen und im Chat zeigen (Pflicht nach jeder Änderung)
 
-Ein Protokoll, das nur im Repository liegt, reicht nicht. Nach **jeder**
-Änderung, auch nach jeder Korrekturrunde, wird es dem Nutzer im Chat gezeigt,
-damit er es dort prüfen kann:
+Nach **jeder** Änderung, auch nach jeder Korrekturrunde:
 
-1. **Protokolldatei und Screenshots als Dateien an den Nutzer senden**
-   (z. B. mit dem Werkzeug zum Senden von Dateien, Anzeigemodus „render“):
-   die `README.md` des Änderungsordners und die `*-ansicht.jpg`-Bilder für
-   iPhone 17, Laptop und Desktop jeder betroffenen Seite. Die Aufnahmen der
-   ganzen Seite mitsenden, wenn sich die Änderung weiter unten auf der Seite befindet.
-2. **In der Chat-Antwort zusammenfassen:** was geändert wurde, welche Seiten
-   betroffen sind, Branch und Link zum Branch auf GitHub, Prüfhinweise und
-   Auffälligkeiten.
+1. `protokoll.html` mit dem Artifact-Werkzeug veröffentlichen. Alle verwendeten
+   Screenshots als zugehörige Dateien mitgeben (`files`, Pfade
+   `screenshots/<datei>.jpg`, `root` = Änderungsordner), damit sie in der Seite
+   angezeigt werden. Bei einer Korrekturrunde dieselbe Datei erneut
+   veröffentlichen, damit der Link gleich bleibt.
+2. In der Chat-Antwort den **Link zum Artifact** nennen und kurz
+   zusammenfassen: was geändert wurde, welche Seiten betroffen sind, Branch,
+   Prüfhinweise.
 3. **Am Ende ausdrücklich um Freigabe bitten**, z. B. „Soll ich die Änderung
    nach `main` übernehmen?“
+4. Nach Freigabe und Übernahme nach `main` den Status in der Seite auf
+   „In main übernommen am …“ setzen und erneut veröffentlichen.
 
-Gibt es kein Werkzeug zum Senden von Dateien, die Pfade der Protokolldatei und
-der Screenshots im Chat nennen und die Beschreibung vollständig in die Antwort
-übernehmen.
+Steht das Artifact-Werkzeug nicht zur Verfügung, die Screenshots und die Seite
+als Dateien an den Nutzer senden und die Beschreibung vollständig in die
+Chat-Antwort übernehmen.
 
 ## 3. Sonstiges
 

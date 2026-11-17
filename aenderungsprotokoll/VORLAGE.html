@@ -1,0 +1,146 @@
+<title>Änderung: TITEL</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&family=Roboto:wght@400;500&display=swap">
+<style>
+/* Layout: einspaltiges Protokoll, Screenshots je Seite als Geräte-Reihe (iPhone · Laptop · Desktop). Farben wie gsc-salzgitter.de. */
+:root {
+  --bg: #f6f5f3; --surface: #ffffff; --fg: #17171b; --muted: #5d5d66;
+  --line: #e3e1dd; --accent: #d95a00; --accent-soft: #fff0e5;
+  --warn: #8a5a00; --warn-soft: #fff4d6; --ok: #146c34; --ok-soft: #e3f6ea;
+  --shot-bg: #0e0e11;
+  --font-head: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e0e11; --surface: #18181d; --fg: #f2f2f4; --muted: #a2a2ab;
+  --line: #2b2b33; --accent: #ff7a1a; --accent-soft: #2e1c10;
+  --warn: #f5b942; --warn-soft: #2e2510; --ok: #4ade80; --ok-soft: #12291a;
+  --shot-bg: #050506; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e0e11; --surface: #18181d; --fg: #f2f2f4; --muted: #a2a2ab;
+  --line: #2b2b33; --accent: #ff7a1a; --accent-soft: #2e1c10;
+  --warn: #f5b942; --warn-soft: #2e2510; --ok: #4ade80; --ok-soft: #12291a;
+  --shot-bg: #050506; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px }
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700 }
+h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 12px }
+h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 12px }
+p, ul { margin: 0; max-width: 68ch }
+ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 6px }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere }
+a { color: var(--accent) }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.eyebrow { font: 500 .78rem var(--font-head); letter-spacing: .12em; text-transform: uppercase; color: var(--accent) }
+header { display: flex; flex-direction: column; gap: 14px; padding-bottom: 28px; border-bottom: 1px solid var(--line) }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--muted); font-size: .92rem }
+.meta b { color: var(--fg); font-weight: 500 }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 999px; font: 500 .85rem var(--font-head) }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor }
+.pill.warten { color: var(--warn); background: var(--warn-soft) }
+.pill.frei { color: var(--ok); background: var(--ok-soft) }
+section { display: flex; flex-direction: column; gap: 10px }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 24px }
+.page { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 16px }
+.page-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px }
+.page-head h3 { margin: 0 }
+.shots { display: grid; grid-template-columns: minmax(0, .55fr) minmax(0, 1.2fr) minmax(0, 1.45fr); gap: 16px; align-items: start }
+@media (max-width: 760px) { .shots { grid-template-columns: minmax(0, 1fr) } .shots figure.phone { max-width: 300px } }
+figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0 }
+figure img { display: block; width: 100%; height: auto; border-radius: 8px; background: var(--shot-bg); border: 1px solid var(--line) }
+figure.phone img { border-radius: 18px }
+figcaption { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .85rem; color: var(--muted) }
+figcaption b { color: var(--fg); font-weight: 500 }
+button.full { font: 500 .8rem var(--font-head); color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; cursor: pointer }
+button.full:hover { background: var(--accent-soft) }
+.note { background: var(--warn-soft); border-radius: 10px; padding: 14px 18px }
+.approval { border: 1px dashed var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 8px }
+dialog { border: 0; padding: 0; background: var(--surface); color: var(--fg); width: min(1100px, 94vw); max-height: 92vh; border-radius: 14px }
+dialog::backdrop { background: rgba(0,0,0,.7) }
+.dlg-head { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--line) }
+.dlg-body { padding: 16px; display: flex; justify-content: center }
+.dlg-body img { max-width: 100%; height: auto }
+.dlg-body img.phone { max-width: 420px; width: 100% }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Änderungsprotokoll · GSC Salzgitter</span>
+    <h1>TITEL DER ÄNDERUNG</h1>
+    <div class="meta">
+      <span>Datum <b>JJJJ-MM-TT</b></span>
+      <span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/BRANCH"><code>BRANCH</code></a></span>
+      <span class="pill warten">Wartet auf Freigabe</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Was wurde geändert?</h2>
+    <ul>
+      <li>…</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Warum?</h2>
+    <p>…</p>
+  </section>
+
+  <section>
+    <h2>Betroffene Seiten und Dateien</h2>
+    <div class="files">
+      <ul><li>Seite <code>/…</code></li></ul>
+      <ul><li><code>src/…</code></li></ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Screenshots</h2>
+    <!-- Ein .page-Block je betroffener Seite. SLUG = Dateinamen-Präfix des Screenshot-Skripts (z. B. start, faq). -->
+    <div class="page">
+      <div class="page-head"><h3>Startseite</h3><code>/</code></div>
+      <div class="shots">
+        <figure class="phone"><img src="screenshots/start-iphone17-ansicht.jpg" alt="Startseite auf dem iPhone 17" loading="lazy">
+          <figcaption><b>iPhone 17</b><button class="full" data-src="screenshots/start-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
+        <figure><img src="screenshots/start-laptop-ansicht.jpg" alt="Startseite auf dem Laptop" loading="lazy">
+          <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="screenshots/start-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+        <figure><img src="screenshots/start-desktop-ansicht.jpg" alt="Startseite auf dem Desktop" loading="lazy">
+          <figcaption><b>Desktop · 1920 × 1080</b><button class="full" data-src="screenshots/start-desktop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Prüfhinweise</h2>
+    <div class="note"><ul><li>…</li></ul></div>
+  </section>
+
+  <section class="approval">
+    <h2>Freigabe</h2>
+    <p>Noch nicht freigegeben. Bitte im Chat bestätigen, dann wird die Änderung nach <code>main</code> übernommen und geht live.</p>
+  </section>
+</div>
+
+<dialog id="full-view" aria-label="Ganze Seite">
+  <div class="dlg-head"><b id="full-title">Ganze Seite</b><button class="full" id="full-close">Schließen</button></div>
+  <div class="dlg-body"><img id="full-img" alt=""></div>
+</dialog>
+<script>
+  const dlg = document.getElementById('full-view');
+  const img = document.getElementById('full-img');
+  document.querySelectorAll('button.full[data-src]').forEach((b) => b.addEventListener('click', () => {
+    img.src = b.dataset.src;
+    img.className = 'phone' in b.dataset ? 'phone' : '';
+    img.alt = b.closest('figure').querySelector('img').alt + ' (ganze Seite)';
+    document.getElementById('full-title').textContent = b.closest('.page').querySelector('h3').textContent + ' · ' + b.previousElementSibling.textContent;
+    dlg.showModal();
+  }));
+  document.getElementById('full-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+</script>
