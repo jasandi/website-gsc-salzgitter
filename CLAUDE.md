@@ -84,7 +84,9 @@ Aufnahmen in diesen Ansichten:
 | `laptop`  | 1366 × 768                                   |
 
 Jeweils als erster Bildschirm direkt nach dem Laden (`*-ansicht.jpg`) und als
-ganze Seite (`*-ganzeseite.jpg`), als JPEG komprimiert. Für einen Vorher-Vergleich das Skript zusätzlich
+ganze Seite (`*-ganzeseite.jpg`), als JPEG komprimiert. Liegt die Änderung
+weiter unten, den Abschnitt mit angeben (z. B. `/#initiativen`): Die
+Ansicht-Aufnahme zeigt dann genau diesen Abschnitt. Für einen Vorher-Vergleich das Skript zusätzlich
 auf dem Stand von `main` ausführen und in `screenshots/vorher/` ablegen.
 
 Die Screenshots selbst prüfen (Layout, Umbrüche, abgeschnittene Texte,

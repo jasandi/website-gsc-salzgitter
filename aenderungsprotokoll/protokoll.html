@@ -92,6 +92,7 @@ dialog::backdrop { background: rgba(0,0,0,.7) }
 
   <nav class="toc" aria-label="Alle Stände">
 <!-- NEUE STÄNDE HIER OBEN EINTRAGEN -->
+    <a href="#stand-5"><time>18.11.2026</time><span>Initiativen: zweites Titelwort in Orange</span><span class="pill warten">Wartet auf Freigabe</span></a>
     <a href="#stand-4"><time>17.11.2026</time><span>Ein fortlaufendes Änderungsprotokoll</span><span class="pill frei">In main übernommen am 17.11.2026</span></a>
     <a href="#stand-3"><time>17.11.2026</time><span>Screenshots nur noch für iPhone und Laptop</span><span class="pill frei">In main übernommen am 17.11.2026</span></a>
     <a href="#stand-2"><time>17.11.2026</time><span>Protokoll als Seite in Claude statt Markdown</span><span class="pill frei">In main übernommen am 17.11.2026</span></a>
@@ -99,8 +100,50 @@ dialog::backdrop { background: rgba(0,0,0,.7) }
   </nav>
 <!-- NEUE EINTRÄGE HIER OBEN EINFÜGEN (VORLAGE-eintrag.html) -->
 
+  <!-- STAND 5 -->
+  <article class="entry neu" id="stand-5">
+    <div class="entry-head">
+      <span class="eyebrow">Stand 5</span>
+      <h2>Initiativen: zweites Titelwort in Orange</h2>
+      <div class="meta"><span>Datum <b>18.11.2026</b></span><span>Branch <a href="https://github.com/jasandi/website-gsc-salzgitter/tree/claude/gifted-tesla-myq3dq"><code>claude/gifted-tesla-myq3dq</code></a></span><span class="pill warten">Wartet auf Freigabe</span></div>
+    </div>
+    <section><h3 class="sec">Was wurde geändert?</h3><ul>
+      <li>Im Abschnitt „Unsere Initiativen“ auf der Startseite ist das zweite Wort der Kartentitel jetzt orange: GSC <b>School</b>, Cross <b>Kids</b>, Girls <b>Day</b>. Das entspricht der Hervorhebung in allen anderen Überschriften der Website.</li>
+      <li>Das Screenshot-Skript kann jetzt gezielt einen Abschnitt aufnehmen (z. B. <code>/#initiativen</code>), damit Änderungen weiter unten auf einer Seite direkt sichtbar sind.</li>
+    </ul></section>
+    <section><h3 class="sec">Warum?</h3><p>Die Titel waren für eine Hervorhebung vorbereitet, wurden aber komplett weiß angezeigt. Dadurch wirkte der Abschnitt uneinheitlich zum Rest der Seite.</p></section>
+    <section><h3 class="sec">Betroffene Seiten und Dateien</h3><ul>
+      <li>Seite: Startseite <code>/</code>, Abschnitt „Unsere Initiativen“</li>
+      <li><code>src/pages/index.astro</code>, gebaute <code>index.html</code>, <code>scripts/screenshots.mjs</code>, <code>CLAUDE.md</code></li>
+    </ul></section>
+    <section><h3 class="sec">Screenshots</h3>
+        <div class="page">
+          <div class="page-head"><h4>Nachher · Unsere Initiativen</h4><code>/#initiativen</code></div>
+          <div class="shots">
+            <figure class="phone"><img src="2026-11-18-initiativen-hervorhebung/screenshots/start-initiativen-iphone17-ansicht.jpg" alt="Nachher · Unsere Initiativen auf dem iPhone 17" loading="lazy">
+              <figcaption><b>iPhone 17</b><button class="full" data-src="2026-11-18-initiativen-hervorhebung/screenshots/start-initiativen-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
+            <figure><img src="2026-11-18-initiativen-hervorhebung/screenshots/start-initiativen-laptop-ansicht.jpg" alt="Nachher · Unsere Initiativen auf dem Laptop" loading="lazy">
+              <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="2026-11-18-initiativen-hervorhebung/screenshots/start-initiativen-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+          </div>
+        </div>
+        <div class="page">
+          <div class="page-head"><h4>Vorher · Unsere Initiativen</h4><code>/#initiativen</code></div>
+          <div class="shots">
+            <figure class="phone"><img src="2026-11-18-initiativen-hervorhebung/screenshots/vorher/start-initiativen-iphone17-ansicht.jpg" alt="Vorher · Unsere Initiativen auf dem iPhone 17" loading="lazy">
+              <figcaption><b>iPhone 17</b><button class="full" data-src="2026-11-18-initiativen-hervorhebung/screenshots/vorher/start-initiativen-iphone17-ganzeseite.jpg" data-phone>Ganze Seite</button></figcaption></figure>
+            <figure><img src="2026-11-18-initiativen-hervorhebung/screenshots/vorher/start-initiativen-laptop-ansicht.jpg" alt="Vorher · Unsere Initiativen auf dem Laptop" loading="lazy">
+              <figcaption><b>Laptop · 1366 × 768</b><button class="full" data-src="2026-11-18-initiativen-hervorhebung/screenshots/vorher/start-initiativen-laptop-ganzeseite.jpg">Ganze Seite</button></figcaption></figure>
+          </div>
+        </div>
+    </section>
+    <section><h3 class="sec">Prüfhinweise</h3><div class="note"><ul>
+      <li>Auf dem iPhone ist im ersten Bildschirm nur die erste Karte (GSC School) zu sehen. Cross Kids und Girls Day zeigt die Aufnahme „Ganze Seite“.</li>
+      <li>Sonst hat sich an Texten, Bildern und Abständen nichts geändert.</li>
+    </ul></div></section>
+  </article>
+
   <!-- STAND 4 -->
-  <article class="entry neu" id="stand-4">
+  <article class="entry" id="stand-4">
     <div class="entry-head">
       <span class="eyebrow">Stand 4</span>
       <h2>Ein fortlaufendes Änderungsprotokoll</h2>
